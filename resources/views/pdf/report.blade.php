@@ -81,7 +81,8 @@
 
 </head>
 <body>
-
+    <table width="100%" style="margin-bottom:20px;">
+    <tr>
         <td width="80%" style="text-align:center;">
             <h2 style="margin:0;">
                 Climate Change Resilience Assessment Model (CCRAM)
