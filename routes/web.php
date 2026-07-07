@@ -9,10 +9,6 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MiningController;
 use App\Http\Controllers\PDFController;
 
-// Route::get('/phpinfo', function(){
-//     phpinfo();
-// });
-
 Route::get('/', function () {
     return redirect()->route('assessments.index');
 });

@@ -53,6 +53,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
     <div class="container">
+        <img src="{{ asset('images/logo.jpeg') }}" alt="CCR-ID" style="height: 50px;">
         <a class="navbar-brand" href="/">CCRAM Assessment</a>
         <div class="d-flex gap-2">
             <a href="{{ route('assessments.create') }}" class="btn btn-outline-secondary">Assessment Baru</a>
