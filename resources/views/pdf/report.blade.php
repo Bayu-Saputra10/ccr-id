@@ -81,19 +81,6 @@
 
 </head>
 <body>
-    <table width="100%" style="margin-bottom:20px;">
-    <tr>
-        <td width="80%" style="text-align:center;">
-            <h2 style="margin:0;">
-                Climate Change Resilience Assessment Model (CCRAM)
-            </h2>
-
-            <div>
-                Assessment Report
-            </div>
-        </td>
-    </tr>
-</table>
     <div class="title">Corporate Climate Resilience Assessment Report</div>
 
     <div class="subtitle">Climate Change Resilience Assessment Model</div>
