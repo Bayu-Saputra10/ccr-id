@@ -81,12 +81,6 @@
 
 </head>
 <body>
-    <table width="100%" style="margin-bottom:20px;">
-    <tr>
-        <td width="20%">
-            <img src="{{ public_path('images/logo.jpeg') }}"
-                 style="height:70px;">
-        </td>
 
         <td width="80%" style="text-align:center;">
             <h2 style="margin:0;">
