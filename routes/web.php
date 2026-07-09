@@ -8,6 +8,7 @@ use App\Http\Controllers\AgricultureController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MiningController;
 use App\Http\Controllers\PDFController;
+use App\Models\Subsector;
 
 Route::get('/', function () {
     return redirect()->route('assessments.index');
@@ -19,29 +20,33 @@ Route::get('/assessments/create', [AssessmentController::class, 'create'])->name
 
 Route::post('/assessments', [AssessmentController::class, 'store'])->name('assessments.store');
 
+Route::get('/subsectors/{sector}', function ($sector){
+    return Subsector::where('sector', $sector)->orderBy('name')->get();
+});
+
 Route::get('/assessments/{assessment}/report', [AssessmentController::class, 'report'])->name('assessments.report');
 
 // infrastruktur
-Route::get('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'index'])->name('infrastructure.input');
+Route::get('/assessments/infrastructure', [InfrastructureController::class, 'index'])->name('infrastructure.input');
 
-Route::post('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'save'])->name('infrastructure.save');
+Route::post('/assessments/infrastructure', [InfrastructureController::class, 'save'])->name('infrastructure.save');
 
 // manufaktur
-Route::get('/assessments/{assessment}/manufacturing', [ManufacturingController::class, 'index'])->name('manufacturing.input');
+Route::get('/assessments/manufacturing', [ManufacturingController::class, 'index'])->name('manufacturing.input');
 
-Route::post('/assessments/{assessment}/manufacturing', [ManufacturingController::class, 'save'])->name('manufacturing.save');
+Route::post('/assessments/manufacturing', [ManufacturingController::class, 'save'])->name('manufacturing.save');
 
 // agrikultur
-Route::get('/assessments/{assessment}/agriculture', [AgricultureController::class, 'index'])->name('agriculture.input');
-Route::post('/assessments/{assessment}/agriculture', [AgricultureController::class, 'save'])->name('agriculture.save');
+Route::get('/assessments/agriculture', [AgricultureController::class, 'index'])->name('agriculture.input');
+Route::post('/assessments/agriculture', [AgricultureController::class, 'save'])->name('agriculture.save');
 
 // keuangan
-Route::get('/assessments/{assessment}/finance', [FinanceController::class, 'index'])->name('finance.input');
-Route::post('/assessments/{assessment}/finance', [FinanceController::class, 'save'])->name('finance.save');
+Route::get('/assessments/finance', [FinanceController::class, 'index'])->name('finance.input');
+Route::post('/assessments/finance', [FinanceController::class, 'save'])->name('finance.save');
 
 // energi & tambang
-Route::get('/assessments/{assessment}/mining', [MiningController::class, 'index'])->name('mining.input');
-Route::post('/assessments/{assessment}/mining', [MiningController::class, 'save'])->name('mining.save');
+Route::get('/assessments/mining', [MiningController::class, 'index'])->name('mining.input');
+Route::post('/assessments/mining', [MiningController::class, 'save'])->name('mining.save');
 
 // pdf export
 Route::post('/assessment/{assessment}/pdf', [PDFController::class,'report'])->name('assessment.pdf');

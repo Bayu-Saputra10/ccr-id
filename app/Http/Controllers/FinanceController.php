@@ -10,15 +10,20 @@ use App\Services\CCRAMCalculatorService;
 
 class FinanceController extends Controller
 {
-    public function index(Assessment $assessment)
-    {
+    public function index() {
+        $assessment = session('assessment_data');
+        $assessment = (object) $assessment;
+        if (!$assessment) {
+            return redirect()->route('assessments.create');
+        }
+
         $indicators = Finance::with(['scores', 'evidences'])->orderBy('dimension')->orderBy('indicator_id')->get();
 
         return view('finance.input', compact('assessment', 'indicators'));
     }
-    public function save(Request $request, Assessment $assessment)
-    {
-        AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
+    public function save(Request $request) {
+        $data = session('assessment_data');
+        $assessment = Assessment::create($data);
 
         foreach ($request->score as $indicatorId => $score) {
             AssessmentAnswer::create([
@@ -34,6 +39,7 @@ class FinanceController extends Controller
 
         $assessment->update($result);
 
+        session()->forget('assessment_data');
         return redirect()->route('assessments.report', $assessment->id);
     }
 }

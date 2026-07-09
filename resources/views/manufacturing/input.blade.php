@@ -15,7 +15,7 @@
         <strong>Penginput Data :</strong>
         {{ $assessment->entry_operator }}
     </div>
-    <form action="{{ route('manufacturing.save', $assessment->id) }}" method="POST">
+    <form action="{{ route('manufacturing.save') }}" method="POST">
         @csrf
         <table class="table table-bordered table-striped">
             <thead class="table-dark">

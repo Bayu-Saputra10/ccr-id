@@ -34,50 +34,26 @@ class AssessmentController extends Controller
             'address' => 'required',
             'assessment_date' => 'required',
             'entry_operator' => 'required',
-            'data_source' => 'required'
+            'data_source' => 'required|array|min:1',
+            'data_source.*' => 'string'
         ]);
 
-        $assessment = Assessment::create([
+        session([
+            'assessment_data' => [
             'sector' => $request->sector,
             'company_name' => $request->company_name,
             'subsector' => $request->subsector,
             'address' => $request->address,
             'assessment_date' => $request->assessment_date,
             'entry_operator' => $request->entry_operator,
-            'data_source' => $request->data_source,
+            'data_source' => implode(', ', $request->data_source),
             'notes' => $request->notes
+            ]
         ]);
 
         // pilihan sektor
-        if (strtolower($request->sector)
-            == 'infrastructure'
-            ) {
-            return redirect()->route(
-                'infrastructure.input', $assessment->id
-            );
-        }
-        if (strtolower($request->sector) == 'manufacturing') {
-            return redirect()->route(
-                'manufacturing.input', $assessment->id
-            );
-        }
-        if (strtolower($request->sector) == 'agriculture') {
-            return redirect()->route(
-                'agriculture.input', $assessment->id
-            );
-        }
-        if (strtolower($request->sector) == 'finance') {
-            return redirect()->route(
-                'finance.input', $assessment->id
-            );
-        }
-        if (strtolower($request->sector) == 'mining') {
-            return redirect()->route(
-                'mining.input', $assessment->id
-            );
-        }
-        return redirect()->back()->with(
-            'error', 'Sektor belum tersedia'
+        return redirect()->route(
+            strtolower($request->sector). '.input'
         );
     }
 

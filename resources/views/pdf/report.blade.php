@@ -97,24 +97,38 @@
                 <th>Sector</th>
                 <td>{{ ucfirst($assessment->sector_name) }}</td>
             </tr>
+            <tr>
+                <th>Subsector</th>
+                <td>{{ $assessment->subsector }}</td>
+            </tr>
+        </table>
+    </div>
 
-<tr>
-
-<th>
-
-Subsector
-
-</th>
-
-<td>
-
-{{ $assessment->subsector }}
-
-</td>
-
-</tr>
-
-<tr>
+    <div class="section">
+        <div class="section-title">Climate Rating</div>
+        <table>
+            <tr>
+                <th width="30%">Grade</th>
+                <td>{{ $assessment->grade }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ $assessment->category }}</td>
+            </tr>
+            <tr>
+                <th>Total Score</th>
+                <td>{{ number_format($assessment->total_score,2) }}</td>
+            </tr>
+            <tr>
+                <th>Gap to Next Grade</th>
+                <td>{{ $assessment->gap_to_next_grade }} points</td>
+            </tr>
+            <tr>
+                <th>Next Grade</th>
+                <td>{{ $assessment->next_grade }}</td>
+            </tr>
+        </table>
+    </div>
 
 <th>
 

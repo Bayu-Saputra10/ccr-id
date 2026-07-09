@@ -15,7 +15,7 @@
         <strong>Penginput Data :</strong>
         {{ $assessment->entry_operator }}
     </div>
-    <form action="{{ route('mining.save', $assessment->id) }}" method="POST">
+    <form action="{{ route('mining.save') }}" method="POST">
 
         @csrf
 

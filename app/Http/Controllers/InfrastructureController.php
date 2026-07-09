@@ -10,7 +10,13 @@ use App\Services\CCRAMCalculatorService;
 
 class InfrastructureController extends Controller
 {
-    public function index(Assessment $assessment) {
+    public function index() {
+        $assessment = session('assessment_data');
+        $assessment = (object) $assessment;
+        if (!$assessment) {
+            return redirect()->route('assessments.create');
+        }
+
         $indicators = Infrastructure::with([
             'scores', 'evidences'
         ])->orderBy('dimension')->orderBy('indicator_id')->get();
@@ -18,7 +24,7 @@ class InfrastructureController extends Controller
         return view('infrastructure.input', compact('assessment', 'indicators'));
     }
 
-    public function save(Request $request, Assessment $assessment) {
+    public function save(Request $request) {
         $indicators = Infrastructure::orderBy('indicator_id')->get();
 
         $errors = [];
@@ -37,7 +43,8 @@ class InfrastructureController extends Controller
             return back()->withInput()->with('validationErrors', $errors);
         }
 
-        AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
+        $data = session('assessment_data');
+        $assessment = Assessment::create($data);
 
         foreach ($request->score as $indicatorId => $score) {
             AssessmentAnswer::create([
@@ -53,6 +60,7 @@ class InfrastructureController extends Controller
 
         $assessment->update($result);
 
+        session()->forget('assessment_data');
         return redirect()->route('assessments.report', $assessment->id);
     }
 }

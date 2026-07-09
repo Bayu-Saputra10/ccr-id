@@ -10,15 +10,21 @@ use App\Services\CCRAMCalculatorService;
 
 class MiningController extends Controller
 {
-    public function index(Assessment $assessment)
-    {
+    public function index() {
+        $assessment = session('assessment_data');
+        $assessment = (object) $assessment;
+        if (!$assessment) {
+            return redirect()->route('assessments.create');
+        }        
+
         $indicators = Mining::with(['scores', 'evidences'])->orderBy('dimension')->orderBy('indicator_id')->get();
 
         return view('mining.input', compact('assessment', 'indicators'));
     }
-    public function save(Request $request, Assessment $assessment)
+    public function save(Request $request)
     {
-        AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
+        $data = session('assessment_data');
+        $assessment = Assessment::create($data);
 
         foreach ($request->score as $indicatorId => $score) {
             AssessmentAnswer::create([
@@ -34,6 +40,7 @@ class MiningController extends Controller
 
         $assessment->update($result);
 
+        session()->forget('assessment_data');
         return redirect()->route('assessments.report', $assessment->id);
     }
 }
