@@ -127,9 +127,7 @@
                 <th>Next Grade</th>
                 <td>{{ $assessment->next_grade }}</td>
             </tr>
-        </table>
-    </div>
-
+        
 <th>
 
 Address
@@ -191,6 +189,7 @@ Data Source
 </table>
 
 </div>
+
 
 <div class="section">
 
