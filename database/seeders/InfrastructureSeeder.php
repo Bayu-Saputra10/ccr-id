@@ -14,7 +14,6 @@ class InfrastructureSeeder extends Seeder
     public function run(): void
     {
         Infrastructure::insert([
-
         // dimensi a
         ['dimension'=>'A', 'indicator_id'=>'A1', 'indicator_name'=> 'Pengawasan dewan direksi terhadap isu iklim', 'definition'=>'Mengukur tingkat keterlibatan dan pengawasan dewan direksi dalam pengambilan keputusan terkait risiko, peluang, strategi, target dan kinerja iklim perusahaan.'],
         ['dimension'=>'A', 'indicator_id'=>'A2', 'indicator_name'=> 'Peran manajemen senior dalam strategi iklim', 'definition'=>'Mengukur tingkat tanggung jawab dan akuntabilitas manajemen senior dalam mengimplementasikan, memantau dan mengevaluasi strategi iklim perusahaan.'],
@@ -25,12 +24,13 @@ class InfrastructureSeeder extends Seeder
         // dimensi b
         ['dimension'=>'B', 'indicator_id'=>'B1', 'indicator_name'=> 'Identifikasi risiko & peluang iklim', 'definition'=>'Mengukur kemampuan perusahaan dalam mengenali dan mendokumentasikan risiko serta peluang yang muncul akibat perubahan iklim terhadap operasional dan bisnis.'],
         ['dimension'=>'B', 'indicator_id'=>'B2', 'indicator_name'=> 'Dampak iklim pada model bisnis & keuangan', 'definiton'=>'Mengukur tingkat integrasi pertimbangan iklim ke dalam model bisnis, investasi, struktur biaya, pendapatan, dan perencanaan keuangan perusahaan.'],
+        ['dimension'=>'B', 'indicator_id'=>'B3', 'indicator_name'=> 'Skenario risiko fisik aset (banjir, panas, longsor)', 'definiton'=>'Mengukur kemampuan perusahaan menilai kerentanan aset terhadap ancaman fisik akibat perubahan iklim.'],
         ['dimension'=>'B', 'indicator_id'=>'B5', 'indicator_name'=> 'Integrasi strategi iklim dengan SDGs & ISSB', 'definition'=>'Mengukur tingkat keselarasan strategi iklim perusahaan dengan tujuan pembangunan berkelanjutan (SDGs) dan standar pelaporan keberlanjutan ISSB.'],
 
         // dimensi c
         ['dimension'=>'C', 'indicator_id'=>'C1', 'indicator_name'=> 'Identifikasi risiko fisik & transisi', 'definition'=>'Mengukur kemampuan perusahaan dalam mengidentifikasi risiko fisik akibat perubahan iklim serta risiko transisi akibat perubahan regulasi, teknologi, pasar dan preferensi konsumen.'],
         ['dimension'=>'C', 'indicator_id'=>'C2', 'indicator_name'=> 'Sistem mitigasi & respons risiko iklim', 'definition'=>'Mengukur keberadaan dan efektivitas sistem perusahaan dalam mengurangi dampak risiko iklim dan merespons kejadian terkait iklim secara sistematis.'],
-        ['dimension'=>'C', 'indicator_id'=>'C3', 'indicator_name'=> 'Integrasi risiko iklim ke ERM', 'definition'=>'Mengukur tingkat integrasi risiko iklim ke dalam sistem Enterprise Risk Management (ERM) dan proses tata kelola risiko perusahaan.'],
+        ['dimension'=>'C', 'indicator_id'=>'C3', 'indicator_name'=> 'Integrasi risiko iklim ke ERM perusahaan', 'definition'=>'Mengukur tingkat integrasi risiko iklim ke dalam sistem Enterprise Risk Management (ERM) dan proses tata kelola risiko perusahaan.'],
         ['dimension'=>'C', 'indicator_id'=>'C4', 'indicator_name'=> 'Pelaporan risiko ke dewan & publik', 'definition'=>'Mengukur frekuensi, kualitas, dan transparansi pelaporan risiko iklim kepada dewan direksi serta pemangku kepentingan eksternal.'],
 
         // dimensi d

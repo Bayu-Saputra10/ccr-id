@@ -6,119 +6,11 @@
     <title>CCR-ID</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/images/android-chrome-512x512.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('assets/images/android-chrome-192x192.png') }}">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <style>
-        body{
-            background: #f4f6f9;
-            font-family: 'Segoe UI',sans-serif;
-        }
-        .navbar{
-            background: #fff;
-            padding: 12px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
-        }
-        .navbar-brand{
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        .logo-app{
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-        }
-        .brand-title{
-            font-size: 22px;
-            font-weight: 700;
-            color: #212529;
-            line-height: 1.1;
-        }
-        .brand-subtitle{
-            font-size: 13px;
-            color: #6c757d;
-            margin-top: 2px;
-        }
-        .navbar .btn{
-            padding: 8px 18px;
-            border-radius: 8px;
-        }
-        .main-content{
-            padding-top: 20px;
-            padding-bottom: 20px;
-            min-height: calc(100vh - 180px);
-        }
-        .content-card{
-            background: #fff;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
-        }
-        .footer{
-            margin-top: 20px;
-            text-align: center;
-            color: #6c757d;
-            font-size: .9rem;
-            padding: 18px 0;
-            border-top: 1px solid #e9ecef;
-        }
-        .btn{
-            border-radius: 8px;
-        }
-        .table{
-            vertical-align: middle;
-        }
-        .card{
-            border: none;
-            border-radius: 14px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
-        }
-        .card-header{
-            padding: .8rem 1.2rem;
-        }
-        .card-body{
-            padding: 1.2rem;
-        }
-        .form-label{
-            font-size: .92rem;
-            font-weight: 600;
-            margin-bottom: .35rem;
-        }
-        .form-control, .form-select{
-            min-height: 42px;
-            border-radius: 8px;
-        }
-        textarea .form-control{
-            min-height: 85px;
-        }
-        .form-check{
-            margin-bottom: .35rem;
-        }
-        .border{
-            border-color: #e5e7eb!important;
-        }
-        h2,h3,h4,h5{
-            font-weight: 600;
-        }
-
-        @media(max-width:768px){
-            .navbar{
-                padding: 10px 0;
-            }
-            .main-content{
-                padding-top: 15px;
-                padding-bottom: 15px;
-            }
-            .footer{
-                margin-top: 15px;
-                padding: 15px 0;
-            }
-        }
-    </style>
-
 </head>
 <body>
+    @if (!Request::is('login') && !Request::is('register'))      
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a href="{{ url('/') }}" class="navbar-brand d-flex align-items-center">
@@ -132,12 +24,23 @@
                     </div>
                 </div>
             </a>
-            <div class="ms-auto">
+            <div class="ms-auto d-flex align-items-center gap-2">
+                @auth
                 <a href="{{ route('assessments.create') }}" class="btn btn-outline-primary me-2">Assessment Baru</a>
-                <a href="{{ route('assessments.index') }}" class="btn btn-outline-primary">List Assessment</a>
+                <a href="{{ route('assessments.index') }}" class="btn btn-outline-primary">Daftar Assessment</a>
+                <span class="text secondary me-2">{{ auth()->user()->name }}</span>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Logout</button>
+                </form>
+                @endauth
+                @guest
+                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                @endguest
             </div>
         </div>
     </nav>
+    @endif
 
     <div class="container main-content">
         @if (session('success'))
@@ -148,9 +51,11 @@
         @yield('content')
     </div>
 
+    @if (!Request::is('login') && !Request::is('register'))
     <div class="footer">
         CCR-ID© {{ date('Y') }}
     </div>
+    @endif
 
     {{-- alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

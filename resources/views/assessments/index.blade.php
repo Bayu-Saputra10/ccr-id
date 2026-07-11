@@ -1,12 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
 
 <div class="card">
 
     <div class="card-header d-flex justify-content-between">
         <h3>Daftar Assessment</h3>
-        <a href="{{ route('assessments.create') }}" class="btn btn-primary">New Assessment</a>
     </div>
 
     <div class="card-body">

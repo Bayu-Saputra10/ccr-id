@@ -10,20 +10,21 @@ use App\Http\Controllers\MiningController;
 use App\Http\Controllers\PDFController;
 use App\Models\Subsector;
 
-Route::get('/', function () {
-    return redirect()->route('assessments.index');
+Route::get('/', function (){
+    if(auth()->check()){
+     return redirect()->route('assessments.index');   
+    }
+    return redirect()->route('login');
 });
 
+Route::middleware('auth')->group(function (){
+
 Route::get('/assessments', [AssessmentController::class, 'index'])->name('assessments.index');
-
 Route::get('/assessments/create', [AssessmentController::class, 'create'])->name('assessments.create');
-
 Route::post('/assessments', [AssessmentController::class, 'store'])->name('assessments.store');
-
 Route::get('/subsectors/{sector}', function ($sector){
     return Subsector::where('sector', $sector)->orderBy('name')->get();
 });
-
 Route::get('/assessments/{assessment}/report', [AssessmentController::class, 'report'])->name('assessments.report');
 
 // infrastruktur
@@ -50,3 +51,7 @@ Route::post('/assessments/mining', [MiningController::class, 'save'])->name('min
 
 // pdf export
 Route::post('/assessment/{assessment}/pdf', [PDFController::class,'report'])->name('assessment.pdf');
+
+});
+
+require __DIR__.'/auth.php';

@@ -1,13 +1,234 @@
-@import 'tailwindcss';
-
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* layouts.app */
+body{
+    background: #f4f6f9;
+    font-family: 'Segoe UI',sans-serif;
+}
+.navbar{
+    background: #fff;
+    padding: 12px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
+}
+.navbar-brand{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.logo-app{
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+.brand-title{
+    font-size: 22px;
+    font-weight: 700;
+    color: #212529;
+    line-height: 1.1;
+}
+.brand-subtitle{
+    font-size: 13px;
+    color: #6c757d;
+    margin-top: 2px;
+}
+.navbar .btn{
+    padding: 8px 18px;
+    border-radius: 8px;
+}
+.main-content{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    min-height: calc(100vh - 180px);
+}
+.content-card{
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
+}
+.footer{
+    margin-top: 20px;
+    text-align: center;
+    color: #6c757d;
+    font-size: .9rem;
+    padding: 18px 0;
+    border-top: 1px solid #e9ecef;
+}
+.btn{
+    border-radius: 8px;
+}
+.table{
+    vertical-align: middle;
+}
+.card{
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+.card-header{
+    padding: .8rem 1.2rem;
+}
+.card-body{
+    padding: 1.2rem;
+}
+.form-label{
+    font-size: .92rem;
+    font-weight: 600;
+    margin-bottom: .35rem;
+}
+.form-control, .form-select{
+    min-height: 42px;
+    border-radius: 8px;
+}
+textarea .form-control{
+    min-height: 85px;
+}
+.form-check{
+    margin-bottom: .35rem;
+}
+.border{
+    border-color: #e5e7eb!important;
+}
+h2,h3,h4,h5{
+    font-weight: 600;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@media(max-width:768px){
+    .navbar{
+        padding: 10px 0;
+    }
+    .main-content{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .footer{
+        margin-top: 15px;
+        padding: 15px 0;
+    }
+}
+
+/* layouts.auth */
+html, body{
+    height: 100%;
+}
+.auth-body{
+    margin: 0;
+    padding: 0;
+    background: #eef3f8;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* login */
+.login-left{
+    background: #081223;
+    height: 100vh;
+    padding: 80px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.login-left-content{
+    width: 100%;
+    max-width: 520px;
+}
+.login-logo{
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 22px;
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
+    border: 1px solid rgba(255, 255, 255, .25);
+}
+.login-title{
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.5px;
+    margin-bottom: 20px;
+}
+.login-line{
+    width: 60px;
+    height: 3px;
+    background: #0d6efd;
+    margin: 15px 0;
+    border-radius: 10px;
+}
+.login-desc{
+    font-size: 14px;
+    color: #c9d2de;
+    line-height: 1.8;
+    max-width: 510px;
+}
+.login-right{
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.login-form{
+    width: 100%;
+    max-width: 430px;
+}
+.login-logo-right{
+    width: 120px;
+    display: block;
+    margin: auto;
+    margin-bottom: 25px;
+    object-fit: contain;
+}
+.login-form h2{
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.login-form p{
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 40px;
+}
+.login-input{
+    height: 58px;
+    border-radius: 12px;
+    border: 1px solid #dbe2ea;
+    padding-left: 20px;
+    font-size: 16px;
+}
+.login-input:focus{
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .15);
+}
+.password-toggle{
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 18px;
+    transition: .2s;
+}
+.password-toggle:hover{
+    color: #0d6efd;
+}
+.login-btn{
+    width: 100%;
+    height: 56px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+}
+@media (max-width:992px) {
+    .login-form{
+        width: 90%;
+    }
+    .login-left{
+        display: none;
+    }
 }
