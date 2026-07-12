@@ -131,22 +131,16 @@ class CCRAMCalculatorService
 
             foreach ($answers as $answer) {
                 $sector = ucfirst(strtolower($assessment->sector));
-
                 $indicatorModel = "App\\Models\\{$sector}";
-
                 $indicator = $indicatorModel::find($answer->indicator_id);
-
                 if ($indicator && $indicator->dimension == $dimension) {
                     $scores[] = $answer->score;
                 }
             }
 
             $average = count($scores) ? (array_sum($scores) / count($scores)) : 0;
-
             $dimensionAverage[$dimension] = round($average,4);
-
             $weighted = ($average / 5) * $weight;
-
             $result[$dimension] = round($weighted, 2);
         }
 

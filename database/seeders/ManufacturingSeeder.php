@@ -24,6 +24,7 @@ class ManufacturingSeeder extends Seeder
         // dimensi b
         ['dimension'=>'B', 'indicator_id'=>'B1', 'indicator_name'=> 'Identifikasi risiko & peluang iklim', 'definition'=>'Mengukur kemampuan perusahaan dalam mengenali dan mendokumentasikan risiko serta peluang yang muncul akibat perubahan iklim terhadap operasional dan bisnis.'],
         ['dimension'=>'B', 'indicator_id'=>'B2', 'indicator_name'=> 'Dampak iklim pada model bisnis & keuangan', 'definiton'=>'Mengukur tingkat integrasi pertimbangan iklim ke dalam model bisnis, investasi, struktur biaya, pendapatan dan perencanaan keuangan perusahaan.'],
+        ['dimension'=>'B', 'indicator_id'=>'B4', 'indicator_name'=> 'Stategi dekarbonisasi rantai pasok', 'definiton'=>'Mengukur tingkat integrasi target pengurangan emisi ke dalam pengelolaan pemasok dan rantai pasok perusahaan.'],
         ['dimension'=>'B', 'indicator_id'=>'B5', 'indicator_name'=> 'Integrasi strategi iklim dengan SDGs & ISSB', 'definition'=>'Mengukur tingkat keselarasan strategi iklim perusahaan dengan tujuan pembangunan berkelanjutan (SDGs) dan standar pelaporan keberlanjutan ISSB.'],
 
         // dimensi c
@@ -35,8 +36,10 @@ class ManufacturingSeeder extends Seeder
 
         // dimensi d
         ['dimension'=>'D', 'indicator_id'=>'D1', 'indicator_name'=> 'Emisi GRK Scope 1, 2, 3', 'definition'=>'Mengukur kemampuan perusahaan dalam menghitung, melaporkan dan mengelola emisi gas rumah kaca dari seluruh aktivitas operasional dan rantai nilai.'],
+        ['dimension'=>'D', 'indicator_id'=>'D2', 'indicator_name'=> 'Intensitas energi per unit produk', 'definition'=>'Mengukur efisiensi penggunaan energi dalam menghasilkan output produksi.'],
         ['dimension'=>'D', 'indicator_id'=>'D4', 'indicator_name'=> 'Investasi adaptasi & infrastruktur resilien', 'definition'=>'Mengukur tingkat komitmen finansial perusahaan dalam mendukung adaptasi iklim dan pembangunan infrastruktur yang tahan terhadap risiko iklim.'],
         ['dimension'=>'D', 'indicator_id'=>'D5', 'indicator_name'=> 'Metrik adaptasi non-karbon', 'definition'=>'Mengukur kemampuan perusahaan dalam memantau dan mengevaluasi indikator adaptasi fisik, sosial dan operasional yang tidak secara langsung berkaitan dengan emisi karbon.'],
+        ['dimension'=>'D', 'indicator_id'=>'D6', 'indicator_name'=> 'Pengelolaan limbah & air', 'definition'=>'Mengukur efektivitas perusahaan dalam mengurangi dampak lingkungan melalui pengelolaan limbah dan penggunaan air yang berkelanjutan.'],
 
         // dimensi e
         ['dimension'=>'E', 'indicator_id'=>'E2', 'indicator_name'=>'Pelibatan pemasok hijau', 'definition'=>'Mengukur tingkat integrasi prinsip keberlanjutan dan kinerja lingkungan ke dalam hubungan dengan pemasok.'],

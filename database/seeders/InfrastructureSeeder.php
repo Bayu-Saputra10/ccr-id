@@ -35,8 +35,9 @@ class InfrastructureSeeder extends Seeder
 
         // dimensi d
         ['dimension'=>'D', 'indicator_id'=>'D1', 'indicator_name'=> 'Emisi GRK Scope 1, 2, 3', 'definition'=>'Mengukur kemampuan perusahaan dalam menghitung, melaporkan dan mengelola emisi gas rumah kaca dari seluruh aktivitas operasional dan rantai nilai.'],
+        ['dimension'=>'D', 'indicator_id'=>'D2', 'indicator_name'=> 'Intensitas emisi per km/penumpang atau unit produksi', 'definition'=>'Mengukur efisiensi emisi yang dihasilkan dalam penyediaan layanan transportasi, utilitas atau infrastruktur.'],
         ['dimension'=>'D', 'indicator_id'=>'D4', 'indicator_name'=> 'Investasi adaptasi & infrastruktur resilien', 'definition'=>'Mengukur tingkat komitmen finansial perusahaan dalam mendukung adaptasi iklim dan pembangunan infrastruktur yang tahan terhadap risiko iklim.'],
-        ['dimension'=>'D', 'indicator_id'=>'D5', 'indicator_name'=> 'Metrik adaptasi non-karbon', 'definition'=>'Mengukur kemampuan perusahaan dalam memantau dan mengevaluasi indikator adaptasi fisik, sosial dan operasional yang tidak secara langsung berkaitan dengan emisi karbon.'],
+        ['dimension'=>'D', 'indicator_id'=>'D5', 'indicator_name'=> 'Metrik adaptasi non-karbon (drainase, cadangan energi)', 'definition'=>'Mengukur kesiapan sistem pendukung operasional dalam menghadapi gangguan akibat cuaca ekstrem dan perubahan iklim.'],
         ['dimension'=>'D', 'indicator_id'=>'D6', 'indicator_name'=> 'Infrastruktur tahan iklim', 'definition'=>'Mengukur tingkat investasi yang diarahkan untuk meningkatkan ketahanan aset terhadap risiko iklim.'],
 
         // dimensi e

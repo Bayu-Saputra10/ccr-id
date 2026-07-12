@@ -17,7 +17,7 @@ class AgricultureEvidenceSeeder extends Seeder
         $evidences = [
             
         'A1' => [
-            1 => 'Piagam dewan',
+            1 => 'Board charter',
             2 => 'Notulen rapat dewan',
             3 => 'Annual Report',
             4 => 'Sustainability Report'
@@ -25,93 +25,110 @@ class AgricultureEvidenceSeeder extends Seeder
         'A2' => [
             1 => 'Struktur organisasi',
             2 => 'Job description',
-            3 => 'KPI manajemen',
+            3 => 'KPI',
             4 => 'Laporan manajemen'
         ],
         'A3' => [
             1 => 'SK komite',
             2 => 'TOR',
             3 => 'Agenda rapat',
-            4 => 'Notulen rapat'
+            4 => 'Notulen',
+            5 => 'Laporan rekomendasi',
         ],
         'A5' => [
-            1 => 'Sustainability Report',
-            2 => 'Annual Report',
-            3 => 'Laporan TCFD',
-            4 => 'Assurance'
+            1 => 'Annual Report',
+            2 => 'Sustainability Report',
+            3 => 'TCFD/ISSB report',
+            4 => 'Assurance statement'
         ],
 
         'B1' => [
             1 => 'Risk register',
             2 => 'Dokumen ERM',
-            3 => 'Laporan TCFD'
+            3 => 'TCFD disclosure',
+            4 => 'Strategic plan'
         ],
         'B2' => [
-            1 => 'Dokumen strategi',
-            2 => 'Analisis keuangan',
-            3 => 'Laporan manajemen'
+            1 => 'Business plan',
+            2 => 'CAPEX/OPEX',
+            3 => 'Scenario analysis',
+            4 => 'Laporan keuangan'
         ],
         'B3' => [
-            1 => 'Dokumen strategi',
-            2 => 'Analisis keuangan',
-            3 => 'Laporan manajemen'
+            1 => 'Data BMKG/IPCC',
+            2 => 'Laporan agroclimate assessment',
+            3 => 'Peta risiko lahan'
         ],
         'B5' => [
-            1 => 'Peta SDGs',
-            2 => 'Sustainability Report',
-            3 => 'ISSB disclosure'
+            1 => 'Sustainability Report',
+            2 => 'Peta SDGs',
+            3 => 'ISSB-aligned disclosure'
         ],
 
         'C1' => [
             1 => 'Climate risk assessment',
-            2 => 'Data IPCC/BMKG',
+            2 => 'Data IPCC/BMKG/BNPB',
             3 => 'Peta risiko aset'
         ],
         'C2' => [
-            1 => 'SOP risiko',
+            1 => 'SOP risiko iklim',
             2 => 'Manual ERM',
-            3 => 'Simulasi risiko'
+            3 => 'dashboard risiko',
+            4 => 'BCP',
         ],
         'C3' => [
-            1 => 'Framework ERM',
+            1 => 'ERM Framework',
             2 => 'Risk matrix',
-            3 => 'Laporan ke dewan'
+            3 => 'Laporan risiko ke dewan'
         ],
         'C4' => [
             1 => 'Annual Report',
             2 => 'Sustainability Report',
-            3 => 'Assurance'
+            3 => 'TCFD section',
+            4 => 'Assurance Report'
         ],
 
         'D1' => [
             1 => 'Inventaris GRK',
-            2 => 'GHG Protocol',
-            3 => 'Laporan verifikasi'
+            2 => 'Laporan verifikasi',
+            3 => 'CDP response',
+            4 => 'Sustainability report'
+        ],
+        'D2' => [
+            2 => 'Data produksi',
+            1 => 'Inventaris GRK',
+            3 => 'Laporan operasional kebun'
         ],
         'D4' => [
-            1 => 'Rencana investasi',
-            2 => 'CAPEX adaptasi',
-            3 => 'Laporan proyek'
+            1 => 'CAPEX adaptasi',
+            2 => 'Rencana investasi',
+            3 => 'Laporan proyek adaptasi'
         ],
         'D5' => [
-            1 => 'Laporan operasional',
-            2 => 'Indikator aset',
-            3 => 'Evaluasi dampak'
+            1 => 'Program irigasi',
+            2 => 'Konservasi tanah',
+            3 => 'Varietas tahan iklim',
+            4 => 'Laporan agronomi',
         ],
 
         'E1' => [
-            1 => 'Laporan operasional',
-            2 => 'Indikator aset',
-            3 => 'Evaluasi dampak'
+            1 => 'Data petani plasma',
+            2 => 'Audit pemasok',
+            3 => 'Sertifikasi RSPO/ISPO'
+        ],
+        'E2' => [
+            1 => 'Kontrak kemitraan',
+            2 => 'Program replanting',
+            3 => 'Laporan dampak sosial'
         ],
         'E3' => [
             1 => 'Kebijakan SDM',
-            2 => 'Program pekerja',
+            2 => 'Program pekerja terdampak',
             3 => 'Laporan sosial'
         ],
         'E4' => [
             1 => 'Program CSR',
-            2 => 'Laporan dampak',
+            2 => 'Laporan dampak sosial',
             3 => 'MoU kemitraan'
         ],
         'E5' => [

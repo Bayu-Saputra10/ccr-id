@@ -24,7 +24,7 @@ class AgricultureSeeder extends Seeder
         // dimensi b
         ['dimension'=>'B', 'indicator_id'=>'B1', 'indicator_name'=> 'Identifikasi risiko & peluang iklim', 'definition'=>'Mengukur kemampuan perusahaan dalam mengenali dan mendokumentasikan risiko serta peluang yang muncul akibat perubahan iklim terhadap operasional dan bisnis.'],
         ['dimension'=>'B', 'indicator_id'=>'B2', 'indicator_name'=> 'Dampak iklim pada model bisnis & keuangan', 'definiton'=>'Mengukur tingkat integrasi pertimbangan iklim ke dalam model bisnis, investasi, struktur biaya, pendapatan dan perencanaan keuangan perusahaan.'],
-        ['dimension'=>'B', 'indicator_id'=>'B3', 'indicator_name'=> 'Risiko agroklimat', 'definiton'=>'Mengukur kemampuan perusahaan mengantisipasi dampak perubahan pola iklim terhadap produktivitas dan keberlanjutan usaha.'],
+        ['dimension'=>'B', 'indicator_id'=>'B3', 'indicator_name'=> 'Analisis skenario curah hujan & suhu', 'definiton'=>'Mengukur kemampuan perusahaan mengantisipasi dampak perubahan pola iklim terhadap produktivitas dan keberlanjutan usaha.'],
         ['dimension'=>'B', 'indicator_id'=>'B5', 'indicator_name'=> 'Integrasi strategi iklim dengan SDGs & ISSB', 'definition'=>'Mengukur tingkat keselarasan strategi iklim perusahaan dengan tujuan pembangunan berkelanjutan (SDGs) dan standar pelaporan keberlanjutan ISSB.'],
 
         // dimensi c
@@ -35,11 +35,13 @@ class AgricultureSeeder extends Seeder
 
         // dimensi d
         ['dimension'=>'D', 'indicator_id'=>'D1', 'indicator_name'=> 'Emisi GRK Scope 1, 2, 3', 'definition'=>'Mengukur kemampuan perusahaan dalam menghitung, melaporkan dan mengelola emisi gas rumah kaca dari seluruh aktivitas operasional dan rantai nilai.'],
+        ['dimension'=>'D', 'indicator_id'=>'D2', 'indicator_name'=> 'Intensitas emisi per ton hasil', 'definition'=>'Mengukur efisiensi emisi gas rumah kaca yang dihasilkan dalam proses produksi pertanian atau perkebunan.'],
         ['dimension'=>'D', 'indicator_id'=>'D4', 'indicator_name'=> 'Investasi adaptasi & infrastruktur resilien', 'definition'=>'Mengukur tingkat komitmen finansial perusahaan dalam mendukung adaptasi iklim dan pembangunan infrastruktur yang tahan terhadap risiko iklim.'],
-        ['dimension'=>'D', 'indicator_id'=>'D5', 'indicator_name'=> 'Metrik adaptasi non-karbon', 'definition'=>'Mengukur kemampuan perusahaan dalam memantau dan mengevaluasi indikator adaptasi fisik, sosial dan operasional yang tidak secara langsung berkaitan dengan emisi karbon.'],
+        ['dimension'=>'D', 'indicator_id'=>'D5', 'indicator_name'=> 'Metrik adaptasi non-karbon (tanah, air, varietas)', 'definition'=>'Mengukur penerapan praktik adaptasi yang meningkatkan ketahanan lahan, air, dan produksi terhadap perubahan iklim.'],
 
         // dimensi e
-        ['dimension'=>'E', 'indicator_id'=>'E1', 'indicator_name'=>'Risiko rantai pasok petani', 'definition'=>'Mengukur kemampuan perusahaan mengidentifikasi risiko iklim yang memengaruhi petani, pemasok dan rantai pasok pertanian.'],
+        ['dimension'=>'E', 'indicator_id'=>'E1', 'indicator_name'=>'Asesmen risiko rantai pasok pertanian', 'definition'=>'Mengukur kemampuan perusahaan mengidentifikasi risiko iklim yang memengaruhi petani, pemasok, dan rantai pasok pertanian.'],
+        ['dimension'=>'E', 'indicator_id'=>'E2', 'indicator_name'=>'Program kemitraan petani kecil', 'definition'=>'Mengukur kontribusi perusahaan dalam meningkatkan kapasitas, produktivitas, dan ketahanan petani kecil terhadap perubahan iklim.'],
         ['dimension'=>'E', 'indicator_id'=>'E3', 'indicator_name'=> 'Strategi transisi adil (just transition)', 'definition'=>'Mengukur komitmen perusahaan dalam memastikan transisi menuju ekonomi rendah karbon berlangsung secara adil bagi pekerja dan kelompok yang terdampak.'],
         ['dimension'=>'E', 'indicator_id'=>'E4', 'indicator_name'=> 'Investasi sosial untuk resiliensi komunitas', 'definition'=>'Mengukur kontribusi perusahaan dalam meningkatkan kemampuan komunitas lokal untuk beradaptasi dan pulih dari dampak perubahan iklim.'],
         ['dimension'=>'E', 'indicator_id'=>'E5', 'indicator_name'=> 'Mekanisme keluhan & partisipasi publik', 'definition'=>'Mengukur efektivitas sistem perusahaan dalam menerima, menindaklanjuti dan mengintegrasikan masukan masyarakat terkait isu lingkungan dan iklim.'],
