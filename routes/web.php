@@ -29,12 +29,10 @@ Route::get('/assessments/{assessment}/report', [AssessmentController::class, 're
 
 // infrastruktur
 Route::get('/assessments/infrastructure', [InfrastructureController::class, 'index'])->name('infrastructure.input');
-
 Route::post('/assessments/infrastructure', [InfrastructureController::class, 'save'])->name('infrastructure.save');
 
 // manufaktur
 Route::get('/assessments/manufacturing', [ManufacturingController::class, 'index'])->name('manufacturing.input');
-
 Route::post('/assessments/manufacturing', [ManufacturingController::class, 'save'])->name('manufacturing.save');
 
 // agrikultur

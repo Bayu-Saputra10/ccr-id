@@ -41,6 +41,10 @@
                         <th>Sumber Data Utama</th>
                         <td>{{ $assessment->data_source }}</td>
                     </tr>
+                    <tr>
+                        <th>Catatan</th>
+                        <td>{{ $assessment->notes }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -246,6 +250,13 @@
                     {{ $averages['C'] }},
                     {{ $averages['D'] }},
                     {{ $averages['E'] }}
+                ],
+                pointBackgroundColor: [
+                '#a7c7e7',
+                '#b7e4c7',
+                '#fde2a7',
+                '#f8c8c8',
+                '#d8c4f1'
                 ]
             }]
         },
@@ -271,7 +282,23 @@
                     {{ $averages['C'] }},
                     {{ $averages['D'] }},
                     {{ $averages['E'] }},
-                ]
+                ],
+                backgroundColor: [
+                    '#a7c7e7',
+                    '#b7e4c7',
+                    '#fde2a7',
+                    '#f8c8c8',
+                    '#d8c4f1'
+                ],
+                borderColor: [
+                '#6ea8d7',
+                '#7bc69d',
+                '#f4c95d',
+                '#e5985d',
+                '#b497d6'
+                ],
+                borderWidth:2,
+                borderRadius:8
             }]
         },
         options: {

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('indicator_id');
             $table->integer('score');
             $table->integer('evidence');
-            $table->longText('note');
+            $table->longText('note')->nullable();
 
             $table->timestamps();
         });

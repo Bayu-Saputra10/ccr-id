@@ -35,7 +35,8 @@ class AssessmentController extends Controller
             'assessment_date' => 'required',
             'entry_operator' => 'required',
             'data_source' => 'required|array|min:1',
-            'data_source.*' => 'string'
+            'data_source.*' => 'string',
+            'notes' => 'nullable|string',
         ]);
 
         session([
@@ -97,6 +98,53 @@ class AssessmentController extends Controller
 
         return redirect()->route('assessments.report', $assessment->id);
     }
+
+    public function edit(Assessment $assessment)
+{
+    return view('assessments.create', compact('assessment'));
+}
+
+public function update(Request $request, Assessment $assessment)
+{
+    $request->validate([
+        'sector' => 'required',
+        'company_name' => 'required',
+        'subsector' => 'required',
+        'address' => 'required',
+        'assessment_date' => 'required',
+        'entry_operator' => 'required',
+        'data_source' => 'required|array|min:1',
+        'data_source.*' => 'string',
+        'notes' => 'nullable|string',
+    ]);
+
+    $assessment->update([
+        'sector' => $request->sector,
+        'company_name' => $request->company_name,
+        'subsector' => $request->subsector,
+        'address' => $request->address,
+        'assessment_date' => $request->assessment_date,
+        'entry_operator' => $request->entry_operator,
+        'data_source' => implode(', ', $request->data_source),
+        'notes' => $request->notes,
+    ]);
+
+    return redirect()->route(
+    strtolower($assessment->sector).'.input',
+    $assessment->id
+);
+}
+
+public function destroy(Assessment $assessment)
+{
+    AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
+
+    $assessment->delete();
+
+    return redirect()
+        ->route('assessments.index')
+        ->with('success', 'Data berhasil dihapus.');
+}
 
     public function report(Assessment $assessment) {
         $answers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();

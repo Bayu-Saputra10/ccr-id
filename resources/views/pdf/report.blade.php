@@ -185,6 +185,21 @@ Data Source
 </td>
 
 </tr>
+<tr>
+
+<th>
+
+Catatan
+
+</th>
+
+<td>
+
+{{ $assessment->notes }}
+
+</td>
+
+</tr>
 
 </table>
 

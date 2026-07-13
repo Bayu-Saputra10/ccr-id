@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('assessment_date');
             $table->string('entry_operator');
             $table->longText('data_source');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->string('logo')->nullable();
             
             $table->timestamps();

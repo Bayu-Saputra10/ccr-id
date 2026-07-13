@@ -61,4 +61,9 @@ class Assessment extends Model
         };
     }
 
+    public function answers()
+{
+    return $this->hasMany(AssessmentAnswer::class);
+}
+
 }
