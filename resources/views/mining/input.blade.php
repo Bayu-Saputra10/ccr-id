@@ -63,10 +63,10 @@
                         <div class="mt-2">
                             <a href="{{ asset('storage/'.optional($indicator->answer)->evidence_file) }}" class="btn btn-sm btn-outline-primary" target="_blank">
                                 <i class="bi bi-paperclip">Lihat File</i>
-                                <small class="text-muted">
+                            </a>
+                            <small class="text-muted">
                                     Format: PDF, JPG, JPEG, PNG<br>Maksimal ukuran file: <strong>2 MB</strong>
                                 </small>
-                            </a>
                         </div>
                         @endif
                     </td>
