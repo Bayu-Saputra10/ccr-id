@@ -68,7 +68,7 @@
                 html:`<div style="text-align:left">
                     <p>Masih terdapat indikator yang belum lengkap.</p>
                     <ul style="max-height:250px;overflow-y:auto">
-                        @foreach (session('validationErrors') as $Error)
+                        @foreach (session('validationErrors') as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                         </ul>
@@ -86,7 +86,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sector = document.getElementById('sector');
             const subsector = document.getElementById('subsector');
-            const oldSubsector = "{{ old('subsector') }}";
+            const oldSubsector = "{{ old('subsector',$assessment->subsector ?? '') }}";
 
             function loadSubsector() {
                 if (!sector.value) {

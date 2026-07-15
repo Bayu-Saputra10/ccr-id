@@ -11,7 +11,12 @@
                 </div>
 
                 <div class="card-body p-2 m-3">
+                    @if (isset($assessment))
+                        <form action="{{ route('assessments.update',$assessment->id) }}" method="POST">
+                            @method('PUT')
+                    @else
                     <form action="{{ route('assessments.store') }}" method="POST">
+                    @endif
                         @csrf
                     <div class="border rounded-3 bg-white p-3 mb-3">
                         <h5 class="fw-bold text-primary mb-3">Informasi Assessment</h5>
@@ -21,11 +26,11 @@
                                 <label class="form-label fw-semibold">Sektor<span class="text-danger">*</span></label>
                                 <select name="sector" id="sector" class="form-select" required>
                                     <option value="" selected disabled>Pilih Sektor</option>
-                                    <option value="infrastructure" {{ old('sector')=='infrastructure'?'selected':'' }}>Infrastruktur</option>
-                                    <option value="manufacturing" {{ old('sector')=='manufacturing'?'selected':'' }}>Manufaktur</option>
-                                    <option value="agriculture" {{ old('sector')=='agriculture'?'selected':'' }}>Agrikultur</option>
-                                    <option value="finance" {{ old('sector')=='finance'?'selected':'' }}>Keuangan</option>
-                                    <option value="mining" {{ old('sector')=='mining'?'selected':'' }}>Energi & Pertambangan</option>
+                                    <option value="infrastructure" {{ old('sector',$assessment->sector ?? '')=='infrastructure'?'selected':'' }}>Infrastruktur</option>
+                                    <option value="manufacturing" {{ old('sector',$assessment->sector ?? '')=='manufacturing'?'selected':'' }}>Manufaktur</option>
+                                    <option value="agriculture" {{ old('sector',$assessment->sector ?? '')=='agriculture'?'selected':'' }}>Agrikultur</option>
+                                    <option value="finance" {{ old('sector',$assessment->sector ?? '')=='finance'?'selected':'' }}>Keuangan</option>
+                                    <option value="mining" {{ old('sector',$assessment->sector ?? '')=='mining'?'selected':'' }}>Energi & Pertambangan</option>
                                 </select>
                             </div>
                         {{-- Subsektor --}}
@@ -38,7 +43,7 @@
                             {{-- Tanggal --}}
                             <div class="col-lg-4">
                                 <label class="form-label fw-semibold">Tanggal Penilaian<span class="text-danger">*</span></label>
-                                <input type="date" name="assessment_date" class="form-control" value="{{ old('assessment_date') }}" required>
+                                <input type="date" name="assessment_date" class="form-control" value="{{ old('assessment_date', $assessment->assessment_date ?? '') }}" required>
                             </div>
                         </div>
                     </div>
@@ -48,27 +53,27 @@
                         {{-- Nama Perusahaan --}}
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Nama Perusahaan<span class="text-danger">*</span></label>
-                            <input type="text" name="company_name" class="form-control" value="{{ old('company_name') }}" required>
+                            <input type="text" name="company_name" class="form-control" value="{{ old('company_name', $assessment->company_name ?? '') }}" required>
                         </div>
 
                         {{-- Alamat --}}
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Alamat<span class="text-danger">*</span></label>
-                            <textarea name="address" rows="2" class="form-control" required>{{ old('address') }}</textarea>
+                            <textarea name="address" rows="2" class="form-control" required>{{ old('address', $assessment->address ?? '') }}</textarea>
                         </div>
 
                         <div class="row g-4">
                             {{-- Operator --}}
                                 <div class="col-lg-6">
                                     <label class="form-label fw-semibold">Penginput Data<span class="text-danger">*</span></label>
-                                    <input type="text" name="entry_operator" class="form-control" value="{{ old('entry_operator') }}" required>
+                                    <input type="text" name="entry_operator" class="form-control" value="{{ old('entry_operator', $assessment->entry_operator ?? '') }}" required>
                                 </div>
 
                             {{-- Sumber Data --}}
                             <div class="col-lg-6">
                                 <label class="form-label fw-semibold">Sumber Data Utama<span class="text-danger">*</span></label>
                                 @php
-                                    $oldSources = old('data_sources', []);
+                                    $oldSources = old('data_sources', isset($assessment) ? explode(', ',$assessment->data_source) : []);
                                 @endphp
                                 <div class="border rounded-3 bg-white p-2">
                                     <div class="form-check mb-1">
@@ -90,14 +95,17 @@
                         {{-- Catatan --}}
                         <div class="mt-4">
                             <label class="form-label fw-semibold">Catatan</label>
-                            <textarea name="notes" rows="3" class="form-control">{{ old('notes') }}</textarea>
+                            <textarea name="notes" rows="3" class="form-control">{{ old('notes', $assessment->notes ?? '') }}</textarea>
                         </div>
                     </div>
 
                        <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary">Selanjutnya</button>
+                        @if (isset($assessment))
+                            <button class="btn btn-primary">Update & Lanjut</button>
+                        @else
+                            <button class="btn btn-primary">Selanjutnya</button>
+                        @endif
                        </div>
-
                     </form>
                 </div>
             </div>

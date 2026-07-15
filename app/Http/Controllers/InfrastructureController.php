@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Assessment;
 use App\Models\Infrastructure;
 use App\Models\AssessmentAnswer;
@@ -10,21 +11,25 @@ use App\Services\CCRAMCalculatorService;
 
 class InfrastructureController extends Controller
 {
-    public function index() {
-        $assessment = session('assessment_data');
-        $assessment = (object) $assessment;
-        if (!$assessment) {
-            return redirect()->route('assessments.create');
-        }
+    public function index(Assessment $assessment) {
+        $indicators = Infrastructure::with(['scores', 'evidences'])->orderBy('dimension')->orderBy('indicator_id')->get();
 
-        $indicators = Infrastructure::with([
-            'scores', 'evidences'
-        ])->orderBy('dimension')->orderBy('indicator_id')->get();
+        $answers = AssessmentAnswer::where(
+            'assessment_id', $assessment->id
+        )->get()->keyBy('indicator_id');
+
+        foreach ($indicators as $indicator){
+            $indicator->answer = $answers[$indicator->id] ?? null;
+        }
 
         return view('infrastructure.input', compact('assessment', 'indicators'));
     }
 
-    public function save(Request $request) {
+    public function save(Request $request, Assessment $assessment) {
+        $request->validate([
+            'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
         $indicators = Infrastructure::orderBy('indicator_id')->get();
 
         $errors = [];
@@ -43,15 +48,31 @@ class InfrastructureController extends Controller
             return back()->withInput()->with('validationErrors', $errors);
         }
 
-        $data = session('assessment_data');
-        $assessment = Assessment::create($data);
+        $oldAnswers = AssessmentAnswer::where('assessment_id',$assessment->id)->get()->keyBy('indicator_id');
+        
+        AssessmentAnswer::where('assessment_id',$assessment->id)->delete();
 
         foreach ($request->score as $indicatorId => $score) {
+            $oldAnswer = $oldAnswers[$indicatorId] ?? null;
+            $filePath = $oldAnswer?->evidence_file; 
+
+            if ($request->hasFile("evidence_file.$indicatorId")) {
+                if ($oldAnswer && $oldAnswer->evidence_file && Storage::disk('public')->exists($oldAnswer->evidence_file)) {
+                    Storage::disk('public')->delete($oldAnswer->evidence_file);
+                }
+                $uploadedFile = $request->file("evidence_file.$indicatorId");
+
+                $fileName = $indicatorId.'_'.time().'_'.preg_replace('/[^A-Za-z0-9._-]/','_',$uploadedFile->getClientOriginalName());
+
+                $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
+            }
+
             AssessmentAnswer::create([
                 'assessment_id' => $assessment->id,
                 'indicator_id' => $indicatorId,
                 'score' => $score,
                 'evidence' => $request->evidence[$indicatorId],
+                'evidence_file' => $filePath,
                 'note' => $request->note[$indicatorId] ?? null
             ]);
         }
@@ -60,7 +81,9 @@ class InfrastructureController extends Controller
 
         $assessment->update($result);
 
-        session()->forget('assessment_data');
+        $assessment->status = 'completed';
+        $assessment->save();
+
         return redirect()->route('assessments.report', $assessment->id);
     }
 }

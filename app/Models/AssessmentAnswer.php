@@ -11,6 +11,7 @@ class AssessmentAnswer extends Model
         'indicator_id',
         'score',
         'evidence',
+        'evidence_file',
         'note'
     ];
 

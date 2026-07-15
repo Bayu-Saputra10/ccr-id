@@ -40,8 +40,9 @@ class Assessment extends Model
         'recommendation_category',
         'management_recommendation',
         'action_focus',
-
         'management_recommendation',
+        
+        'status',
     ];
 
     public function details() {

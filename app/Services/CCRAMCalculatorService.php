@@ -206,21 +206,13 @@ class CCRAMCalculatorService
             'grade' => $rating['grade'],
             'category' => $rating['category'],
             'interpretation_grade' => $rating['interpretation_grade'],
-
             'interpretation' => $interpretation ? $interpretation->description : null,
-
             'strongest_dimension' => $strongestDimension,
-
             'weakest_dimension' => $weakestDimension,
-
             'next_grade' => $gapInfo['next_grade'],
-
             'gap_to_next_grade' => $gapInfo['gap'],
-
             'improvement_priority' => $priority,
-
             'management_recommendation' => $recommendation ? $recommendation->management_recommendation : null,
-
             'dimension_performance' => $dimensionPerformance
         ];
     }

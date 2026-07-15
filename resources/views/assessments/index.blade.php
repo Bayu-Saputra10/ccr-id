@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="card">
 
     <div class="card-header d-flex justify-content-between">
@@ -21,6 +20,7 @@
                     <th>Score D</th>
                     <th>Score E</th>
                     <th>Total Score</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -31,43 +31,47 @@
                     <td>{{ $assessment->company_name }}</td>
                     <td>{{ $assessment->sector_name }}</td>
                     <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
-                    <td>{{ number_format($assessment->score_a ?? 0,2) }}</td>
-                    <td>{{ number_format($assessment->score_b ?? 0,2) }}</td>
-                    <td>{{ number_format($assessment->score_c ?? 0,2) }}</td>
-                    <td>{{ number_format($assessment->score_d ?? 0,2) }}</td>
-                    <td>{{ number_format($assessment->score_e ?? 0,2) }}</td>
+                    <td>{{ $assessment->status=='completed' ? number_format($assessment->score_a,2) : '-' }}</td>
+                    <td>{{ $assessment->status=='completed' ? number_format($assessment->score_b,2) : '-' }}</td>
+                    <td>{{ $assessment->status=='completed' ? number_format($assessment->score_c,2) : '-' }}</td>
+                    <td>{{ $assessment->status=='completed' ? number_format($assessment->score_d,2) : '-' }}</td>
+                    <td>{{ $assessment->status=='completed' ? number_format($assessment->score_e,2) : '-' }}</td>
+                    <td><strong>{{ $assessment->status=='completed' ? number_format($assessment->total_score,2) : '-' }}</strong></td>
                     <td>
-                        <strong>{{ number_format($assessment->total_score ?? 0,2) }}</strong>
+                        @if($assessment->status=='completed')
+                        <span class="badge bg-success">Completed</span>
+                        @else
+                        <span class="badge bg-warning text-dark">Draft</span>
+                        @endif
                     </td>
-                    <td><a href="{{ route('assessments.report', $assessment->id) }}"
-                            class="btn btn-success btn-sm">Report</a>
-                            {{-- <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil-square"></i>
-                            </a> --}}
-{{-- <form
-action="{{ route('assessments.destroy',$assessment->id) }}"
-method="POST"
-class="d-inline">
+                    <td>
+                        @if ($assessment->status=='completed')
+                        <a href="{{ route('assessments.report', $assessment->id) }}" class="btn btn-success btn-sm">
+                            Report
+                        </a>
+                        @endif
 
-@csrf
-
-@method('DELETE')
-
-<button
-type="submit"
-class="btn btn-danger btn-sm"
-onclick="return confirm('Yakin ingin menghapus assessment ini?')">
-
-<i class="bi bi-trash"></i>
-
-</button>
-
-</form> --}}
+                        @if ($assessment->status=='draft')
+                            <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i> Lanjutkan
+                            </a>
+                        @else
+                            <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                        @endif
+                        <form action="{{ route('assessments.destroy',$assessment->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus assessment ini?')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="11" class="text-center">No Assessment Found</td>
+                    <td colspan="12" class="text-center">No Assessment Found</td>
                 </tr>
             @endforelse
             </tbody>

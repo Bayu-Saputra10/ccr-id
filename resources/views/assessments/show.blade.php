@@ -214,6 +214,7 @@
                             <th>Indicator Name</th>
                             <th>Score</th>
                             <th>Sumber Bukti</th>
+                            <th width="220">Dokumen Pendukung</th>
                             <th>Catatan</th>
                         </tr>
                     </thead>
@@ -228,6 +229,27 @@
                                     {{ $answer->score_description }}
                                 </td>
                                 <td>{{ $answer->evidence_description }}</td>
+                                <td>
+                                    @if ($answer->evidence_file)
+                                        @php
+                                            $extension = strtolower(pathinfo($answer->evidence_file, PATHINFO_EXTENSION));
+                                            $isImage = in_array($extension, ['jpg','jpeg','png']);
+                                        @endphp
+
+                                        @if ($isImage)
+                                            <i class="bi bi-image text-success"></i>
+                                        @elseif ($extension === 'pdf')
+                                            <i class="bi bi-file-earmark-pdf text-danger"></i>
+                                        @endif
+                                        {{ preg_replace('/^\d+_\d+_/', '', basename($answer->evidence_file)) }}
+                                        <br>
+                                        <a href="{{ asset('storage/'.$answer->evidence_file) }}" class="btn btn-sm btn-outline-primary mt-1" target="_blank">
+                                            <i class="bi bi-eye"></i> Lihat File
+                                        </a>
+                                    @else
+                                        <span class="badge bg-secondary">Tidak diupload</span>
+                                    @endif
+                                </td>
                                 <td>{{ $answer->note }}</td>
                             </tr>
                         @endforeach

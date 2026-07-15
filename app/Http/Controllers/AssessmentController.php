@@ -16,6 +16,39 @@ use App\Models\ManagementRecommendation;
 
 class AssessmentController extends Controller
 {
+    // penulisan route
+    private function getSectorConfig(string $sector): array{
+        $sector = strtolower($sector);
+        return match ($sector){
+            'infrastructure' => [
+                'controller'=>'infrastructure',
+                'model'=>\App\Models\Infrastructure::class,
+                'view'=>'infrastructure.input',
+            ],
+            'manufacturing' => [
+                'controller'=>'manufacturing',
+                'model'=>\App\Models\Manufacturing::class,
+                'view'=>'manufacturing.input',
+            ],
+            'agriculture' => [
+                'controller'=>'agriculture',
+                'model'=>\App\Models\Agriculture::class,
+                'view'=>'agriculture.input',
+            ],
+            'finance' => [
+                'controller'=>'agriculture',
+                'model'=>\App\Models\Finance::class,
+                'view'=>'finance.input',
+            ],
+            'mining' => [
+                'controller'=>'mining',
+                'model'=>\App\Models\Mining::class,
+                'view'=>'mining.input',
+            ],
+            default => abort(404)
+        };
+    }
+
     public function index () {
         $assessments = Assessment::orderBy('created_at', 'desc')->get();
 
@@ -39,8 +72,7 @@ class AssessmentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        session([
-            'assessment_data' => [
+        $assessment = Assessment::create([
             'sector' => $request->sector,
             'company_name' => $request->company_name,
             'subsector' => $request->subsector,
@@ -48,13 +80,15 @@ class AssessmentController extends Controller
             'assessment_date' => $request->assessment_date,
             'entry_operator' => $request->entry_operator,
             'data_source' => implode(', ', $request->data_source),
-            'notes' => $request->notes
-            ]
+            'notes' => $request->notes,
+            'status' => 'draft'
         ]);
+
+        $config = $this->getSectorConfig($request->sector);
 
         // pilihan sektor
         return redirect()->route(
-            strtolower($request->sector). '.input'
+            $config['controller'].'.input', $assessment->id
         );
     }
 
@@ -99,41 +133,40 @@ class AssessmentController extends Controller
         return redirect()->route('assessments.report', $assessment->id);
     }
 
-    public function edit(Assessment $assessment)
-{
-    return view('assessments.create', compact('assessment'));
-}
+    public function edit(Assessment $assessment){
+        $config = $this->getSectorConfig($assessment->sector);
+        return view('assessments.create', [
+            'assessment' => $assessment, 'edit' => true,
+        ]);
+    }
 
-public function update(Request $request, Assessment $assessment)
-{
-    $request->validate([
-        'sector' => 'required',
-        'company_name' => 'required',
-        'subsector' => 'required',
-        'address' => 'required',
-        'assessment_date' => 'required',
-        'entry_operator' => 'required',
-        'data_source' => 'required|array|min:1',
-        'data_source.*' => 'string',
-        'notes' => 'nullable|string',
-    ]);
+    public function update(Request $request, Assessment $assessment){
+        $request->validate([
+            'sector' => 'required',
+            'company_name' => 'required',
+            'subsector' => 'required',
+            'address' => 'required',
+            'assessment_date' => 'required',
+            'entry_operator' => 'required',
+            'data_source' => 'required|array|min:1',
+            'data_source.*' => 'string',
+            'notes' => 'nullable|string',
+        ]);
 
-    $assessment->update([
-        'sector' => $request->sector,
-        'company_name' => $request->company_name,
-        'subsector' => $request->subsector,
-        'address' => $request->address,
-        'assessment_date' => $request->assessment_date,
-        'entry_operator' => $request->entry_operator,
-        'data_source' => implode(', ', $request->data_source),
-        'notes' => $request->notes,
-    ]);
-
-    return redirect()->route(
-    strtolower($assessment->sector).'.input',
-    $assessment->id
-);
-}
+        $assessment->update([
+            'sector' => $request->sector,
+            'company_name' => $request->company_name,
+            'subsector' => $request->subsector,
+            'address' => $request->address,
+            'assessment_date' => $request->assessment_date,
+            'entry_operator' => $request->entry_operator,
+            'data_source' => implode(', ', $request->data_source),
+            'notes' => $request->notes
+        ]);
+        return redirect()->route(
+            strtolower($assessment->sector).'.input', $assessment->id
+        );
+    }
 
 public function destroy(Assessment $assessment)
 {
@@ -160,6 +193,7 @@ public function destroy(Assessment $assessment)
 
             foreach ($answers as $answer) {
                 $indicator = $indicatorModel::find($answer->indicator_id);
+                $answer->file_name = $answer->evidence_file ? basename($answer->evidence_file) : null;
 
                 if ($indicator && $indicator->dimension == $dimension) {
                     $scores[] = $answer->score;
