@@ -27,9 +27,12 @@ class ManufacturingController extends Controller
 
     public function save(Request $request, Assessment $assessment) {
         $request->validate([
-            'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ],[
+            'evidence_file.*.max' => 'Ukuran file maksimal 2 MB.',
+            'evidence_file.*.mimes' => 'Format file harus PDF, JPG, JPEG atau PNG.',
         ]);
-
+        
         $indicators = Manufacturing::orderBy('indicator_id')->get();
 
         $errors = [];
