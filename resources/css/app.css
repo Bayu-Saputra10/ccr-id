@@ -129,8 +129,7 @@ html, body{
     display: flex;
 }
 .login-left-content{
-    max-width: 520px;
-    transform: translateY(-20px);
+    max-width: 560px;
 }
 .login-logo{
     width: 110px;
@@ -143,32 +142,32 @@ html, body{
     box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
 }
 .login-title{
-    font-size: 30px;
+    font-size: clamp(28px, 2vw, 34px);
     font-weight: 700;
     color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    white-space: nowrap;
 }
 .login-line{
-    width: 65px;
+    width: 90px;
     height: 4px;
     background: #fff;
-    margin-bottom: 28px;
-    border-radius: 20px;
+    margin: 18px 0 20px;
+    border-radius: 10px;
 }
 .login-desc{
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 14px;
     color: rgba(255, 255, 255, .88);
-    line-height: 1.9;
-    max-width: 500px;
     text-align: justify;
 }
 .login-tagline{
-    margin-top: 32px;
-    font-size: 24px;
+    margin-top: 22px;
+    font-size: 22px;
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.4;
     color: #fff;
-    max-width: 420px;
 }
 .login-right{
     background: #fff;
@@ -181,7 +180,7 @@ html, body{
     width: 100%;
     max-width: 430px;
 }
-.login-logo-small{
+/* .login-logo-small{
     width: 70px;
     height: 70px;
     object-fit: contain;
@@ -190,7 +189,7 @@ html, body{
     border-radius: 18px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
     margin-bottom: 28px;
-}
+} */
 .login-logo-right{
     width: 120px;
     display: block;

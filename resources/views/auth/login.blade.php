@@ -17,7 +17,8 @@
                     Platform ini mengubah informasi terkait tata kelola, strategi, manajemen risiko, adaptasi, dan mitigasi menjadi Climate Resilience Score, Maturity Level, serta rekomendasi strategis yang mendukung pengambilan keputusan dan peningkatan kinerja keberlanjutan perusahaan.
                 </p>
                 <div class="login-tagline">
-                    One Platform. One Assessment. Stronger Climate Resilience.
+                    One Platform. One Assessment. <br>
+                    Stronger Climate Resilience.
                 </div>
             </div>
         </div>
