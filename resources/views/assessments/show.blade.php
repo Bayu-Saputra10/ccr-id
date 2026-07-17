@@ -2,260 +2,288 @@
 @section('content')
 
 <div class="card-body">
-    
-    {{-- tombol pdf --}}
-    <form action="{{ route('assessment.pdf',$assessment->id) }}" method="POST" id="pdfForm">
-        @csrf
-        <input type="hidden" name="radarImage" id="radarImage">
-        <input type="hidden" name="barImage" id="barImage">
-        <button class="btn btn-danger">Export PDF</button>
-    </form>
 
-    {{-- row 1 --}}
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-header bg-primary text-white">Profil Perusahaan</div>
-                <table class="table table-sm table-bordered mb-0">
-                    <tr>
-                        <th>Nama Perusahaan</th>
-                        <td>{{ $assessment->company_name }}</td>
-                    </tr>
-                    <tr>
-                        <th>Sektor</th>
-                        <td>{{ $assessment->sector_name }}</td>
-                    </tr>
-                    <tr>
-                        <th>Subsektor</th>
-                        <td>{{ $assessment->subsector }}</td>
-                    </tr>
-                    <tr>
-                        <th>Tanggal Penilaian</th>
-                        <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Penginput Data</th>
-                        <td>{{ $assessment->entry_operator }}</td>
-                    </tr>
-                    <tr>
-                        <th>Sumber Data Utama</th>
-                        <td>{{ $assessment->data_source }}</td>
-                    </tr>
-                    <tr>
-                        <th>Catatan</th>
-                        <td>{{ $assessment->notes }}</td>
-                    </tr>
-                </table>
+    <div class="container-fluid">
+        {{-- header --}}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-0">Climate Resilience Report</h3>
+                <small class="text-muted">
+                    {{ $assessment->company_name }} * {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}
+                </small>
             </div>
+            <form action="{{ route('assessment.pdf',$assessment->id) }}" method="POST" id="pdfForm">
+                @csrf
+                <input type="hidden" name="radarImage" id="radarImage">
+                <input type="hidden" name="barImage" id="barImage">
+                <button class="btn btn-danger">
+                    <i class="fa-sharp fa-solid fa-file-export"></i> Export PDF
+                </button>
+            </form>
         </div>
-
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-header bg-primary text-white">Climate Resilience Rating</div>
-                <div class="card-body text-center">
-                    <h1 class="display-2 fw-bold text-primary">{{ $assessment->grade }}</h1>
-                    <h2>{{ number_format($assessment->total_score,0) }}</h2>
-                    <hr>
-                    <span class="badge bg-success fs-6">{{ $assessment->category }}</span>
-                    <br><br>
-                    {{ $assessment->interpretation_grade }}
+        {{-- card --}}
+        <div class="row g-3 mb-4">
+            <div class="col-lg-3">
+                <div class="summary-card">
+                    <small>Total Score</small>
+                    <h2>{{ number_format($assessment->total_score,2) }}</h2>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="summary-card">
+                    <small>Climate Grade</small>
+                    <h2>{{ ($assessment->grade) }}</h2>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="summary-card">
+                    <small>Dimensi Terkuat</small>
+                    <h2>{{ ($assessment->strongest_dimension) }}</h2>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="summary-card">
+                    <small>Dimensi Terlemah</small>
+                    <h2>{{ ($assessment->weakest_dimension) }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-header bg-primary text-white">Executive Snapshot</div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Dimensi Terkuat</th>
-                            <td class="text-center fw-bold fs-3">{{ $assessment->strongest_dimension }}</td>
-                        </tr>
-                        <tr>
-                            <th>Dimensi Terlemah</th>
-                            <td class="text-center fw-bold fs-3">{{ $assessment->weakest_dimension }}</td>
-                        </tr>
-                    </table>
-                    <canvas id="radarChart"></canvas>
+        {{-- row 1 --}}
+        <div class="row g-4 mb-4">
+            {{-- profil --}}
+            <div class="col-lg-6">
+                <div class="card report-card h-100">
+                    <div class="card-header report-header">
+                        Profil Perusahaan
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table profile-table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>Perusahaan</th>
+                                    <td>{{ $assessment->company_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sektor</th>
+                                    <td>{{ $assessment->sector_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Subsektor</th>
+                                    <td>{{ $assessment->subsector }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tahun Penilaian</th>
+                                    <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Penginput Data</th>
+                                    <td>{{ $assessment->entry_operator }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sumber Data</th>
+                                    <td>{{ $assessment->data_source }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Catatan</th>
+                                    <td>{{ $assessment->notes ?: '-' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {{-- score dimensi --}}
+            <div class="col-lg-6">
+                <div class="card report-card h-100">
+                    <div class="card-header report-header">
+                        CCRAM Dimension Score  
+                    </div>
+                    <div class="card-body">
+                        <table class="table dashboard-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Dimension</th>
+                                    <th>Average Score</th>
+                                    <th>Weight</th>
+                                    <th>weighted Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A</td>
+                                    <td>{{ number_format($averages['A'],2) }}</td>
+                                    <td>20%</td>
+                                    <td>{{ number_format($assessment->score_a,2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>B</td>
+                                    <td>{{ number_format($averages['B'],2) }}</td>
+                                    <td>25%</td>
+                                    <td>{{ number_format($assessment->score_b,2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>C</td>
+                                    <td>{{ number_format($averages['C'],2) }}</td>
+                                    <td>20%</td>
+                                    <td>{{ number_format($assessment->score_c,2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>D</td>
+                                    <td>{{ number_format($averages['D'],2) }}</td>
+                                    <td>25%</td>
+                                    <td>{{ number_format($assessment->score_d,2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>E</td>
+                                    <td>{{ number_format($averages['E'],2) }}</td>
+                                    <td>10%</td>
+                                    <td>{{ number_format($assessment->score_e,2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- row 2 --}}
+        <div class="row g-4 mb-4">
+            {{-- hasil rating --}}
+            <div class="col-lg-12">
+                <div class="card report-card h-100">
+                    <div class="card-header report-header">
+                        CCRAM Rating Result
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table profile-table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>Grade</th>
+                                    <td><strong>{{ $assessment->grade }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <td>{{ $assessment->category }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gap Grade</th>
+                                    <td>{{ $assessment->gap_to_next_grade }} poin menuju Grade {{ $assessment->next_grade }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Priority</th>
+                                    <td>{{ $assessment->improvement_priority }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Interpretation</th>
+                                    <td>{{ $assessment->interpretation }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- row 3 --}}
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="card report-card h-100">
+                    <div class="card-header report-header">
+                        Dimension Performance
+                    </div>
+                    <div class="card-body">
+                        @foreach ($dimensionPerformance as $row)
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                            <strong>{{ $row['dimension'] }} - {{ $row['dimension_name'] }}</strong>
+                            <span>{{ number_format($row['avg_score'],2) }}/5</span>
+                        </div>
+                        <div class="progress" role="progressbar" style="height: 12px;">
+                            <div class="progress-bar" style="width: {{ ($row['avg_score']/5)*100 }}%;"></div>
+                        </div>
+                        <small class="text-muted">
+                        <strong>Weighted Score: {{ number_format($row['weighted_score'],2) }}</strong> <br> {{ $row['automatic_interpretation'] }}</small>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-
-        {{-- row 2 --}}
-        <div class="row mb-3">
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">CCRAM Dimension Score</div>
-                    <table class="table table-sm table-bordered mb-0">
-                        <thead>
-                            <tr>
-                                <th>Dimensi</th>
-                                <th>Average Score</th>
-                                <th>Bobot</th>
-                                <th>Weighted Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>A</td>
-                                <td>{{ $averages['A'] }}</td>
-                                <td>20%</td>
-                                <td>{{ $assessment->score_a }}</td>
-                            </tr>
-                            <tr>
-                                <td>B</td>
-                                <td>{{ $averages['B'] }}</td>
-                                <td>25%</td>
-                                <td>{{ $assessment->score_b }}</td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>{{ $averages['C'] }}</td>
-                                <td>20%</td>
-                                <td>{{ $assessment->score_c }}</td>
-                            </tr>
-                            <tr>
-                                <td>D</td>
-                                <td>{{ $averages['D'] }}</td>
-                                <td>25%</td>
-                                <td>{{ $assessment->score_d }}</td>
-                            </tr>
-                            <tr>
-                                <td>E</td>
-                                <td>{{ $averages['E'] }}</td>
-                                <td>10%</td>
-                                <td>{{ $assessment->score_e }}</td>
-                            </tr>
-                            <tr class="table-success">
-                                <th colspan="3">Total Score</th>
-                                <th>{{ $assessment->total_score }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">CCRAM Rating Result</div>
-                    <table class="table table-sm table-bordered mb-0">
-                        <tr>
-                            <th width="250">Grade</th>
-                            <td>{{ $assessment->grade }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250">Category</th>
-                            <td>{{ $assessment->category }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250">Gap Grade</th>
-                            <td>
-                                {{ $assessment->gap_to_next_grade }} poin menuju Grade {{ $assessment->next_grade }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th width="250">Prioritas Perbaikan</th>
-                            <td>{{ $assessment->improvement_priority }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250">Management Recommendation</th>
-                            <td>{{ $assessment->management_recommendation }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250">Sector Interpretation</th>
-                            <td>{{ $assessment->interpretation }}</td>
-                        </tr>
-                    </table>
+    {{-- row 4 --}}
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card report-card h-100">
+                <div class="card report-card">
+                    <div class="card-header report-header">Climate Resilience Radar</div>
+                    <div class="card-body h-100">
+                        <canvas id="radarChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-
-            <div class="card mb-3">
-                <div class="card-header bg-primary text-white">Dimension Performance</div>
-                <table class="table table-bordered table-sm mb-0">
-                    <thead>
-                        <tr>
-                            <th>Dimensi</th>
-                            <th>Nama Dimensi</th>
-                            <th>Interpretasi</th>
-                            <th>Average Score</th>
-                            <th>Weighted</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($dimensionPerformance as $row)
-                            <tr>
-                                <td>{{ $row['dimension'] }}</td>
-                                <td>{{ $row['dimension_name'] }}</td>
-                                <td>{{ $row['automatic_interpretation'] }}</td>
-                                <td>{{ number_format($row['avg_score'],2) }}</td>
-                                <td>{{ number_format($row['weighted_score'],2) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header bg-primary text-white">Assessment Detail Chart</div>
+        <div class="col-lg-6">
+            <div class="card report-card h-100">
+                <div class="card-header report-header">Assessment Detail Chart</div>
                 <div class="card-body">
-                    <canvas id="detailChart"></canvas>
+                    <div class="chart-box">
+                        <canvas id="detailChart"></canvas>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    {{-- row 5 --}}
+    <div class="card report-card">
+        <div class="card-header report-header">
+            Assessment Detail
+        </div>
+        <table class="table assessment-table mb-0">
+            <thead>
+                <tr>
+                    <th>Indicator ID</th>
+                    <th>Indicator Name</th>
+                    <th>Score</th>
+                    <th>Sumber Bukti</th>
+                    <th>Dokumen Pendukung</th>
+                    <th>Catatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($answers as $answer)
+                    <tr>
+                        <td>{{ $answer->indicator->indicator_id }}</td>
+                        <td>{{ $answer->indicator->indicator_name }}</td>
+                        <td>
+                            <strong>{{ $answer->score }}</strong>
+                            -
+                            {{ $answer->score_description }}
+                        </td>
+                        <td>{{ $answer->evidence_description }}</td>
+                        <td>
+                            @if ($answer->evidence_file)
+                                @php
+                                    $extension = strtolower(pathinfo($answer->evidence_file, PATHINFO_EXTENSION));
+                                @endphp
 
-            <div class="card">
-                <div class="card-header bg-primary text-white">Assessment Detail</div>
-                <table class="table table-bordered table-striped table-sm mb-0">
-                    <thead>
-                        <tr>
-                            <th>Indicator ID</th>
-                            <th>Indicator Name</th>
-                            <th>Score</th>
-                            <th>Sumber Bukti</th>
-                            <th width="220">Dokumen Pendukung</th>
-                            <th>Catatan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($answers as $answer)
-                            <tr>
-                                <td>{{ $answer->indicator->indicator_id }}</td>
-                                <td>{{ $answer->indicator->indicator_name }}</td>
-                                <td>
-                                    <strong>{{ $answer->score }}</strong>
-                                    -
-                                    {{ $answer->score_description }}
-                                </td>
-                                <td>{{ $answer->evidence_description }}</td>
-                                <td>
-                                    @if ($answer->evidence_file)
-                                        @php
-                                            $extension = strtolower(pathinfo($answer->evidence_file, PATHINFO_EXTENSION));
-                                            $isImage = in_array($extension, ['jpg','jpeg','png']);
-                                        @endphp
-
-                                        @if ($isImage)
-                                            <i class="bi bi-image text-success"></i>
-                                        @elseif ($extension === 'pdf')
-                                            <i class="bi bi-file-earmark-pdf text-danger"></i>
-                                        @endif
-                                        {{ preg_replace('/^\d+_\d+_/', '', basename($answer->evidence_file)) }}
-                                        <br>
-                                        <a href="{{ asset('storage/'.$answer->evidence_file) }}" class="btn btn-sm btn-outline-primary mt-1" target="_blank">
-                                            <i class="bi bi-eye"></i> Lihat File
-                                        </a>
-                                    @else
-                                        <span class="badge bg-secondary">Tidak diupload</span>
-                                    @endif
-                                </td>
-                                <td>{{ $answer->note }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                                @if ($extension=='pdf')
+                                    <span class="badge bg-danger">PDF</span>
+                                @else
+                                    <span class="badge bg-success">Image</span>
+                                @endif
+                                <br>
+                                <a href="{{ asset('storage/'.$answer->evidence_file) }}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">
+                                    <i class="bi bi-eye"></i> Lihat File
+                                </a>
+                            @else
+                                <span class="badge bg-secondary">Tidak diupload</span>
+                            @endif
+                        </td>
+                        <td>{{ $answer->note }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -283,6 +311,8 @@
             }]
         },
         options: {
+            responsive:true,
+            maintainAspectRatio:false,
             scales: {
                 r: {
                     min: 0,
@@ -291,7 +321,6 @@
             }
         }
     });
-
     const detailChart = new Chart(document.getElementById('detailChart'), {
         type: 'bar',
         data: {
@@ -325,6 +354,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio:false,
             scales: {
                 y: {
                     min: 0,
@@ -333,7 +363,6 @@
             }
         }
     });
-
     document.getElementById('pdfForm').addEventListener('submit', function() {
         document.getElementById('radarImage').value = radarChart.toBase64Image();
 

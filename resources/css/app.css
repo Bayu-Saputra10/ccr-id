@@ -69,7 +69,7 @@ body{
     padding: .8rem 1.2rem;
 }
 .card-body{
-    padding: 1.2rem;
+    padding: 18px;
 }
 .form-label{
     font-size: .92rem;
@@ -123,46 +123,52 @@ html, body{
 .login-left{
     background: #081223;
     height: 100vh;
-    padding: 80px;
+    padding: 60px;
     align-items: center;
     justify-content: center;
     display: flex;
 }
 .login-left-content{
-    width: 100%;
     max-width: 520px;
+    transform: translateY(-20px);
 }
 .login-logo{
-    width: 130px;
-    height: 130px;
+    width: 110px;
+    height: 110px;
     object-fit: contain;
     border-radius: 22px;
     background: #fff;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 22px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
-    border: 1px solid rgba(255, 255, 255, .25);
 }
 .login-title{
-    color: #fff;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -.5px;
-    margin-bottom: 20px;
+    color: #fff;
+    margin-bottom: 8px;
 }
 .login-line{
-    width: 60px;
-    height: 3px;
-    background: #0d6efd;
-    margin: 15px 0;
-    border-radius: 10px;
+    width: 65px;
+    height: 4px;
+    background: #fff;
+    margin-bottom: 28px;
+    border-radius: 20px;
 }
 .login-desc{
     font-size: 14px;
-    color: #c9d2de;
-    line-height: 1.8;
-    max-width: 510px;
+    color: rgba(255, 255, 255, .88);
+    line-height: 1.9;
+    max-width: 500px;
+    text-align: justify;
+}
+.login-tagline{
+    margin-top: 32px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #fff;
+    max-width: 420px;
 }
 .login-right{
     background: #fff;
@@ -174,6 +180,16 @@ html, body{
 .login-form{
     width: 100%;
     max-width: 430px;
+}
+.login-logo-small{
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    background: #fff;
+    padding: 8px;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
+    margin-bottom: 28px;
 }
 .login-logo-right{
     width: 120px;
@@ -231,4 +247,237 @@ html, body{
     .login-left{
         display: none;
     }
+}
+
+/* show.blade table */
+.report-table{
+    font-size: 13px;
+}
+.report-table thead th{
+    background: #0d6efd;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: .3px;
+    vertical-align: middle;
+    border: none;
+}
+.report-table td{
+    font-size: 13px;
+    vertical-align: middle;
+}
+.report-table tbody tr:hover{
+    background: #f5f9ff;
+}
+.report-table tbody tr:nth-child(even){
+    background: #fafbfc;
+}
+.report-table tbody tr{
+    border-bottom: 1px solid #edf2f7;
+}
+.report-table th, .report-table td{
+    padding: .55rem .75rem;
+}
+.report-header{
+    background: #1565d8;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+}
+.report-card{
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+    overflow: hidden;
+    height: 100%;
+}
+/* profil table */
+.profile-table{
+    margin: 0;
+    font-size: 13px;
+}
+.profile-table th{
+    width: 180px;
+    background: #f8fafc;
+    font-size: 13px;
+    font-weight: 600;
+    color: #405057;
+    vertical-align: top;
+    padding: 12px 16px;
+    border-bottom: 1px solid #edf2f7;
+}
+.profile-table td{
+    padding: 12px 16px;
+    width: 62%;
+    font-size: 13px;
+    color: #212529;
+    padding: 10px 12px;
+    word-break: break-word;
+    border-bottom: 1px solid #edf2f7;
+}
+.profile-table tr:last-child td, .profile-table tr:last-child th{
+    border-bottom: none;
+}
+
+/* show.blade */
+.summary-card{
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
+    transition: .25s;
+    min-height: 115px;
+}
+.summary-card:hover{
+    transform: translateY(-3px);
+}
+.summary-card small{
+    color: #6b7280;
+    font-size: 13px;
+}
+.summary-card h2{
+    margin-top: 10px;
+    font-size: 34px;
+    font-weight: 700;
+    color: #0d6efd;
+}
+.profile-item{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #edf2f7;
+    padding: 11px 0;
+}
+.profile-item label{
+    font-weight: 600;
+    color: #374151;
+}
+.profile-item span{
+    text-align: right;
+    color: #111827;
+}
+.dashboard-table{
+    margin: 0;
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+}
+.dashboard-table thead th{
+    background: #f8fafc;
+    color: #374151;
+    border: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.dashboard-table th{
+    text-align: center;
+    vertical-align: middle;
+}
+.dashboard-table td{
+    border: none;
+    border-bottom: 1px solid #edf2f7;
+    padding: 11px;
+    text-align: center;
+    vertical-align: middle;
+}
+.dashboard-table tbody td{
+    padding: 18px 10px;
+}
+.dashboard-table tbody tr:last-child td{
+    border: none;
+}
+.dashboard-table tbody tr:hover{
+    background: #f5f9ff;
+}
+.progress{
+    border-radius: 10px;
+    background: #edf2f7;
+}
+.progress-bar{
+    background: #0d6efd;
+    border-radius: 10px;
+}
+.assessment-table{
+    font-size: 12px;
+}
+.assessment-table thead th{
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    padding: 12px;
+}
+.assessment-table td{
+    vertical-align: middle;
+    padding: 10px;
+}
+.assessment-table tbody tr:hover{
+    background: #f8fbff;
+}
+.chart-box{
+    position: relative;
+    height: 280px;
+}
+/* index.blade table */
+.list-table{
+    font-size: 15px;
+}
+.list-table thead th{
+    background: #f8fafc;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    padding: 16px 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+.list-table tbody td{
+    padding: 18px 12px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 14px;
+}
+.list-table tbody td:nth-child(2), .list-table tbody td:nth-child(3){
+    text-align: left;
+}
+.list-table tbody tr{
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+.list-table tbody tr:hover td{
+    background: #eef5ff;
+}
+.action-btn{
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.action-btn i{
+    font-size: 15px;
+}
+/* tombol edit hapus */
+.action-icon{
+    font-size: 19px;
+    transition: .2s;
+}
+.action-edit{
+    color: #6c757d;
+}
+.action-edit:hover{
+    color: #0d6efd;
+    transform: scale(1.15);
+}
+.action-delete{
+    color: #dc3545;
+}
+.action-delete:hover{
+    color: #b02a37;
+    transform: scale(1.15);
 }

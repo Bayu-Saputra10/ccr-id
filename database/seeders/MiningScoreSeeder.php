@@ -34,7 +34,7 @@ class MiningScoreSeeder extends Seeder
             1 => 'Tidak ada komite keberlanjutan/iklim.',
             2 => 'Komite ada tetapi pasif atau tidak memiliki agenda jelas.',
             3 => 'Komite rapat minimal tahunan dan membahas isu iklim.',
-            4 => 'Komite rapat minimal tahunan dan membahas isu iklim.',
+            4 => 'Komite memberi rekomendasi berkala kepada dewan/manajemen.',
             5 => 'Komite lintas fungsi aktif dengan output, target dan hasil terukur.'
         ],
         'A4' => [

@@ -8,12 +8,16 @@
         <div class="col-lg-6 login-left">
             <div class="login-left-content">
                 <img src="{{ asset('assets/images/Logo.jpeg') }}" class="login-logo" alt="CCR-ID">
-                <h1 class="login-title">
-                    CCR-ID
-                </h1>
+                <h1 class="login-title">Build a More Climate-Resilient Business</h1>
                 <div class="login-line"></div>
-                <div class="login-desc">
-                    Corporate Climate Resilience Assessment Model (CCRAM) adalah aplikasi yang dikembangkan untuk menilai tingkat ketahanan iklim perusahaan secara objektif dan terstruktur. Berdasarkan indikator universal dan sektoral, aplikasi ini mengevaluasi kesiapan perusahaan dalam menghadapi risiko perubahan iklim, menghitung tingkat kematangan ketahanan iklim, serta menyajikan analisis dan rekomendasi strategis guna mendukung peningkatan kinerja keberlanjutan, manajemen risiko dan daya saing perusahaan.
+                <p class="login-desc">
+                    CCR-ID membantu perusahaan mengukur, memahami, dan meningkatkan ketahanan iklim melalui pendekatan berbasis data dan indikator yang komprehensif.
+                </p>
+                <p class="login-desc">
+                    Platform ini mengubah informasi terkait tata kelola, strategi, manajemen risiko, adaptasi, dan mitigasi menjadi Climate Resilience Score, Maturity Level, serta rekomendasi strategis yang mendukung pengambilan keputusan dan peningkatan kinerja keberlanjutan perusahaan.
+                </p>
+                <div class="login-tagline">
+                    One Platform. One Assessment. Stronger Climate Resilience.
                 </div>
             </div>
         </div>
