@@ -49,11 +49,14 @@
         color:white;
         padding:6px 8px;
         border:1px solid #999;
-        text-align: left;
+        /* text-align: left;
+        vertical-align: middle; */
     }
     table td {
         padding:6px;
         border:1px solid #999;
+        /* text-align: left;
+        vertical-align: middle; */
     }
     
     .section {
@@ -67,7 +70,7 @@
         font-size:14px;
         font-weight:bold;
         margin-bottom:8px;
-        text-align: left;
+        /* text-align: left; */
         padding-left: 12px;
     }
     
@@ -125,15 +128,15 @@
         
         <table>
             <tr>
-                <th width="30%">Company</th>
+                <th width="30%" align="left">Company</th>
                 <td>{{ $assessment->company_name }}</td>
             </tr>
             <tr>
-                <th>Sector</th>
+                <th align="left">Sector</th>
                 <td>{{ ucfirst($assessment->sector_name) }}</td>
             </tr>
             <tr>
-                <th>Subsector</th>
+                <th align="left">Subsector</th>
                 <td>{{ $assessment->subsector }}</td>
             </tr>
         </table>
@@ -143,70 +146,44 @@
         <div class="section-title">Climate Rating</div>
         <table>
             <tr>
-                <th width="30%">Grade</th>
+                <th width="30%" align="left">Grade</th>
                 <td>{{ $assessment->grade }}</td>
             </tr>
             <tr>
-                <th>Category</th>
+                <th align="left">Category</th>
                 <td>{{ $assessment->category }}</td>
             </tr>
             <tr>
-                <th>Total Score</th>
+                <th align="left">Total Score</th>
                 <td>{{ number_format($assessment->total_score,2) }}</td>
             </tr>
             <tr>
-                <th>Gap to Next Grade</th>
+                <th align="left">Gap to Next Grade</th>
                 <td>{{ $assessment->gap_to_next_grade }} points</td>
             </tr>
             <tr>
-                <th>Next Grade</th>
+                <th align="left">Next Grade</th>
                 <td>{{ $assessment->next_grade }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th align="left">Address</th>
                 <td>{{ $assessment->address }}</td>
             </tr>
             <tr>
-                <th>Assessment Date</th>
+                <th align="left">Assessment Date</th>
                 <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
             </tr>
             <tr>
-                <th>Entry Operator</th>
+                <th align="left">Entry Operator</th>
                 <td>{{ $assessment->entry_operator }}</td>
             </tr>
             <tr>
-                <th>Data Source</th>
+                <th align="left">Data Source</th>
                 <td>{{ $assessment->data_source }}</td>
             </tr>
             <tr>
-                <th>Catatan</th>
+                <th align="left">Catatan</th>
                 <td>{{ $assessment->notes }}</td>
-            </tr>
-        </table>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">Climate Rating</div>
-        <table>
-            <tr>
-                <th width="30%">Grade</th>
-                <td>{{ $assessment->grade }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ $assessment->category }}</td>
-            </tr>
-            <tr>
-                <th>Total Score</th>
-                <td>{{ number_format($assessment->total_score,2) }}</td>
-            </tr>
-            <tr>
-                <th>Gap to Next Grade</th>
-                <td>{{ $assessment->gap_to_next_grade }} points</td>
-            </tr>
-            <tr>
-                <th>Next Grade</th>
-                <td>{{ $assessment->next_grade }}</td>
             </tr>
         </table>
     </div>
@@ -215,19 +192,19 @@
         <div class="section-title">Executive Summary</div>
         <table>
             <tr>
-                <th width="30%">Strongest Dimension</th>
+                <th width="30%" align="left">Strongest Dimension</th>
                 <td>{{ $assessment->strongest_dimension }}</td>
             </tr>
             <tr>
-                <th>Weakest Dimension</th>
+                <th align="left">Weakest Dimension</th>
                 <td>{{ $assessment->weakest_dimension }}</td>
             </tr>
             <tr>
-                <th>Priority Improvement</th>
+                <th align="left">Priority Improvement</th>
                 <td>{{ $assessment->improvement_priority }}</td>
             </tr>
             <tr>
-                <th>Management Recommendation</th>
+                <th align="left">Management Recommendation</th>
                 <td>{{ $assessment->management_recommendation }}</td>
             </tr>
         </table>
@@ -237,11 +214,11 @@
         <div class="section-title">Overall Interpretation</div>
         <table>
             <tr>
-                <th width="30%">Grade Interpretation</th>
+                <th width="30%" align="left">Grade Interpretation</th>
                 <td>{{ $assessment->interpretation_grade }}</td>
             </tr>
             <tr>
-                <th>Sector Interpretation</th>
+                <th align="left">Sector Interpretation</th>
                 <td>{{ $assessment->interpretation }}</td>
             </tr>
         </table>
@@ -250,10 +227,10 @@
     <div style="page-break-before: always;"></div>
     <div class="section">
         <div class="section-title">CCRAM Dimension Score</div>
-        <table>
+        <table class="center-table">
             <thead>
                 <tr>
-                    <th width="8%">Dimension</th>
+                    <th width="8%" class="text-center">Dimension</th>
                     <th width="42%">Dimension Name</th>
                     <th width="15%">Average Score</th>
                     <th width="15%">Weight</th>
@@ -319,7 +296,7 @@
     
     <div class="section">
         <div class="section-title">Dimension Performance</div>
-        <table>
+        <table class="center-table">
             <thead>
                 <tr>
                     <th width="7%">Dimension</th>
@@ -347,7 +324,7 @@
     
     <div class="section">
         <div class="section-title">Recommendation by Dimension</div>
-        <table>
+        <table class="center-table">
             <thead>
                 <tr>
                     <th width="8%">Dimension</th>
@@ -370,7 +347,7 @@
     <div style="page-break-before: always;"></div>
     <div class="section">
         <div class="section-title">Assessment Detail</div>
-        <table>
+        <table class="center-table">
             <thead>
                 <tr>
                     <th width="8%">Indikator</th>
@@ -408,19 +385,19 @@
         <div class="section-title">Assessment Summary</div>
         <table>
             <tr>
-                <th width="35%">Total Indicator</th>
+                <th width="35%" align="left">Total Indicator</th>
                 <td>{{ count($answers) }}</td>
             </tr>
             <tr>
-                <th>Average Assessment Score</th>
+                <th align="left">Average Assessment Score</th>
                 <td>{{ number_format(array_sum($averages)/count($averages),2) }}</td>
             </tr>
             <tr>
-                <th>Final CCRAM Score</th>
+                <th align="left">Final CCRAM Score</th>
                 <td>{{ number_format($assessment->total_score,2) }}</td>
             </tr>
             <tr>
-                <th>Final Rating</th>
+                <th align="left">Final Rating</th>
                 <td>{{ $assessment->grade }} - {{ $assessment->category }}</td>
             </tr>
         </table>
