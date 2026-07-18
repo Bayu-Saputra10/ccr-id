@@ -16,6 +16,27 @@
         font-size:11px;
         color:#333;
     }
+    .header-table{
+        width: 100%;
+        border: none;
+        margin-bottom: 20px;
+    }
+    .header-table td{
+        border: none;
+        vertical-align: middle;
+    }
+    .logo{
+        width: 70px;
+    }
+    .report-title{
+        font-size: 22px;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+    .report-subtitle{
+        font-size: 12px;
+        color: #666;
+    }
     
     table {
         width:100%;
@@ -26,10 +47,10 @@
     table th {
         background:#2f5597;
         color:white;
-        padding:6px;
+        padding:6px 8px;
         border:1px solid #999;
+        text-align: left;
     }
-    
     table td {
         padding:6px;
         border:1px solid #999;
@@ -46,6 +67,8 @@
         font-size:14px;
         font-weight:bold;
         margin-bottom:8px;
+        text-align: left;
+        padding-left: 12px;
     }
     
     .title {
@@ -81,9 +104,21 @@
 
 </head>
 <body>
-    <div class="title">Corporate Climate Resilience Assessment Report</div>
-
-    <div class="subtitle">Climate Change Resilience Assessment Model</div>
+   <table class="header-table">
+    <tr>
+        <td width="12%">
+            <img src="{{ public_path('assets/images/android-chrome-512x512.png') }}" class="logo">
+        </td>
+        <td>
+            <div class="report-title">
+                Corporate Climate Resilience Assessment Report
+            </div>
+            <div class="report-subtitle">
+                Climate Change Resilience Assessment Model (CCRAM)
+            </div>
+        </td>
+    </tr>
+   </table>
     
     <div class="section">
         <div class="section-title">Company Profile</div>

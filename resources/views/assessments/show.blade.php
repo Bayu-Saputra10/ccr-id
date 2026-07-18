@@ -178,6 +178,10 @@
                                     <th>Interpretation</th>
                                     <td>{{ $assessment->interpretation }}</td>
                                 </tr>
+                                <tr>
+                                    <th>Management Recommendation</th>
+                                    <td>{{ $assessment->management_recommendation }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
