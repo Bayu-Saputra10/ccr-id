@@ -36,7 +36,7 @@ class AssessmentController extends Controller
                 'view'=>'agriculture.input',
             ],
             'finance' => [
-                'controller'=>'agriculture',
+                'controller'=>'finance',
                 'model'=>\App\Models\Finance::class,
                 'view'=>'finance.input',
             ],

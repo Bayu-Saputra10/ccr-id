@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assessment extends Model
 {
     protected $fillable = [
+        'user_id',
         'sector',
         'company_name',
         'subsector',
@@ -16,32 +17,26 @@ class Assessment extends Model
         'data_source',
         'notes',
         'logo',
-
         'score_a',
         'score_b',
         'score_c',
         'score_d',
         'score_e',
         'total_score',
-
         'grade',
         'category',
         'interpretation_grade',
-
         'interpretation',
-
         'strongest_dimension',
         'weakest_dimension',
         'next_grade',
         'gap_to_next_grade',
         'improvement_priority',
-
         'recommendation_dimension',
         'recommendation_category',
         'management_recommendation',
         'action_focus',
         'management_recommendation',
-        
         'status',
     ];
 
@@ -62,9 +57,11 @@ class Assessment extends Model
         };
     }
 
-    public function answers()
-{
-    return $this->hasMany(AssessmentAnswer::class);
-}
+    public function answers() {
+        return $this->hasMany(AssessmentAnswer::class);
+    }
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
