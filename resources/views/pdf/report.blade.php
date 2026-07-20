@@ -125,7 +125,6 @@
     
     <div class="section">
         <div class="section-title">Company Profile</div>
-        
         <table>
             <tr>
                 <th width="30%" align="left">Company</th>
@@ -223,8 +222,31 @@
             </tr>
         </table>
     </div>
+        <div style="page-break-before: always;"></div>
+
+
+    <div class="section">
+        <div class="section-title">Assessment Summary</div>
+        <table>
+            <tr>
+                <th width="30%" align="left">Total Indicator</th>
+                <td>{{ count($answers) }}</td>
+            </tr>
+            <tr>
+                <th align="left">Average Assessment Score</th>
+                <td>{{ number_format(array_sum($averages)/count($averages),2) }}</td>
+            </tr>
+            <tr>
+                <th align="left">Final CCRAM Score</th>
+                <td>{{ number_format($assessment->total_score,2) }}</td>
+            </tr>
+            <tr>
+                <th align="left">Final Rating</th>
+                <td>{{ $assessment->grade }} - {{ $assessment->category }}</td>
+            </tr>
+        </table>
+    </div>
     
-    <div style="page-break-before: always;"></div>
     <div class="section">
         <div class="section-title">CCRAM Dimension Score</div>
         <table class="center-table">
@@ -293,6 +315,20 @@
             </tr>
         </table>
     </div>
+
+        <div style="page-break-before: always;"></div>
+    <div class="section">
+        <div class="section-title">Dimension Average Score</div>
+        <table>
+            <tr>
+                <td align="center">
+                    @if (!empty($barImage))
+                    <img src="{{ $barImage }}" style="width: 520px;">
+                    @endif
+                </td>
+            </tr>
+        </table>
+    </div>
     
     <div class="section">
         <div class="section-title">Dimension Performance</div>
@@ -344,7 +380,6 @@
         </table>
     </div>
     
-    <div style="page-break-before: always;"></div>
     <div class="section">
         <div class="section-title">Assessment Detail</div>
         <table class="center-table">
@@ -381,39 +416,6 @@
         </table>
     </div>
     
-    <div class="section">
-        <div class="section-title">Assessment Summary</div>
-        <table>
-            <tr>
-                <th width="35%" align="left">Total Indicator</th>
-                <td>{{ count($answers) }}</td>
-            </tr>
-            <tr>
-                <th align="left">Average Assessment Score</th>
-                <td>{{ number_format(array_sum($averages)/count($averages),2) }}</td>
-            </tr>
-            <tr>
-                <th align="left">Final CCRAM Score</th>
-                <td>{{ number_format($assessment->total_score,2) }}</td>
-            </tr>
-            <tr>
-                <th align="left">Final Rating</th>
-                <td>{{ $assessment->grade }} - {{ $assessment->category }}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="section">
-        <div class="section-title">Dimension Average Score</div>
-        <table>
-            <tr>
-                <td align="center">
-                    @if (!empty($barImage))
-                    <img src="{{ $barImage }}" style="width: 520px;">
-                    @endif
-                </td>
-            </tr>
-        </table>
-    </div>
     <div class="footer">
         Climate Change Resilience Assessment Model (CCRAM)<br>Generated : {{ now()->format('d F Y H:i') }}
     </div>

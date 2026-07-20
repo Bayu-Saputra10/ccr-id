@@ -50,7 +50,26 @@ class AssessmentController extends Controller
     }
 
     public function index () {
-        $assessments = Assessment::orderBy('created_at', 'desc')->get();
+        $query = Assessment::withCount([
+            'answers as answered_count' => function ($q) {
+                $q->whereNotNull('score');
+            }
+        ]);
+
+        if (auth()->user()->role != 'admin') {
+            $query->where('user_id', auth()->id());
+        }
+        $assessments = $query->orderBy('created_at', 'desc')->get();
+
+        foreach ($assessments as $assessment) {
+            if ($assessment->status === 'completed') {
+                $assessment->progress = 100;
+                continue;
+            }
+            $config = $this->getSectorConfig($assessment->sector);
+            $total = $config['model']::count();
+            $assessment->progress = $total > 0 ? round(($assessment->answered_count / $total) * 100) : 0;
+        }
 
         return view('assessments.index', compact('assessments'));
     }
@@ -73,6 +92,8 @@ class AssessmentController extends Controller
         ]);
 
         $assessment = Assessment::create([
+            'user_id' => auth()->id(),
+
             'sector' => $request->sector,
             'company_name' => $request->company_name,
             'subsector' => $request->subsector,
@@ -134,6 +155,10 @@ class AssessmentController extends Controller
     }
 
     public function edit(Assessment $assessment){
+        if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+            abort(403);
+        }
+
         $config = $this->getSectorConfig($assessment->sector);
         return view('assessments.create', [
             'assessment' => $assessment, 'edit' => true,
@@ -141,6 +166,10 @@ class AssessmentController extends Controller
     }
 
     public function update(Request $request, Assessment $assessment){
+        if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+            abort(403);
+        }
+
         $request->validate([
             'sector' => 'required',
             'company_name' => 'required',
@@ -168,8 +197,11 @@ class AssessmentController extends Controller
         );
     }
 
-public function destroy(Assessment $assessment)
-{
+public function destroy(Assessment $assessment) {
+    if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses menghapus assessment');
+        }
+    
     AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
 
     $assessment->delete();
@@ -180,6 +212,10 @@ public function destroy(Assessment $assessment)
 }
 
     public function report(Assessment $assessment) {
+        if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+            abort(403);
+        }
+
         $answers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();
 
         $sector = ucfirst(strtolower($assessment->sector));
@@ -217,9 +253,7 @@ public function destroy(Assessment $assessment)
 
         foreach ($answers as $answer) {
             $answer->indicator = $indicatorModel::find($answer->indicator_id);
-
             $answer->score_description = $scoreModel::where($foreignKey, $answer->indicator_id)->where('score', $answer->score)->value('description');
-
             $answer->evidence_description = $evidenceModel::where($foreignKey, $answer->indicator_id)->where('value', $answer->evidence)->value('description');
         }
 

@@ -11,7 +11,15 @@ use App\Services\CCRAMCalculatorService;
 
 class MiningController extends Controller
 {
+    private function authorizeAssessment(Assessment $assessment) {
+        if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+    }
+
     public function index(Assessment $assessment) {
+        $this->authorizeAssessment($assessment);
+        
         $indicators = Mining::with(['scores', 'evidences'])->orderBy('dimension')->orderBy('indicator_id')->get();
 
         $answers = AssessmentAnswer::where(
@@ -26,29 +34,31 @@ class MiningController extends Controller
     }
 
     public function save(Request $request, Assessment $assessment) {
+        $this->authorizeAssessment($assessment);
+
         $request->validate([
             'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ],[
             'evidence_file.*.max' => 'Ukuran file maksimal 2 MB.',
             'evidence_file.*.mimes' => 'Format file harus PDF, JPG, JPEG atau PNG.',
         ]);
+        $action = $request->input('action', 'submit');
 
         $indicators = Mining::orderBy('indicator_id')->get();
 
-        $errors = [];
-
-        foreach ($indicators as $indicator) {
-            if (!isset($request->score[$indicator->id]) || $request->score[$indicator->id] === '') {
-                $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name .
-                ' (Score belum diisi)'; 
+        if ($action == 'submit') {
+            $errors = [];
+            foreach ($indicators as $indicator) {
+                if (!isset($request->score[$indicator->id]) || $request->score[$indicator->id] === '') {
+                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (Score belum diisi)';
+                }
+                if (!isset($request->evidence[$indicator->id]) || $request->evidence[$indicator->id] === '') {
+                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (Sumber Bukti belum diisi)';
+                }
             }
-            if (!isset($request->evidence[$indicator->id]) || $request->evidence[$indicator->id] === '') {
-                $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name .
-                ' (Sumber bukti belum diisi)'; 
+            if (count($errors)>0) {
+                return back()->withInput()->with('validationErrors',$errors);
             }
-        }
-        if (count($errors) > 0) {
-            return back()->withInput()->with('validationErrors', $errors);
         }
 
         $oldAnswers = AssessmentAnswer::where('assessment_id',$assessment->id)->get()->keyBy('indicator_id');
@@ -70,16 +80,23 @@ class MiningController extends Controller
                 $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
             }
 
-            AssessmentAnswer::create([
+            AssessmentAnswer::updateOrCreate([
                 'assessment_id' => $assessment->id,
                 'indicator_id' => $indicatorId,
+            ],[
                 'score' => $score,
-                'evidence' => $request->evidence[$indicatorId],
+                'evidence' => $request->evidence[$indicatorId] ?? null,
                 'evidence_file' => $filePath,
-                'note' => $request->note[$indicatorId] ?? null
+                'note' => $request->note[$indicatorId] ?? null,
             ]);
         }
 
+        if ($action == 'draft') {
+            $assessment->status='draft';
+            $assessment->save();
+            return redirect()->route('assessments.index')->with('success', 'Draft berhasil disimpan.');
+        }
+        
         $result = app(CCRAMCalculatorService::class)->calculate($assessment);
         
         $assessment->update($result);

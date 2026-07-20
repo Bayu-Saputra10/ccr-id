@@ -14,7 +14,30 @@
         <br>
         <strong>Tahun Penilaian :</strong>
         {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}
+        <br>
+    <strong>Status :</strong>
+    @if ($assessment->status == 'draft')
+        <span class="badge bg-warning text-dark">Draft</span>
+    @else
+        <span class="badge bg-success">Completed</span>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     </div>
+    
+    @if (session('validationErrors'))
+        <div class="alert alert-danger">
+            <strong>Masih ada indikator yang belum lengkap:</strong>
+            <ul class="mb-0">
+                @foreach (session('validationErrors') as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('manufacturing.save', $assessment->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <table class="table table-bordered table-striped">
@@ -76,7 +99,11 @@
             @endforeach
         </tbody>
     </table>
-    <button type="submit" class="btn btn-success">Simpan</button>
+    <div class="d-flex justify-content-end gap-2 mt-3">
+            <button type="submit" name="action" value="draft" class="btn btn-warning">Simpan Draft</button>
+
+            <button type="submit" name="action" value="submit" class="btn btn-success">Simpan Assessment</button>
+        </div>
 </form>
 </div>
 

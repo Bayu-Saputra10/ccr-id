@@ -22,6 +22,7 @@
                             <th>Score D</th>
                             <th>Score E</th>
                             <th>Total Score</th>
+                            <th>Progress</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -43,6 +44,29 @@
                             <td>{{ $assessment->status=='completed' ? number_format($assessment->score_d,2) : '-' }}</td>
                             <td>{{ $assessment->status=='completed' ? number_format($assessment->score_e,2) : '-' }}</td>
                             <td><strong>{{ $assessment->status=='completed' ? number_format($assessment->total_score,2) : '-' }}</strong></td>
+                            <td width="220">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <small class="fw-semibold text-dark">Progress: </small>
+                                    <small class="fw-bold text-dark"> {{ $assessment->progress }}%</small>
+                                </div>
+
+<div class="progress" style="height: 12px;">
+    <div class="progress-bar
+        @if($assessment->progress == 100)
+            bg-success
+        @elseif($assessment->progress >= 50)
+            bg-warning
+        @else
+            bg-danger
+        @endif"
+        role="progressbar"
+        style="width: {{ $assessment->progress }}%;"
+        aria-valuenow="{{ $assessment->progress }}"
+        aria-valuemin="0"
+        aria-valuemax="100">
+    </div>
+</div>
+                            </td>
                             <td>
                                 @if($assessment->status=='completed')
                                 <span class="badge bg-success rounded-pill">Completed</span>
@@ -53,15 +77,17 @@
                             <td onclick="event.stopPropagation();">
                                 <div class="d-flex justify-content-center gap-2">
                                 @if ($assessment->status=='draft')
-                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="action-icon action-edit" title="Edit Draft"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-warning btn-sm" title="Edit Draft">Lanjutkan</a>
                                 @else
                                     <a href="{{ route('assessments.edit',$assessment->id) }}" class="action-icon action-edit" title="Edit"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
                                 @endif
+                                @if(auth()->user()->role == 'admin')
                                 <form action="{{ route('assessments.destroy',$assessment->id) }}" class="d-inline" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn p-0 border-0 bg-transparent action-icon action-delete" onclick="return confirm('Yakin ingin menghapus assessment ini?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
                                 </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assessment extends Model
 {
     protected $fillable = [
-        // 'user_id',
+        'user_id',
         'sector',
         'company_name',
         'subsector',

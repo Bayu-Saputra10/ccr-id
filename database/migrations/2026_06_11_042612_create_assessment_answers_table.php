@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->foreignId('assessment_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('indicator_id');
-            $table->integer('score');
-            $table->integer('evidence');
+            $table->integer('score')->nullable();
+            $table->integer('evidence')->nullable();
             $table->longText('note')->nullable();
 
             $table->timestamps();

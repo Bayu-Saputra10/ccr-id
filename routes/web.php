@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function (){
     // rute infrastruktur
     Route::get('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'index'])->name('infrastructure.input');
     Route::post('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'save'])->name('infrastructure.save');
+    // 
 
     // rute manufaktur
     Route::get('/assessments/{assessment}/manufacturing', [ManufacturingController::class, 'index'])->name('manufacturing.input');
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function (){
 
     // pdf export
     Route::post('/assessment/{assessment}/pdf', [PDFController::class,'report'])->name('assessment.pdf');
+    
 });
 
 require __DIR__.'/auth.php';

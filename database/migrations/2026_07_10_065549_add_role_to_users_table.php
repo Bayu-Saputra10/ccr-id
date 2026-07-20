@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', [
-                'superadmin',
-                'admin',
-                'assessor',
-                'viewer',
+                'admin', 'viewer'
             ])->default('viewer')->email('email');
         });
     }
