@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
     <div class="card report-card">
-        <div class="card-header report-header d-flex justify-content-between align-items-center">
+        <div class="card-header report-header d-flex justify-content-between align-items-center bg-primary text-white">
             <h5 class="mb-0 fw-bold">
                 <i class="bi bi-clipboard-data me-2"></i> Daftar Assessment
             </h5>
@@ -211,7 +211,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Score A</span>
+    <span>A</span>
 
     @if(request('sort')=='score_a')
 
@@ -235,7 +235,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Score B</span>
+    <span>B</span>
 
     @if(request('sort')=='score_b')
 
@@ -258,7 +258,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Score C</span>
+    <span>C</span>
 
     @if(request('sort')=='score_c')
 
@@ -281,7 +281,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Score D</span>
+    <span>D</span>
 
     @if(request('sort')=='score_d')
 
@@ -304,7 +304,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Score E</span>
+    <span>E</span>
 
     @if(request('sort')=='score_e')
 

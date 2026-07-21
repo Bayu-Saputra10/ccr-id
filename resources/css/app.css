@@ -61,12 +61,10 @@ body{
     vertical-align: middle;
 }
 .card{
-    border: none;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+    border-radius: .375rem;
 }
 .card-header{
-    padding: .8rem 1.2rem;
+    padding: .7rem;
 }
 .card-body{
     padding: 18px;
@@ -278,13 +276,6 @@ html, body{
 .report-table th, .report-table td{
     padding: .55rem .75rem;
 }
-.report-header{
-    background: #1565d8;
-    color: #fff;
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-}
 .report-card{
     border: none;
     border-radius: 14px;
@@ -425,14 +416,17 @@ html, body{
     font-size: 15px;
 }
 .list-table thead th{
-    background: #f8fafc;
-    color: #374151;
-    font-size: 15px;
-    font-weight: 700;
-    border: none;
-    padding: 16px 14px;
-    text-align: center;
-    vertical-align: middle;
+
+    background:#f1f5f9;
+
+    color:#334155;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
 }
 .list-table tbody td{
     padding: 18px 12px;
@@ -467,7 +461,31 @@ html, body{
     text-align: center !important;
 }
 .progress-column{
-    min-width:180px;
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+}
+.progress-column small{
+    font-size: 12px;
+}
+
+.progress-column .progress{
+    height: 8px !important;
+    margin-top: 2px;
+}
+
+.progress-column .progress-bar{
+    border-radius: 8px;
+}
+.filter-card{
+    border:none;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+    margin-bottom:20px;
+}
+
+.filter-card .card-body{
+    padding:22px;
 }
 .action-btn{
     width: 36px;
@@ -619,7 +637,7 @@ html, body{
 
 .card-header{
 
-    background:white;
+    /* background:white; */
 
     font-weight:600;
 
