@@ -28,10 +28,26 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-        ];
+
+        'email' => ['required','email'],
+
+        'password' => ['required'],
+
+    ];
     }
+
+    public function messages(): array
+{
+    return [
+
+        'email.required' => 'Email wajib diisi.',
+
+        'email.email' => 'Format email tidak valid.',
+
+        'password.required' => 'Password wajib diisi.',
+
+    ];
+}
 
     /**
      * Attempt to authenticate the request's credentials.
@@ -43,14 +59,14 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
-        }
+    RateLimiter::hit($this->throttleKey());
 
-        RateLimiter::clear($this->throttleKey());
+    throw ValidationException::withMessages([
+        'email' => 'Email atau password yang Anda masukkan salah.',
+    ]);
+
+}
     }
 
     /**

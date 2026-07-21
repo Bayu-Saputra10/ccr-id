@@ -9,16 +9,24 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MiningController;
 use App\Http\Controllers\PDFController;
 use App\Models\Subsector;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function (){
     if(auth()->check()){
-        return redirect()->route('assessments.index');   
+        return redirect()->route('dashboard'); 
     }
     return redirect()->route('login');
 });
 
 
 Route::middleware('auth')->group(function (){
+
+    // rute viewer
+    Route::get('/dashboard',[DashboardController::class,'index'])
+        ->name('dashboard');
+
     // list indikator
     Route::get('/assessments', [AssessmentController::class, 'index'])->name('assessments.index');
     // tambah 
@@ -61,7 +69,18 @@ Route::middleware('auth')->group(function (){
 
     // pdf export
     Route::post('/assessment/{assessment}/pdf', [PDFController::class,'report'])->name('assessment.pdf');
-    
+
 });
+
+Route::prefix('admin')
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+        
+        Route::resource('users', UserController::class);
+    });
 
 require __DIR__.'/auth.php';

@@ -29,13 +29,64 @@
                 <img src="{{ asset('assets/images/Logo.jpeg') }}" alt="CCR-ID" class="login-logo-right">
                     <h2>Selamat Datang</h2>
                     <p>Silahkan login ke CCR-ID</p>
+
+                    @if ($errors->any())
+
+<div class="alert alert-danger alert-dismissible fade show">
+
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+    {{ $errors->first() }}
+
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert">
+    </button>
+
+</div>
+
+@endif
+
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <input type="email" name="email" class="form-control login-input" placeholder="Email" required>
+                            <input
+    id="email"
+    class="form-control"
+    type="email"
+    name="email"
+    value="{{ old('email') }}" placeholder="Email"
+    required
+    autofocus>
+
+@error('email')
+
+<div class="invalid-feedback">
+
+    {{ $message }}
+
+</div>
+
+@enderror
                         </div>
                         <div class="mb-4 position-relative">
-                            <input type="password" name="password" id="password" class="form-control login-input p3-5" placeholder="Password" required>
+                            <input
+    id="password"
+    class="form-control"
+    type="password"
+    name="password" placeholder="Password"
+    required>
+
+@error('password')
+
+<div class="invalid-feedback">
+
+    {{ $message }}
+
+</div>
+
+@enderror
                             <span id="togglePassword" class="password-toggle"><i class="bi bi-eye"></i></span>
                         </div>
                         <button class="btn btn-primary login-btn">Masuk</button>

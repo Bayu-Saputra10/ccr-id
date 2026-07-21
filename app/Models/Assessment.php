@@ -57,6 +57,21 @@ class Assessment extends Model
         };
     }
 
+    public const SECTORS = [
+        'Infrastructure',
+        'Manufacturing',
+        'Agriculture',
+        'Finance',
+        'Mining',
+    ];
+    public const SECTOR_LABELS = [
+        'Infrastructure' => 'Infrastruktur',
+        'Manufacturing' => 'Manufaktur',
+        'Agriculture' => 'Agrikultur',
+        'Finance' => 'Keuangan',
+        'Mining' => 'Energi & Pertambangan',
+    ];
+
     public function answers() {
         return $this->hasMany(AssessmentAnswer::class);
     }

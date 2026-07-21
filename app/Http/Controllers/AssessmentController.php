@@ -49,29 +49,133 @@ class AssessmentController extends Controller
         };
     }
 
-    public function index () {
+    public function index (Request $request) {
         $query = Assessment::withCount([
-            'answers as answered_count' => function ($q) {
-                $q->whereNotNull('score');
-            }
-        ]);
-
-        if (auth()->user()->role != 'admin') {
-            $query->where('user_id', auth()->id());
+        'answers as answered_count' => function ($q) {
+            $q->whereNotNull('score');
         }
-        $assessments = $query->orderBy('created_at', 'desc')->get();
+    ]);
 
-        foreach ($assessments as $assessment) {
-            if ($assessment->status === 'completed') {
-                $assessment->progress = 100;
-                continue;
-            }
-            $config = $this->getSectorConfig($assessment->sector);
-            $total = $config['model']::count();
-            $assessment->progress = $total > 0 ? round(($assessment->answered_count / $total) * 100) : 0;
+    // Hak akses
+    if (auth()->user()->role != 'admin') {
+        $query->where('user_id', auth()->id());
+    }
+
+    // ==========================
+    // SEARCH
+    // ==========================
+
+    if ($request->filled('search')) {
+
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+
+            $q->where('company_name', 'like', "%{$search}%")
+              ->orWhere('subsector', 'like', "%{$search}%")
+              ->orWhere('entry_operator', 'like', "%{$search}%");
+
+        });
+
+    }
+
+    // ==========================
+    // FILTER TAHUN
+    // ==========================
+
+    if ($request->filled('year')) {
+
+        $query->whereYear(
+            'assessment_date',
+            $request->year
+        );
+
+    }
+
+    // ==========================
+    // FILTER SEKTOR
+    // ==========================
+
+    if ($request->filled('sector')) {
+
+        $query->where(
+            'sector',
+            $request->sector
+        );
+
+    }
+
+    // ==========================
+// SORTING
+// ==========================
+
+$sort = $request->get('sort', 'created_at');
+$direction = $request->get('direction', 'desc');
+
+$allowedSort = [
+    'company_name',
+    'sector',
+    'assessment_date',
+    'total_score',
+    'status',
+    'created_at',
+];
+
+if (!in_array($sort, $allowedSort)) {
+    $sort = 'created_at';
+}
+
+$direction = strtolower($direction) == 'asc' ? 'asc' : 'desc';
+
+$query->orderBy($sort, $direction);
+
+    // ==========================
+    // PAGINATION
+    // ==========================
+
+    $perPage = $request->per_page ?? 10;
+
+    $assessments = $query
+        ->paginate($perPage)
+        ->withQueryString();
+
+    foreach ($assessments as $assessment) {
+
+        if ($assessment->status == 'completed') {
+
+            $assessment->progress = 100;
+
+            continue;
+
         }
 
-        return view('assessments.index', compact('assessments'));
+        $config = $this->getSectorConfig($assessment->sector);
+
+        $total = $config['model']::count();
+
+        $assessment->progress = $total > 0
+            ? round(($assessment->answered_count / $total) * 100)
+            : 0;
+
+    }
+
+    // Dropdown Tahun
+    $years = Assessment::selectRaw('YEAR(assessment_date) as year')
+                ->distinct()
+                ->orderByDesc('year')
+                ->pluck('year');
+
+    // Dropdown Sektor
+    $sectors = Assessment::SECTORS;
+
+    return view(
+        'assessments.index',
+        compact(
+            'assessments',
+            'years',
+            'sectors'
+        )
+    );
     }
 
     public function create() {

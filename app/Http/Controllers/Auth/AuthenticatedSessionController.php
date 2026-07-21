@@ -26,9 +26,37 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        try {
 
-        return redirect()->intended(route('assessments.index'));
+    $request->authenticate();
+
+} catch (\Illuminate\Validation\ValidationException $e) {
+
+    return back()
+        ->withErrors([
+            'email' => 'Email atau password yang Anda masukkan salah.'
+        ])
+        ->onlyInput('email');
+
+}
+
+$request->session()->regenerate();
+
+if (auth()->user()->role === 'admin') {
+    return redirect()->route('admin.dashboard');
+}
+
+return redirect()->route('dashboard');
+
+        $user = auth()->user();
+        
+        if (auth()->user()->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        if ($user->role === 'viewer') {
+            return redirect()->route('dashboard');
+        }
+        return redirect('/');
     }
 
     /**
