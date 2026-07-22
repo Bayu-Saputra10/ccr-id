@@ -248,7 +248,7 @@ style="width:{{ $overallProgress }}%">
 
             <div class="card-header bg-white">
 
-                <strong>Draft Assessment</strong>
+                Draft Assessment
 
             </div>
 
@@ -335,7 +335,7 @@ style="width:{{ $overallProgress }}%">
 
             <div class="card-header bg-white">
 
-                <strong>Aktivitas Terakhir</strong>
+                Aktivitas Terakhir
 
             </div>
 
