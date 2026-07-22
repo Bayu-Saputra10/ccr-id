@@ -6,7 +6,7 @@
         'manufacturing'=> 'Manufaktur',
         'agriculture'=> 'Agrikultur',
         'finance'=> 'Keuangan',
-        'mining'=> 'Pertambangan',
+        'mining'=> 'Energi & Pertambangan',
     ];
 @endphp
 
