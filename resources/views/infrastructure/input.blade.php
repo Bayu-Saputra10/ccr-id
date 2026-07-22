@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="card-header">
-    <h3>Indikator Infrastruktur</h3>
-</div>
+<div class="px-3">
+    <h3 class="fw-bold mb-4">Indikator Infrastruktur</h3>
 
-<div class="card-body">
     <div class="mb-3">
         <strong>Perusahaan :</strong>
         {{ $assessment->company_name }}
