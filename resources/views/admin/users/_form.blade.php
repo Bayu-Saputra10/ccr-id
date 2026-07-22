@@ -102,10 +102,20 @@
 
         </label>
 
-        <input
-            type="password"
-            name="password"
-            class="form-control @error('password') is-invalid @enderror">
+        <div class="input-group">
+    <input type="password"
+           name="password"
+           id="password"
+           class="form-control @error('password') is-invalid @enderror">
+
+    <button class="btn btn-outline-secondary"
+            type="button"
+            id="togglePassword">
+
+        <i class="bi bi-eye"></i>
+
+    </button>
+</div>
 
         @error('password')
             <div class="invalid-feedback">
@@ -121,10 +131,20 @@
             Konfirmasi Password
         </label>
 
-        <input
-            type="password"
-            name="password_confirmation"
-            class="form-control">
+        <div class="input-group">
+    <input type="password"
+           name="password_confirmation"
+           id="password_confirmation"
+           class="form-control">
+
+    <button class="btn btn-outline-secondary"
+            type="button"
+            id="toggleConfirmPassword">
+
+        <i class="bi bi-eye"></i>
+
+    </button>
+</div>
 
     </div>
 

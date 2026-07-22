@@ -442,45 +442,47 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
 
     <div class="d-flex justify-content-between align-items-center mt-3">
 
-    <div>
+    <div class="text-muted">
         Menampilkan
-        <strong>{{ $assessments->firstItem() }}</strong>
-        -
-        <strong>{{ $assessments->lastItem() }}</strong>
+        <strong>{{ $assessments->firstItem() ?? 0 }}</strong>
+        sampai
+        <strong>{{ $assessments->lastItem() ?? 0 }}</strong>
         dari
         <strong>{{ $assessments->total() }}</strong>
         data
     </div>
 
-    <div>
-
     <nav>
         <ul class="pagination pagination-sm mb-0">
-            {{-- Previous --}}
+
+            {{-- Sebelumnya --}}
             <li class="page-item {{ $assessments->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $assessments->previousPageUrl() }}">
-                    &lt;
+                <a class="page-link"
+                   href="{{ $assessments->previousPageUrl() ?? '#' }}">
+                    Sebelumnya
                 </a>
             </li>
+
             {{-- Nomor Halaman --}}
             @for($i=1;$i<=$assessments->lastPage();$i++)
                 <li class="page-item {{ $i==$assessments->currentPage()?'active':'' }}">
-                    <a class="page-link" href="{{ $assessments->url($i) }}">
+                    <a class="page-link"
+                       href="{{ $assessments->url($i) }}">
                         {{ $i }}
                     </a>
                 </li>
             @endfor
 
-            {{-- Next --}}
-            <li class="page-item {{ !$assessments->hasMorePages() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $assessments->nextPageUrl() }}">
-                    &gt;
+            {{-- Berikutnya --}}
+            <li class="page-item {{ $assessments->hasMorePages() ? '' : 'disabled' }}">
+                <a class="page-link"
+                   href="{{ $assessments->nextPageUrl() ?? '#' }}">
+                    Berikutnya
                 </a>
             </li>
 
         </ul>
     </nav>
-</div>
 
 </div>
 

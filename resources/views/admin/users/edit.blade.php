@@ -37,4 +37,33 @@
 
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    function togglePassword(inputId, buttonId) {
+
+        const input = document.getElementById(inputId);
+        const icon = document.querySelector('#' + buttonId + ' i');
+
+        if (!input || !icon) return;
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('bi-eye', 'bi-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('bi-eye-slash', 'bi-eye');
+        }
+    }
+
+    document.getElementById('togglePassword')?.addEventListener('click', function () {
+        togglePassword('password', 'togglePassword');
+    });
+
+    document.getElementById('toggleConfirmPassword')?.addEventListener('click', function () {
+        togglePassword('password_confirmation', 'toggleConfirmPassword');
+    });
+
+});
+</script>
 @endsection

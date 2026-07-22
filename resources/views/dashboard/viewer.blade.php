@@ -131,9 +131,9 @@ style="width:{{ $overallProgress }}%">
 
 <div class="row mb-4">
 
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex">
 
-        <div class="card shadow-sm">
+        <div class="card shadow-sm w-100 h-100">
 
             <div class="card-header">
 
@@ -182,9 +182,9 @@ style="width:{{ $overallProgress }}%">
 
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex">
 
-        <div class="card shadow-sm mb-4">
+        <div class="card shadow-sm w-100 h-100">
 
     <div class="card-header">
         Distribusi Assessment
@@ -192,11 +192,44 @@ style="width:{{ $overallProgress }}%">
 
     <div class="card-body text-center">
 
-        <div style="max-width:280px;margin:auto">
+        <div
+    style="
+        width:180px;height:180px;margin:0 auto;
+    ">
+    <canvas id="sectorChart"></canvas>
+</div>
+<div class="d-flex justify-content-center flex-wrap gap-4 mt-3">
 
-            <canvas id="sectorChart"></canvas>
+    @php
+        $colors = [
+            'infrastructure' => '#4F46E5',
+            'manufacturing'  => '#F59E0B',
+            'agriculture'    => '#06B6D4',
+            'finance'        => '#10B981',
+            'mining'         => '#EF4444',
+        ];
+    @endphp
+
+    @foreach($sectorChart as $sector => $total)
+        <div class="d-flex align-items-center">
+
+            <span
+                style="
+                    width:12px;
+                    height:12px;
+                    border-radius:50%;
+                    background:{{ $colors[$sector] }};
+                    display:inline-block;
+                    margin-right:8px;
+                ">
+            </span>
+
+            <small>{{ $sectorNames[$sector] }}</small>
 
         </div>
+    @endforeach
+
+</div>
 
     </div>
 
@@ -359,25 +392,16 @@ Daftar Assessment
 
 <div class="card-body">
 
-<table class="table table-bordered">
-
-<thead>
-
-<tr>
-
-<th>No</th>
-
-<th>Perusahaan</th>
-
-<th>Sektor</th>
-
-<th>Progress</th>
-
-</tr>
-
-</thead>
-
-<tbody>
+<table class="table table-bordered align-middle text-center">
+    <thead class="text-center">
+        <tr>
+            <th>Perusahaan</th>
+            <th>Sektor</th>
+            <th>Progress</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
 @foreach($assessments as $assessment)
 
@@ -389,28 +413,30 @@ Daftar Assessment
 <tr>
 @endif
 
-<td>{{ $loop->iteration }}</td>
-
 <td>{{ $assessment->company_name }}</td>
 
 <td>{{ $sectorNames[$assessment->sector] ?? $assessment->sector }}</td>
 
-<td width="220">
+<td class="text-center align-middle" width="220">
 
-<div class="progress" style="height:22px">
+<div class="d-flex justify-content-center">
+    <div class="progress" style="width:200px;height:22px">
 
-<div class="progress-bar
-    @if($assessment->progress<40) bg-danger
-    @elseif($assessment->progress<80) bg-warning
-    @else bg-success
-    @endif"
+        <div class="progress-bar
+            @if($assessment->progress<40)
+                bg-danger
+            @elseif($assessment->progress<80)
+                bg-warning
+            @else
+                bg-success
+            @endif"
+            style="width:{{ $assessment->progress }}%">
 
-style="width:{{ $assessment->progress }}%">
+            {{ $assessment->progress }}%
 
-{{ $assessment->progress }}%
+        </div>
 
-</div>
-
+    </div>
 </div>
 
 </td>
@@ -455,8 +481,66 @@ style="width:{{ $assessment->progress }}%">
 </tbody>
 
 </table>
+<div class="d-flex justify-content-between align-items-center mt-3">
+
+    <div class="text-muted small">
+        Menampilkan
+        <strong>{{ $assessments->firstItem() ?? 0 }}</strong>
+        sampai
+        <strong>{{ $assessments->lastItem() ?? 0 }}</strong>
+        dari
+        <strong>{{ $assessments->total() }}</strong>
+        data
+    </div>
+
+    <nav>
+        <ul class="pagination pagination-sm mb-0">
+
+            {{-- Tombol Sebelumnya --}}
+            @if ($assessments->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link">Sebelumnya</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ $assessments->previousPageUrl() }}">
+                        Sebelumnya
+                    </a>
+                </li>
+            @endif
+
+            {{-- Nomor Halaman --}}
+            @for ($i = 1; $i <= $assessments->lastPage(); $i++)
+                <li class="page-item {{ $i == $assessments->currentPage() ? 'active' : '' }}">
+                    <a class="page-link"
+                       href="{{ $assessments->url($i) }}">
+                        {{ $i }}
+                    </a>
+                </li>
+            @endfor
+
+            {{-- Tombol Berikutnya --}}
+            @if ($assessments->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ $assessments->nextPageUrl() }}">
+                        Berikutnya
+                    </a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link">Berikutnya</span>
+                </li>
+            @endif
+
+        </ul>
+    </nav>
 
 </div>
+
+</div>
+
 
 </div>
 
@@ -509,7 +593,6 @@ const ctx = document.getElementById('sectorChart');
 new Chart(ctx, {
 
     type: 'doughnut',
-
     data: {
 
         labels: @json(
@@ -535,22 +618,16 @@ new Chart(ctx, {
         }]
     },
 
-    options:{
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '70%',
 
-    responsive:true,
-
-    maintainAspectRatio:true,
-
-    aspectRatio:1,
-
-    cutout:'65%',
-
-    plugins:{
-        legend:{
-            position:'bottom'
+    plugins: {
+        legend: {
+            display: false
         }
     }
-
 }
 
 });

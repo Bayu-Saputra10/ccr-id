@@ -37,8 +37,7 @@ class DashboardController extends Controller
 
         $assessments = Assessment::where('user_id',$user->id)
             ->latest()
-            ->take(5)
-            ->get();
+            ->paginate(5);
 
         foreach($assessments as $assessment){
 
@@ -91,8 +90,9 @@ class DashboardController extends Controller
     ->get();
 
 $recentActivities = Assessment::where('user_id', $user->id)
+    ->where('updated_at', '>=', now()->subDay())
     ->latest()
-    ->take(10)
+    ->take(5)
     ->get();
 
 $sectorProgress = [];
