@@ -37,29 +37,33 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    function togglePassword(inputId, buttonId) {
+    function toggle(buttonId, inputId){
 
-        const input = document.getElementById(inputId);
-        const icon = document.querySelector('#' + buttonId + ' i');
+        const button = document.getElementById(buttonId);
+        const input  = document.getElementById(inputId);
 
-        if (!input || !icon) return;
+        if(!button || !input) return;
 
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.replace('bi-eye', 'bi-eye-slash');
-        } else {
-            input.type = 'password';
-            icon.classList.replace('bi-eye-slash', 'bi-eye');
-        }
+        button.onclick = function(e){
+
+            e.preventDefault();
+
+            const icon = this.querySelector('i');
+
+            if(input.type === 'password'){
+                input.type = 'text';
+                icon.classList.replace('bi-eye','bi-eye-slash');
+            }else{
+                input.type = 'password';
+                icon.classList.replace('bi-eye-slash','bi-eye');
+            }
+
+        };
+
     }
 
-    document.getElementById('togglePassword')?.addEventListener('click', function () {
-        togglePassword('password', 'togglePassword');
-    });
-
-    document.getElementById('toggleConfirmPassword')?.addEventListener('click', function () {
-        togglePassword('password_confirmation', 'toggleConfirmPassword');
-    });
+    toggle('togglePassword','password');
+    toggle('toggleConfirmPassword','password_confirmation');
 
 });
 </script>

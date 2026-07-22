@@ -79,7 +79,7 @@ return view('admin.users.index', compact(
 
             'role' => $request->role,
 
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
 
         ]);
 
@@ -144,7 +144,7 @@ if (
 
         if ($request->filled('password')) {
 
-            $user->password = Hash::make($request->password);
+            $user->password = $request->password;
 
         }
 

@@ -1,5 +1,3 @@
-@csrf
-
 <div class="row">
 
     <div class="col-md-6 mb-3">
@@ -90,63 +88,64 @@
 
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+    <label class="form-label">
+        Password
+        @isset($user)
+            <small class="text-muted">(Kosongkan jika tidak diubah)</small>
+        @endisset
+    </label>
 
-            Password
+    <div class="input-group">
+        <input
+            type="password"
+            name="password"
+            id="password"
+            autocomplete="new-password"
+            class="form-control @error('password') is-invalid @enderror">
 
-            @isset($user)
-                <small class="text-muted">
-                    (Kosongkan jika tidak diubah)
-                </small>
-            @endisset
-
-        </label>
-
-        <div class="input-group">
-    <input type="password"
-           name="password"
-           id="password"
-           class="form-control @error('password') is-invalid @enderror">
-
-    <button class="btn btn-outline-secondary"
+        <button
+            class="btn btn-outline-secondary"
             type="button"
             id="togglePassword">
-
-        <i class="bi bi-eye"></i>
-
-    </button>
-</div>
-
-        @error('password')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-
+            <i class="bi bi-eye"></i>
+        </button>
     </div>
+
+    <small class="text-muted">
+        Minimal 8 karakter.
+    </small>
+
+    @error('password')
+        <div class="invalid-feedback d-block">
+            {{ $message }}
+        </div>
+    @enderror
+
+</div>
 
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
-            Konfirmasi Password
-        </label>
+    <label class="form-label">
+        Konfirmasi Password
+    </label>
 
-        <div class="input-group">
-    <input type="password"
-           name="password_confirmation"
-           id="password_confirmation"
-           class="form-control">
+    <div class="input-group">
+        <input
+            type="password"
+            name="password_confirmation"
+            id="password_confirmation"
+            autocomplete="new-password"
+            class="form-control">
 
-    <button class="btn btn-outline-secondary"
+        <button
+            class="btn btn-outline-secondary"
             type="button"
             id="toggleConfirmPassword">
-
-        <i class="bi bi-eye"></i>
-
-    </button>
-</div>
-
+            <i class="bi bi-eye"></i>
+        </button>
     </div>
+
+</div>
 
 </div>
 

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-@stack('scripts')
+
 <body>
     @if (!Request::is('login') && !Request::is('register'))      
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -172,31 +172,6 @@
             });
         </script>
     @endif
-
-    {{-- pilhan subsektor bedasarkan sektor --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sector = document.getElementById('sector');
-            const subsector = document.getElementById('subsector');
-            const oldSubsector = "{{ old('subsector',$assessment->subsector ?? '') }}";
-
-            function loadSubsector() {
-                if (!sector.value) {
-                    subsector.innerHTML = `<option value="" selected disabled>Pilih Subsektor</option>`;
-                    return;
-                }
-                fetch('/subsectors/' + sector.value).then(response => response.json()).then(data => {
-                    subsector.innerHTML = `<option value="" disabled ${oldSubsector ? '' : 'selected'}>Pilih Subsektor</option>`;
-                    data.forEach(function(item){
-                        let selected = item.name === oldSubsector ? 'selected' : '';
-                        subsector.innerHTML += `<option value="${item.name}" ${selected}>${item.name}</option>`;
-                    });
-                });
-            }
-            sector.addEventListener('change', loadSubsector);
-            loadSubsector();
-        });
-    </script>
-
+@stack('scripts')
 </body>
 </html>

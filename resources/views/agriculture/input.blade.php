@@ -77,7 +77,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="file" name="evidence_file[{{ $indicator->id }}]" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                        <input type="file" name="evidence_file[{{ $indicator->id }}]" class="form-control evidence-file" accept=".pdf,.jpg,.jpeg,.png">
                         <small class="text-muted">
                                     Format: PDF, JPG, JPEG, PNG<br>Maksimal ukuran file: <strong>2 MB</strong>
                                 </small>
@@ -128,4 +128,42 @@
     </div>
 </div>
 @endforeach
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const MAX_SIZE = 2 * 1024 * 1024; // 2 MB
+
+    document.querySelectorAll('.evidence-file').forEach(function(input) {
+
+        input.addEventListener('change', function () {
+
+            if (!this.files.length) return;
+
+            const file = this.files[0];
+
+            if (file.size > MAX_SIZE) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ukuran File Terlalu Besar',
+                    html: `
+                        File <b>${file.name}</b> berukuran
+                        <b>${(file.size / 1024 / 1024).toFixed(2)} MB</b>.<br><br>
+                        Ukuran maksimal yang diperbolehkan adalah
+                        <b>2 MB</b>.
+                    `,
+                    confirmButtonText: 'OK'
+                });
+
+                // Hapus file yang sudah dipilih
+                this.value = '';
+
+            }
+
+        });
+
+    });
+
+});
+</script>   
 @endsection
