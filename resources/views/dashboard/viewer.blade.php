@@ -1,6 +1,14 @@
 @extends('layouts.app')
-
 @section('content')
+@php
+    $sectorNames =[
+        'infrastructure'=> 'Infrastruktur',
+        'manufacturing'=> 'Manufaktur',
+        'agriculture'=> 'Agrikultur',
+        'finance'=> 'Keuangan',
+        'mining'=> 'Pertambangan',
+    ];
+@endphp
 
 <div class="container">
 
@@ -141,7 +149,7 @@ style="width:{{ $overallProgress }}%">
 
                         <div class="d-flex justify-content-between">
 
-                            <strong>{{ ucfirst($sector) }}</strong>
+                            <strong>{{ $sectorNames[$sector] ?? ucfirst($sector) }}</strong>
 
                             <span>{{ $progress }}%</span>
 
@@ -245,7 +253,7 @@ style="width:{{ $overallProgress }}%">
 
                             <small class="text-muted">
 
-                                {{ ucfirst($draft->sector) }}
+                                {{ $sectorNames[$draft->sector] ?? ucfirst($draft->sector) }}
 
                             </small>
 
@@ -385,7 +393,7 @@ Daftar Assessment
 
 <td>{{ $assessment->company_name }}</td>
 
-<td>{{ $assessment->sector }}</td>
+<td>{{ $sectorNames[$assessment->sector] ?? $assessment->sector }}</td>
 
 <td width="220">
 
@@ -504,7 +512,11 @@ new Chart(ctx, {
 
     data: {
 
-        labels: @json($sectorChart->keys()),
+        labels: @json(
+    $sectorChart->keys()->map(function($sector) use ($sectorNames) {
+        return $sectorNames[$sector] ?? ucfirst($sector);
+    })
+),
 
         datasets: [{
             data: @json($sectorChart->values()),
