@@ -63,31 +63,42 @@ class InfrastructureController extends Controller
 
         $oldAnswers = AssessmentAnswer::where('assessment_id',$assessment->id)->get()->keyBy('indicator_id');
 
-        foreach ($request->score as $indicatorId => $score) {
-            $oldAnswer = $oldAnswers[$indicatorId] ?? null;
-            $filePath = $oldAnswer?->evidence_file; 
+        $scores = $request->input('score', []);
 
-            if ($request->hasFile("evidence_file.$indicatorId")) {
-                if ($oldAnswer && $oldAnswer->evidence_file && Storage::disk('public')->exists($oldAnswer->evidence_file)) {
-                    Storage::disk('public')->delete($oldAnswer->evidence_file);
-                }
-                $uploadedFile = $request->file("evidence_file.$indicatorId");
+foreach ($scores as $indicatorId => $score) {
 
-                $fileName = $indicatorId.'_'.time().'_'.preg_replace('/[^A-Za-z0-9._-]/','_',$uploadedFile->getClientOriginalName());
+    $oldAnswer = $oldAnswers[$indicatorId] ?? null;
+    $filePath = $oldAnswer?->evidence_file;
 
-                $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
-            }
+    if ($request->hasFile("evidence_file.$indicatorId")) {
 
-            AssessmentAnswer::updateOrCreate([
-                'assessment_id' => $assessment->id,
-                'indicator_id' => $indicatorId,
-            ],[
-                'score' => $score,
-                'evidence' => $request->evidence[$indicatorId] ?? null,
-                'evidence_file' => $filePath,
-                'note' => $request->note[$indicatorId] ?? null,
-            ]);
+        if ($oldAnswer && $oldAnswer->evidence_file &&
+            Storage::disk('public')->exists($oldAnswer->evidence_file)) {
+
+            Storage::disk('public')->delete($oldAnswer->evidence_file);
         }
+
+        $uploadedFile = $request->file("evidence_file.$indicatorId");
+
+        $fileName = $indicatorId.'_'.time().'_'.
+            preg_replace('/[^A-Za-z0-9._-]/','_',$uploadedFile->getClientOriginalName());
+
+        $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
+    }
+
+    AssessmentAnswer::updateOrCreate(
+        [
+            'assessment_id' => $assessment->id,
+            'indicator_id' => $indicatorId,
+        ],
+        [
+            'score' => $score,
+            'evidence' => $request->evidence[$indicatorId] ?? null,
+            'evidence_file' => $filePath,
+            'note' => $request->note[$indicatorId] ?? null,
+        ]
+    );
+}
 
         if ($action == 'draft') {
             $assessment->status='draft';

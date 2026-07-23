@@ -25,7 +25,7 @@
     @endif
     </div>
     
-    @if (session('validationErrors'))
+    {{-- @if (session('validationErrors'))
         <div class="alert alert-danger">
             <strong>Masih ada indikator yang belum lengkap:</strong>
             <ul class="mb-0">
@@ -34,7 +34,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
     <form action="{{ route('agriculture.save', $assessment->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
