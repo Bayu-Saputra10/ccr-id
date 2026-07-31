@@ -362,6 +362,17 @@ public function destroy(Assessment $assessment) {
 
         $result = app(CCRAMCalculatorService::class)->calculate($assessment);
 
+        $assessment->category = $result['category'];
+$assessment->interpretation_grade = $result['interpretation_grade'];
+$assessment->interpretation = $result['interpretation'];
+$assessment->management_recommendation = $result['management_recommendation'];
+$assessment->improvement_priority = $result['improvement_priority'];
+
+$assessment->strongest_dimension = $result['strongest_dimension'];
+$assessment->weakest_dimension = $result['weakest_dimension'];
+$assessment->next_grade = $result['next_grade'];
+$assessment->gap_to_next_grade = $result['gap_to_next_grade'];
+
         $dimensionPerformance = $result['dimension_performance'];
 
         $sector = ucfirst(strtolower($assessment->sector));

@@ -136,7 +136,7 @@
             </tr>
             <tr>
                 <th align="left">{{ t('Subsector') }}</th>
-                <td>{{ $assessment->subsector }}</td>
+                <td>{{ $assessment->subsector_name }}</td>
             </tr>
         </table>
     </div>
@@ -178,7 +178,7 @@
             </tr>
             <tr>
     <th align="left">{{ t('Data Source') }}</th>
-    <td>{{ t($assessment->data_source) }}</td>
+    <td>{{ $assessment->data_source_name }}</td>
 </tr>
             <tr>
                 <th align="left">{{ t('Catatan') }}</th>
@@ -242,7 +242,9 @@
             </tr>
             <tr>
                 <th align="left">{{ t('Final Rating') }}</th>
-                <td>{{ $assessment->grade }} - {{ $assessment->category }}</td>
+                <td><strong>{{ $assessment->grade }}</strong>
+<br>
+{{ $assessment->category }}</td>
             </tr>
         </table>
     </div>

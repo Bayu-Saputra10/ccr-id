@@ -15,22 +15,55 @@ class PDFController extends Controller
         $this->calculator = $calculator;
     }
 
-    public function report(Request $request, Assessment $assessment) {
-        $report = $this->calculator->buildReportData($assessment);
+    public function report(Request $request, Assessment $assessment)
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Hitung ulang report sesuai locale yang sedang aktif
+    |--------------------------------------------------------------------------
+    */
+    $result = $this->calculator->calculate($assessment);
 
-        $report['radarImage'] = $request->radarImage;
+    /*
+    |--------------------------------------------------------------------------
+    | Override object assessment (TIDAK disimpan ke database)
+    |--------------------------------------------------------------------------
+    */
+    $assessment->category = $result['category'];
+    $assessment->interpretation_grade = $result['interpretation_grade'];
+    $assessment->interpretation = $result['interpretation'];
+    $assessment->management_recommendation = $result['management_recommendation'];
+    $assessment->improvement_priority = $result['improvement_priority'];
 
-        $report['barImage'] = $request->barImage;
+    $assessment->strongest_dimension = $result['strongest_dimension'];
+    $assessment->weakest_dimension = $result['weakest_dimension'];
+    $assessment->next_grade = $result['next_grade'];
+    $assessment->gap_to_next_grade = $result['gap_to_next_grade'];
 
-        $pdf = Pdf::loadView(
-            'pdf.report',
-            $report
-        );
+    /*
+    |--------------------------------------------------------------------------
+    | Build report menggunakan assessment yang sudah dioverride
+    |--------------------------------------------------------------------------
+    */
+    $report = $this->calculator->buildReportData($assessment);
 
-        $pdf->setPaper('A4', 'portrait');
+    // Pastikan assessment yang dikirim ke blade adalah assessment terbaru
+    $report['assessment'] = $assessment;
 
-        $filename = 'CCRAM_Report_' .str_replace(' ', '_', $assessment->company_name) .'.pdf';
+    $report['radarImage'] = $request->radarImage;
+    $report['barImage'] = $request->barImage;
 
-        return $pdf->download($filename);
-    }
+    $pdf = Pdf::loadView(
+        'pdf.report',
+        $report
+    );
+
+    $pdf->setPaper('A4', 'portrait');
+
+    $filename = 'CCRAM_Report_' .
+        str_replace(' ', '_', $assessment->company_name) .
+        '.pdf';
+
+    return $pdf->download($filename);
+}
 }

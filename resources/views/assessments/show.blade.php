@@ -70,7 +70,7 @@
                                 </tr>
                                 <tr>
                                     <th>{{ t('Subsektor') }}</th>
-                                    <td>{{ $assessment->subsector }}</td>
+                                    <td>{{ $assessment->subsector_name }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{ t('Tahun Penilaian') }}</th>

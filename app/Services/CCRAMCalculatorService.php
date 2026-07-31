@@ -49,15 +49,11 @@ class CCRAMCalculatorService
 
     $result = GradeInterpretation::where('grade', $grade)->first();
 
-    return [
-
-        'grade' => $result->grade,
-
-        'category' => $result->category,
-
-        'interpretation_grade' => $result->interpretation,
-
-    ];
+return [
+    'grade' => $result?->grade ?? $grade,
+    'category' => $result?->category ?? '-',
+    'interpretation_grade' => $result?->interpretation ?? '-',
+];
 }
 
     private function getGapToNextGrade(float $score): array
@@ -128,7 +124,20 @@ class CCRAMCalculatorService
         $rating = $this->getGrade(round($total, 2));
 
         // sector interpretation
-        $interpretation = InterpretationResult::where('sector', ucfirst(strtolower($assessment->sector)))->where('category', $rating['category'])->first();
+        $gradeMaster = GradeInterpretation::where(
+    'grade',
+    $rating['grade']
+)->first();
+
+$interpretation = InterpretationResult::where(
+    'sector',
+    ucfirst(strtolower($assessment->sector))
+)
+->where(
+    'category',
+    $gradeMaster?->category ?? $rating['category']
+)
+->first();
 
         $dimensionNames = [
     'A' => [
@@ -217,6 +226,8 @@ class CCRAMCalculatorService
 
     public function buildReportData(Assessment $assessment): array {
         $answers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();
+
+        $result = $this->calculate($assessment);
 
         $weights = [
             'A' => 20,
@@ -311,29 +322,66 @@ class CCRAMCalculatorService
     $answer->score_description = $score?->description;
 
     $answer->evidence_description = $evidence?->description;
+
+    $gradeInterpretation = GradeInterpretation::where(
+    'grade',
+    $result['grade']
+)->first();
+
+$managementRecommendation = $result['management_recommendation'];
+
 }
 
+/*
+|--------------------------------------------------------------------------
+| Gunakan hasil terbaru untuk assessment
+|--------------------------------------------------------------------------
+*/
+
+$assessment->grade = $result['grade'];
+$assessment->category = $result['category'];
+$assessment->interpretation_grade = $result['interpretation_grade'];
+$assessment->interpretation = $result['interpretation'];
+$assessment->management_recommendation = $result['management_recommendation'];
+$assessment->improvement_priority = $result['improvement_priority'];
+
+$assessment->strongest_dimension = $result['strongest_dimension'];
+$assessment->weakest_dimension = $result['weakest_dimension'];
+$assessment->next_grade = $result['next_grade'];
+$assessment->gap_to_next_grade = $result['gap_to_next_grade'];
+
         return [
-            'assessment' => $assessment,
-            'answers' => $answers,
-            'averages' => $averages,
-            'dimensionPerformance' => $dimensionPerformance,
-            'radarLabel' => ['A','B','C','D','E'],
-            'radarData' => [
-                $averages['A'],
-                $averages['B'],
-                $averages['C'],
-                $averages['D'],
-                $averages['E'],
-            ],
-            'barLabel' => ['A','B','C','D','E'],
-            'barData' => [
-                $averages['A'],
-                $averages['B'],
-                $averages['C'],
-                $averages['D'],
-                $averages['E'],
-            ]
-        ];
+    'assessment' => $assessment,
+
+    'answers' => $answers,
+
+    'averages' => $averages,
+
+    'dimensionPerformance' => $dimensionPerformance,
+
+    'gradeInterpretation' => $gradeInterpretation,
+
+    'managementRecommendation' => $managementRecommendation,
+
+    'radarLabel' => ['A','B','C','D','E'],
+
+    'radarData' => [
+        $averages['A'],
+        $averages['B'],
+        $averages['C'],
+        $averages['D'],
+        $averages['E'],
+    ],
+
+    'barLabel' => ['A','B','C','D','E'],
+
+    'barData' => [
+        $averages['A'],
+        $averages['B'],
+        $averages['C'],
+        $averages['D'],
+        $averages['E'],
+    ]
+];
     }
 }

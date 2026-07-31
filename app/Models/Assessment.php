@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Subsector;
 
 class Assessment extends Model
 {
@@ -111,6 +112,20 @@ public function getDataSourceNameAttribute()
         'Finance' => 'Keuangan',
         'Mining' => 'Energi & Pertambangan',
     ];
+
+    public function getSubsectorNameAttribute()
+{
+    $subsector = Subsector::where('sector', $this->sector)
+        ->where(function ($query) {
+            $query->where('name_id', $this->subsector)
+                  ->orWhere('name_en', $this->subsector);
+        })
+        ->first();
+
+    return $subsector
+        ? $subsector->name
+        : $this->subsector;
+}
 
     public function answers() {
         return $this->hasMany(AssessmentAnswer::class);
