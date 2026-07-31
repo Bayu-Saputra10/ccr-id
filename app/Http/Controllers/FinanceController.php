@@ -13,7 +13,7 @@ class FinanceController extends Controller
 {
     private function authorizeAssessment(Assessment $assessment) {
         if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
-            abort(403, 'Anda tidak memiliki akses');
+            abort(403, t('Anda tidak memiliki akses'));
         }
     }
 
@@ -38,8 +38,8 @@ class FinanceController extends Controller
         $request->validate([
             'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ],[
-            'evidence_file.*.max' => 'Ukuran file maksimal 2 MB.',
-            'evidence_file.*.mimes' => 'Format file harus PDF, JPG, JPEG atau PNG.',
+            'evidence_file.*.max' => t('Ukuran file maksimal 2 MB.'),
+            'evidence_file.*.mimes' => t('Format file harus PDF, JPG, JPEG atau PNG.'),
         ]);
         $action = $request->input('action', 'submit');
 
@@ -51,10 +51,10 @@ class FinanceController extends Controller
             $errors = [];
             foreach ($indicators as $indicator) {
                 if (!isset($request->score[$indicator->id]) || $request->score[$indicator->id] === '') {
-                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (Score belum diisi)';
+                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (' . t('Score belum diisi') . ')';
                 }
                 if (!isset($request->evidence[$indicator->id]) || $request->evidence[$indicator->id] === '') {
-                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (Sumber Bukti belum diisi)';
+                    $errors[] = $indicator->indicator_id . ' - ' . $indicator->indicator_name . ' (' . t('Sumber Bukti belum diisi') . ')';
                 }
             }
             if (count($errors)>0) {
@@ -106,7 +106,7 @@ foreach ($scores as $indicatorId => $score) {
         if ($action == 'draft') {
             $assessment->status='draft';
             $assessment->save();
-            return redirect()->route('assessments.index')->with('success', 'Draft berhasil disimpan.');
+            return redirect()->route('assessments.index')->with('success', t('Draft berhasil disimpan.'));
         }
 
         $result = app(CCRAMCalculatorService::class)->calculate($assessment);

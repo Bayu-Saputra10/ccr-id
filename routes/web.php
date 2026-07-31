@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Subsector;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\InfrastructureController;
 use App\Http\Controllers\ManufacturingController;
@@ -8,10 +9,10 @@ use App\Http\Controllers\AgricultureController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MiningController;
 use App\Http\Controllers\PDFController;
-use App\Models\Subsector;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\LanguageController;
 
 Route::get('/', function (){
     if(auth()->check()){
@@ -19,7 +20,6 @@ Route::get('/', function (){
     }
     return redirect()->route('login');
 });
-
 
 Route::middleware('auth')->group(function (){
 
@@ -34,9 +34,8 @@ Route::middleware('auth')->group(function (){
     // simpan 
     Route::post('/assessments', [AssessmentController::class, 'store'])->name('assessments.store');
     // list subsektor
-    Route::get('/subsectors/{sector}', function ($sector){
-        return Subsector::where('sector', $sector)->orderBy('name')->get();
-    });
+    Route::get('/subsectors/{sector}', [AssessmentController::class, 'getSubsectors'])
+    ->name('subsectors.bySector');
     // tampilkan isi indikator
     Route::get('/assessments/{assessment}/report', [AssessmentController::class, 'report'])->name('assessments.report');
     // edit
@@ -72,15 +71,12 @@ Route::middleware('auth')->group(function (){
 
 });
 
-Route::prefix('admin')
-    ->middleware(['auth', 'role:admin'])
-    ->name('admin.')
-    ->group(function () {
-
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-            ->name('dashboard');
-        
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
     });
+
+Route::get('/language/{locale}', [LanguageController::class,'switch'])
+    ->name('language.switch');
 
 require __DIR__.'/auth.php';

@@ -46,16 +46,56 @@ class Assessment extends Model
         );
     }
 
-    public function getSectorNameAttribute() {
-        return match ($this->sector) {
-            'infrastructure' => 'Infrastruktur',
-            'manufacturing' => 'Manufaktur',
-            'agriculture' => 'Agrikultur',
-            'finance' => 'Keuangan',
-            'mining' => 'Energi & Pertambangan',
-            default => $this->sector,
-        };
-    }
+    public function getSectorNameAttribute()
+{
+    return match ($this->sector) {
+
+        'infrastructure' => app()->getLocale() === 'en'
+            ? 'Infrastructure'
+            : 'Infrastruktur',
+
+        'manufacturing' => app()->getLocale() === 'en'
+            ? 'Manufacturing'
+            : 'Manufaktur',
+
+        'agriculture' => app()->getLocale() === 'en'
+            ? 'Agriculture'
+            : 'Agrikultur',
+
+        'finance' => app()->getLocale() === 'en'
+            ? 'Finance'
+            : 'Keuangan',
+
+        'mining' => app()->getLocale() === 'en'
+            ? 'Energy & Mining'
+            : 'Energi & Pertambangan',
+
+        default => $this->sector,
+    };
+}
+
+public function getDataSourceNameAttribute()
+{
+    $sources = explode(', ', $this->data_source);
+
+    $map = [
+        'Laporan Keuangan' => app()->getLocale() === 'en'
+            ? 'Financial Report'
+            : 'Laporan Keuangan',
+
+        'Laporan Keberlanjutan' => app()->getLocale() === 'en'
+            ? 'Sustainability Report'
+            : 'Laporan Keberlanjutan',
+
+        'Dokumen Internal Lainnya' => app()->getLocale() === 'en'
+            ? 'Other Internal Documents'
+            : 'Dokumen Internal Lainnya',
+    ];
+
+    return collect($sources)
+        ->map(fn ($item) => $map[$item] ?? $item)
+        ->implode(', ');
+}
 
     public const SECTORS = [
         'Infrastructure',

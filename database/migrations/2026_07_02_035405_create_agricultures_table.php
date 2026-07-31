@@ -16,8 +16,10 @@ return new class extends Migration
 
             $table->string('dimension');
             $table->string('indicator_id');
-            $table->string('indicator_name');
-            $table->string('definition')->nullable();
+            $table->string('indicator_name_id');
+            $table->string('indicator_name_en')->nullable();
+            $table->string('definition_id')->nullable();
+            $table->string('definition_en')->nullable();
 
             $table->timestamps();
         });

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('category');
             $table->string('score_min');
             $table->string('score_max');
-            $table->string('description');
+            $table->text('description_id');
+            $table->text('description_en');
 
             $table->timestamps();
         });

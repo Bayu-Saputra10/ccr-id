@@ -17,11 +17,15 @@ return new class extends Migration
             $table->string('key')->unique();
             $table->string('dimension');
             $table->string('dimension_name');
-            $table->string('category');
+            $table->string('category_id');
+$table->string('category_en');
             $table->decimal('score_min',8,4);
             $table->decimal('score_max',8,4);
-            $table->longText('automatic_interpretation');
-            $table->longText('short_recommendation');
+            $table->longText('automatic_interpretation_id');
+$table->longText('automatic_interpretation_en');
+
+$table->longText('short_recommendation_id');
+$table->longText('short_recommendation_en');
 
             $table->timestamps();
         });

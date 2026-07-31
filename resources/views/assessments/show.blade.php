@@ -7,9 +7,9 @@
         {{-- header --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h3 class="fw-bold mb-0">Climate Resilience Report</h3>
+                <h3 class="fw-bold mb-0">{{ t('Climate Resilience Report') }}</h3>
                 <small class="text-muted">
-                    {{ $assessment->company_name }} * {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}
+                    {{ $assessment->company_name }} * {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale(app()->getLocale())->translatedFormat('d F Y') }}
                 </small>
             </div>
             <form action="{{ route('assessment.pdf',$assessment->id) }}" method="POST" id="pdfForm">
@@ -17,7 +17,7 @@
                 <input type="hidden" name="radarImage" id="radarImage">
                 <input type="hidden" name="barImage" id="barImage">
                 <button class="btn btn-danger">
-                    <i class="fa-sharp fa-solid fa-file-export"></i> Export PDF
+                    <i class="fa-sharp fa-solid fa-file-export"></i> {{ t('Export PDF') }}
                 </button>
             </form>
         </div>
@@ -25,25 +25,25 @@
         <div class="row g-3 mb-4">
             <div class="col-lg-3">
                 <div class="summary-card">
-                    <small>Total Score</small>
+                    <small>{{ t('Total Score') }}</small>
                     <h2>{{ number_format($assessment->total_score,2) }}</h2>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="summary-card">
-                    <small>Climate Grade</small>
+                    <small>{{ t('Climate Grade') }}</small>
                     <h2>{{ ($assessment->grade) }}</h2>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="summary-card">
-                    <small>Dimensi Terkuat</small>
+                    <small>{{ t('Dimensi Terkuat') }}</small>
                     <h2>{{ ($assessment->strongest_dimension) }}</h2>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="summary-card">
-                    <small>Dimensi Terlemah</small>
+                    <small>{{ t('Dimensi Terlemah') }}</small>
                     <h2>{{ ($assessment->weakest_dimension) }}</h2>
                 </div>
             </div>
@@ -55,37 +55,37 @@
             <div class="col-lg-6">
                 <div class="card report-card h-100">
                     <div class="card-header report-header">
-                        Profil Perusahaan
+                        {{ t('Profil Perusahaan') }}
                     </div>
                     <div class="card-body p-0">
                         <table class="table profile-table mb-0">
                             <tbody>
                                 <tr>
-                                    <th>Perusahaan</th>
+                                    <th>{{ t('Perusahaan') }}</th>
                                     <td>{{ $assessment->company_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Sektor</th>
+                                    <th>{{ t('Sektor') }}</th>
                                     <td>{{ $assessment->sector_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Subsektor</th>
+                                    <th>{{ t('Subsektor') }}</th>
                                     <td>{{ $assessment->subsector }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Tahun Penilaian</th>
-                                    <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
+                                    <th>{{ t('Tahun Penilaian') }}</th>
+                                    <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale(app()->getLocale())->translatedFormat('d F Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Penginput Data</th>
+                                    <th>{{ t('Penginput Data') }}</th>
                                     <td>{{ $assessment->entry_operator }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Sumber Data</th>
-                                    <td>{{ $assessment->data_source }}</td>
+                                    <th>{{ t('Sumber Data') }}</th>
+                                    <td>{{ $assessment->data_source_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Catatan</th>
+                                    <th>{{ t('Catatan') }}</th>
                                     <td>{{ $assessment->notes ?: '-' }}</td>
                                 </tr>
                             </tbody>
@@ -97,16 +97,16 @@
             <div class="col-lg-6">
                 <div class="card report-card h-100">
                     <div class="card-header report-header">
-                        CCRAM Dimension Score  
+                        {{ t('CCRAM Dimension Score') }}  
                     </div>
                     <div class="card-body">
                         <table class="table dashboard-table mb-0">
                             <thead>
                                 <tr>
-                                    <th>Dimension</th>
-                                    <th>Average Score</th>
-                                    <th>Weight</th>
-                                    <th>weighted Score</th>
+                                    <th>{{ t('Dimension') }}</th>
+                                    <th>{{ t('Average Score') }}</th>
+                                    <th>{{ t('Weight') }}</th>
+                                    <th>{{ t('weighted Score') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,33 +153,33 @@
             <div class="col-lg-12">
                 <div class="card report-card h-100">
                     <div class="card-header report-header">
-                        CCRAM Rating Result
+                        {{ t('CCRAM Rating Result') }}
                     </div>
                     <div class="card-body p-0">
                         <table class="table profile-table mb-0">
                             <tbody>
                                 <tr>
-                                    <th>Grade</th>
+                                    <th>{{ t('Grade') }}</th>
                                     <td><strong>{{ $assessment->grade }}</strong></td>
                                 </tr>
                                 <tr>
-                                    <th>Category</th>
+                                    <th>{{ t('Category') }}</th>
                                     <td>{{ $assessment->category }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Gap Grade</th>
-                                    <td>{{ $assessment->gap_to_next_grade }} poin menuju Grade {{ $assessment->next_grade }}</td>
+                                    <th>{{ t('Gap Grade') }}</th>
+                                    <td>{{ $assessment->gap_to_next_grade }} {{ t('poin menuju Grade') }} {{ $assessment->next_grade }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Priority</th>
+                                    <th>{{ t('Priority') }}</th>
                                     <td>{{ $assessment->improvement_priority }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Interpretation</th>
+                                    <th>{{ t('Interpretation') }}</th>
                                     <td>{{ $assessment->interpretation }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Management Recommendation</th>
+                                    <th>{{ t('Management Recommendation') }}</th>
                                     <td>{{ $assessment->management_recommendation }}</td>
                                 </tr>
                             </tbody>
@@ -193,7 +193,7 @@
             <div class="col-lg-12">
                 <div class="card report-card h-100">
                     <div class="card-header report-header">
-                        Dimension Performance
+                        {{ t('Dimension Performance') }}
                     </div>
                     <div class="card-body">
                         @foreach ($dimensionPerformance as $row)
@@ -206,7 +206,7 @@
                             <div class="progress-bar" style="width: {{ ($row['avg_score']/5)*100 }}%;"></div>
                         </div>
                         <small class="text-muted">
-                        <strong>Weighted Score: {{ number_format($row['weighted_score'],2) }}</strong> <br> {{ $row['automatic_interpretation'] }}</small>
+                        <strong>{{ t('Weighted Score:') }} {{ number_format($row['weighted_score'],2) }}</strong> <br> {{ $row['automatic_interpretation'] }}</small>
                     </div>
                     @endforeach
                 </div>
@@ -218,8 +218,8 @@
         <div class="col-lg-6">
             <div class="card report-card h-100">
                 <div class="card report-card">
-                    <div class="card-header report-header">Climate Resilience Radar</div>
-                    <div class="card-body h-100">
+                    <div class="card-header report-header">{{ t('Climate Resilience Radar') }}</div>
+                    <div class="card-body" style="height: 340px;">
                         <canvas id="radarChart"></canvas>
                     </div>
                 </div>
@@ -227,9 +227,9 @@
         </div>
         <div class="col-lg-6">
             <div class="card report-card h-100">
-                <div class="card-header report-header">Assessment Detail Chart</div>
+                <div class="card-header report-header">{{ t('Assessment Detail Chart') }}</div>
                 <div class="card-body">
-                    <div class="chart-box">
+                    <div class="chart-box" style="height: 340px;">
                         <canvas id="detailChart"></canvas>
                     </div>
                 </div>
@@ -239,17 +239,17 @@
     {{-- row 5 --}}
     <div class="card report-card">
         <div class="card-header report-header">
-            Assessment Detail
+            {{ t('Assessment Detail') }}
         </div>
         <table class="table assessment-table mb-0">
             <thead>
                 <tr>
-                    <th>Indicator ID</th>
-                    <th>Indicator Name</th>
-                    <th>Score</th>
-                    <th>Sumber Bukti</th>
-                    <th>Dokumen Pendukung</th>
-                    <th>Catatan</th>
+                    <th>{{ t('Indicator ID') }}</th>
+                    <th>{{ t('Indicator Name') }}</th>
+                    <th>{{ t('Score') }}</th>
+                    <th>{{ t('Sumber Bukti') }}</th>
+                    <th>{{ t('Dokumen Pendukung') }}</th>
+                    <th>{{ t('Catatan') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -270,16 +270,16 @@
                                 @endphp
 
                                 @if ($extension=='pdf')
-                                    <span class="badge bg-danger">PDF</span>
+                                    <span class="badge bg-danger">{{ t('PDF') }}</span>
                                 @else
-                                    <span class="badge bg-success">Image</span>
+                                    <span class="badge bg-success">{{ t('Image') }}</span>
                                 @endif
                                 <br>
                                 <a href="{{ asset('storage/'.$answer->evidence_file) }}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">
-                                    <i class="bi bi-eye"></i> Lihat File
+                                    <i class="bi bi-eye"></i> {{ t('Lihat File') }}
                                 </a>
                             @else
-                                <span class="badge bg-secondary">Tidak diupload</span>
+                                <span class="badge bg-secondary">{{ t('Tidak diupload') }}</span>
                             @endif
                         </td>
                         <td>{{ $answer->note }}</td>
@@ -297,7 +297,7 @@
         data: {
             labels: ['A','B','C','D','E'],
             datasets: [{
-                label: 'Dimension Score',
+                label: '{{ t("Dimension Score") }}',
                 data: [
                     {{ $averages['A'] }},
                     {{ $averages['B'] }},
@@ -330,7 +330,7 @@
         data: {
             labels: ['A','B','C','D','E'],
             datasets: [{
-                label: 'Average Score',
+                label: '{{ t("Average Score") }}',
                 data: [
                     {{ $averages['A'] }},
                     {{ $averages['B'] }},
@@ -353,19 +353,62 @@
                 '#b497d6'
                 ],
                 borderWidth:2,
-                borderRadius:8
+                borderRadius:10,
+                barPercentage: 0.75,
+                categoryPercentage: 0.8,
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio:false,
-            scales: {
-                y: {
-                    min: 0,
-                    max: 5
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false,
+
+    layout: {
+        padding: {
+            top: 10,
+            right: 15,
+            bottom: 10,
+            left: 10
+        }
+    },
+
+    plugins: {
+        legend: {
+            display: false
+        }
+    },
+
+    scales: {
+        x: {
+            grid: {
+                display: false
+            },
+            ticks: {
+                font: {
+                    size: 14,
+                    weight: 'bold'
                 }
             }
+        },
+
+        y: {
+            min: 0,
+            max: 5,
+            beginAtZero: true,
+
+            ticks: {
+                stepSize: 0.5,
+                font: {
+                    size: 12
+                }
+            },
+
+            grid: {
+                color: '#E5E7EB'
+            }
         }
+    }
+}
     });
     document.getElementById('pdfForm').addEventListener('submit', function() {
         document.getElementById('radarImage').value = radarChart.toBase64Image();

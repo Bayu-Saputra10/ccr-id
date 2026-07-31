@@ -16,7 +16,8 @@ return new class extends Migration
 
             $table->foreignId('agriculture_id')->constrained('agricultures')->cascadeOnDelete();
             $table->integer('score');
-            $table->text('description');
+            $table->text('description_id');
+            $table->text('description_en')->nullable();
 
             $table->timestamps();
         });

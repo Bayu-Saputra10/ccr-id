@@ -16,7 +16,8 @@ return new class extends Migration
 
             $table->foreignId('mining_id')->constrained('minings')->cascadeOnDelete();
             $table->integer('value');
-            $table->text('description');
+            $table->text('description_id');
+            $table->text('description_en')->nullable();
 
             $table->timestamps();
         });

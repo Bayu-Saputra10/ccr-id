@@ -10,91 +10,41 @@
     <div class="card report-card">
         <div class="card-header report-header d-flex justify-content-between align-items-center bg-primary text-white">
             <h5 class="mb-0 fw-bold">
-                <i class="bi bi-clipboard-data me-2"></i> Daftar Assessment
+                <i class="bi bi-clipboard-data me-2"></i> {{ t('Daftar Assessment') }}
             </h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <div class="card mb-3 shadow-sm">
-
-    <div class="card-body">
-
-        <form method="GET">
-
-            <div class="row">
-
-                <div class="col-md-4">
-
-                    <input
-                        type="text"
-                        name="search"
-                        value="{{ request('search') }}"
-                        class="form-control"
-                        placeholder="Cari perusahaan, subsektor, operator">
-
-                </div>
-
-                <div class="col-md-2">
-
-                    <select
-                        name="year"
-                        class="form-select">
-
-                        <option value="">
-
-                            Semua Tahun
-
-                        </option>
-
-                        @foreach($years as $year)
-
-                        <option
-                            value="{{ $year }}"
-                            {{ request('year')==$year?'selected':'' }}>
-
-                            {{ $year }}
-
-                        </option>
-
-                        @endforeach
-
-                    </select>
-
-                </div>
-
-                <div class="col-md-2">
-                    <select name="sector" class="form-select">
-                        <option value="">Semua Sektor</option>
-                        @foreach($sectors as $sector)
-                        <option value="{{ $sector }}"
-                            {{ request('sector')==$sector?'selected':'' }}>
-                            {{ \App\Models\Assessment::SECTOR_LABELS[$sector] }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-
-                    <select
-                        name="per_page"
-                        class="form-select">
-
-                        @foreach([10,20,50,100] as $row)
-
-                        <option
-                            value="{{ $row }}"
-                            {{ request('per_page',10)==$row?'selected':'' }}>
-
-                            {{ $row }}
-
-                        </option>
-
-                        @endforeach
-
-                    </select>
-
-                </div>
+                    <div class="card-body">
+                        <form method="GET">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="{{ t('Cari perusahaan, subsektor, operator') }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="year" class="form-select">
+                                        <option value="">{{ t('Semua Tahun') }}</option>
+                                        @foreach($years as $year)
+                                        <option value="{{ $year }}" {{ request('year')==$year?'selected':'' }}>{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="sector" class="form-select">
+                                        <option value="">{{ t('Semua Sektor') }}</option>
+                                        @foreach($sectors as $sector)
+                                        <option value="{{ $sector }}" {{ request('sector')==$sector?'selected':'' }}>{{ t(\App\Models\Assessment::SECTOR_LABELS[$sector]) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="per_page" class="form-select">
+                                        @foreach([10,20,50,100] as $row)
+                                        <option value="{{ $row }}" {{ request('per_page',10)==$row?'selected':'' }}>{{ $row }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                 <div class="col-md-2 d-grid">
 
@@ -103,7 +53,7 @@
 
                         <i class="bi bi-search"></i>
 
-                        Cari
+                        {{ t('Cari') }}
 
                     </button>
 
@@ -117,7 +67,7 @@
                     href="{{ route('assessments.index') }}"
                     class="btn btn-secondary btn-sm">
 
-                    Reset Filter
+                    {{ t('Reset Filter') }}
 
                 </a>
 
@@ -139,7 +89,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Perusahaan</span>
+    <span>{{ t('Perusahaan') }}</span>
 
     @if(request('sort')=='company_name')
 
@@ -163,7 +113,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Sektor</span>
+    <span>{{ t('Sektor') }}</span>
 
     @if(request('sort')=='sector_name')
 
@@ -187,7 +137,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Tanggal Penilaian</span>
+    <span>{{ t('Tanggal Penilaian') }}</span>
 
     @if(request('sort')=='assessment_date')
 
@@ -327,7 +277,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Total Score</span>
+    <span>{{ t('Total Score') }}</span>
 
     @if(request('sort')=='total_score')
 
@@ -342,7 +292,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
     @endif
                                 </a>
                             </th>
-                            <th>Progress</th>
+                            <th>{{ t('Progress') }}</th>
                             <th>
                                 <a href="{{ route('assessments.index',
 array_merge(request()->query(),[
@@ -351,7 +301,7 @@ array_merge(request()->query(),[
 ])) }}"
 class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
 
-    <span>Status</span>
+    <span>{{ t('Status') }}</span>
 
     @if(request('sort')=='status')
 
@@ -378,7 +328,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
                         >
                             <td class="fw-semibold">{{ $assessment->company_name }}</td>
                             <td>{{ $assessment->sector_name }}</td>
-                            <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale(app()->getLocale())->translatedFormat('d F Y') }}</td>
                             <td class="score-column">{{ $assessment->status=='completed' ? number_format($assessment->score_a,2) : '-' }}</td>
                             <td class="score-column">{{ $assessment->status=='completed' ? number_format($assessment->score_b,2) : '-' }}</td>
                             <td class="score-column">{{ $assessment->status=='completed' ? number_format($assessment->score_c,2) : '-' }}</td>
@@ -387,7 +337,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
                             <td><strong>{{ $assessment->status=='completed' ? number_format($assessment->total_score,2) : '-' }}</strong></td>
                             <td class="progress-column">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <small class="fw-semibold text-dark">Progress: </small>
+                                    <small class="fw-semibold text-dark">{{ t('Progress:') }} </small>
                                     <small class="fw-bold text-dark"> {{ $assessment->progress }}%</small>
                                 </div>
 
@@ -410,23 +360,23 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
                             </td>
                             <td>
                                 @if($assessment->status=='completed')
-                                <span class="badge bg-success rounded-pill">Completed</span>
+                                <span class="badge bg-success rounded-pill">{{ t('Completed') }}</span>
                                 @else
-                                <span class="badge bg-warning text-dark rounded-pill">Draft</span>
+                                <span class="badge bg-warning text-dark rounded-pill">{{ t('Draft') }}</span>
                                 @endif
                             </td>
                             <td onclick="event.stopPropagation();">
                                 <div class="d-flex justify-content-center gap-2">
                                 @if ($assessment->status=='draft')
-                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-warning btn-sm" title="Edit Draft">Lanjutkan</a>
+                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="btn btn-warning btn-sm" title="{{ t('Edit Draft') }}">{{ t('Lanjutkan') }}</a>
                                 @else
-                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="action-icon action-edit" title="Edit"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('assessments.edit',$assessment->id) }}" class="action-icon action-edit" title="{{ t('Edit') }}"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
                                 @endif
                                 @if(auth()->user()->role == 'admin')
                                 <form action="{{ route('assessments.destroy',$assessment->id) }}" class="d-inline" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn p-0 border-0 bg-transparent action-icon action-delete" onclick="return confirm('Yakin ingin menghapus assessment ini?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                                    <button type="submit" class="btn p-0 border-0 bg-transparent action-icon action-delete" onclick="return confirm('{{ t('Yakin ingin menghapus assessment ini?') }}')"><i class="fa-sharp fa-solid fa-trash"></i></button>
                                 </form>
                                 @endif
                             </div>
@@ -434,7 +384,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="11" class="text-center py-5 text-muted">Belum ada assesment.</td>
+                        <td colspan="11" class="text-center py-5 text-muted">{{ t('Belum ada assessment.') }}</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -443,13 +393,13 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
     <div class="d-flex justify-content-between align-items-center mt-3">
 
     <div class="text-muted">
-        Menampilkan
+        {{ t('Menampilkan') }}
         <strong>{{ $assessments->firstItem() ?? 0 }}</strong>
-        sampai
+        {{ t('sampai') }}
         <strong>{{ $assessments->lastItem() ?? 0 }}</strong>
-        dari
+        {{ ('dari') }}
         <strong>{{ $assessments->total() }}</strong>
-        data
+        {{ t('data') }}
     </div>
 
     <nav>
@@ -459,7 +409,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
             <li class="page-item {{ $assessments->onFirstPage() ? 'disabled' : '' }}">
                 <a class="page-link"
                    href="{{ $assessments->previousPageUrl() ?? '#' }}">
-                    Sebelumnya
+                    {{ t('Sebelumnya') }}
                 </a>
             </li>
 
@@ -477,7 +427,7 @@ class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-cent
             <li class="page-item {{ $assessments->hasMorePages() ? '' : 'disabled' }}">
                 <a class="page-link"
                    href="{{ $assessments->nextPageUrl() ?? '#' }}">
-                    Berikutnya
+                    {{ t('Berikutnya') }}
                 </a>
             </li>
 

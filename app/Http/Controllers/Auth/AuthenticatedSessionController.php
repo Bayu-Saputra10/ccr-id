@@ -42,21 +42,35 @@ class AuthenticatedSessionController extends Controller
 
 $request->session()->regenerate();
 
+$user = auth()->user();
+
+app()->setLocale($user->language);
+
+session([
+    'locale'=>$user->language
+]);
+
+cookie()->queue(
+    'locale',
+    $user->language,
+    60*24*365
+);
+
 if (auth()->user()->role === 'admin') {
     return redirect()->route('admin.dashboard');
 }
 
 return redirect()->route('dashboard');
 
-        $user = auth()->user();
+        // $user = auth()->user();
         
-        if (auth()->user()->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
-        if ($user->role === 'viewer') {
-            return redirect()->route('dashboard');
-        }
-        return redirect('/');
+        // if (auth()->user()->role == 'admin') {
+        //     return redirect()->route('admin.dashboard');
+        // }
+        // if ($user->role === 'viewer') {
+        //     return redirect()->route('dashboard');
+        // }
+        // return redirect('/');
     }
 
     /**

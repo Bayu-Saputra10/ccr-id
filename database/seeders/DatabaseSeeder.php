@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
             ManagementRecommendationSeeder::class,
 
             DimensionInterpretationSeeder::class,
+            GradeInterpretationSeeder::class,
         ]);
     }
 }

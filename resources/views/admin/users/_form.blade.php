@@ -1,10 +1,6 @@
 <div class="row">
-
     <div class="col-md-6 mb-3">
-
-        <label class="form-label">
-            Nama
-        </label>
+        <label class="form-label">{{ t('Nama') }}</label>
 
         <input
             type="text"
@@ -24,7 +20,7 @@
     <div class="col-md-6 mb-3">
 
         <label class="form-label">
-            Email
+            {{ t('Email') }}
         </label>
 
         <input
@@ -49,7 +45,7 @@
     <div class="col-md-6 mb-3">
 
         <label class="form-label">
-            Role
+            {{ t('Role') }}
         </label>
 
         <select
@@ -57,16 +53,16 @@
             class="form-select @error('role') is-invalid @enderror">
 
             @if (isset($user) && $user->id == auth()->id() && $user->role == 'admin')
-                <option value="admin" selected>Admin</option>
+                <option value="admin" selected>{{ t('Admin') }}</option>
             @else
                 <option value="viewer"
                 {{ old('role', $user->role ?? '') == 'viewer' ? 'selected' : '' }}>
-                User
+                {{ t('User') }}
                 </option>
 
             <option value="admin"
                 {{ old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>
-                Admin
+                {{ t('Admin') }}
             </option>
             @endif
 
@@ -89,9 +85,9 @@
     <div class="col-md-6 mb-3">
 
     <label class="form-label">
-        Password
+        {{ t('Password') }}
         @isset($user)
-            <small class="text-muted">(Kosongkan jika tidak diubah)</small>
+            <small class="text-muted">({{ t('Kosongkan jika tidak diubah') }})</small>
         @endisset
     </label>
 
@@ -112,7 +108,7 @@
     </div>
 
     <small class="text-muted">
-        Minimal 8 karakter.
+        {{ t('Minimal 8 karakter.') }}
     </small>
 
     @error('password')
@@ -126,7 +122,7 @@
     <div class="col-md-6 mb-3">
 
     <label class="form-label">
-        Konfirmasi Password
+        {{ t('Konfirmasi Password') }}
     </label>
 
     <div class="input-group">
@@ -155,14 +151,14 @@
 
         <i class="bi bi-check-circle"></i>
 
-        Simpan
+        {{ t('Simpan') }}
 
     </button>
 
     <a href="{{ route('admin.users.index') }}"
         class="btn btn-secondary">
 
-        Kembali
+        {{ t('Kembali') }}
 
     </a>
 

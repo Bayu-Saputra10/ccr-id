@@ -114,110 +114,110 @@
         </td>
         <td>
             <div class="report-title">
-                Corporate Climate Resilience Assessment Report
+                {{ t('Corporate Climate Resilience Assessment Report') }}
             </div>
             <div class="report-subtitle">
-                Climate Change Resilience Assessment Model (CCRAM)
+                {{ t('Climate Change Resilience Assessment Model (CCRAM)') }}
             </div>
         </td>
     </tr>
    </table>
     
     <div class="section">
-        <div class="section-title">Company Profile</div>
+        <div class="section-title">{{ t('Company Profile') }}</div>
         <table>
             <tr>
-                <th width="30%" align="left">Company</th>
+                <th width="30%" align="left">{{ t('Company') }}</th>
                 <td>{{ $assessment->company_name }}</td>
             </tr>
             <tr>
-                <th align="left">Sector</th>
+                <th align="left">{{ t('Sector') }}</th>
                 <td>{{ ucfirst($assessment->sector_name) }}</td>
             </tr>
             <tr>
-                <th align="left">Subsector</th>
+                <th align="left">{{ t('Subsector') }}</th>
                 <td>{{ $assessment->subsector }}</td>
             </tr>
         </table>
     </div>
 
     <div class="section">
-        <div class="section-title">Climate Rating</div>
+        <div class="section-title">{{ t('Climate Rating') }}</div>
         <table>
             <tr>
-                <th width="30%" align="left">Grade</th>
+                <th width="30%" align="left">{{ t('Grade') }}</th>
                 <td>{{ $assessment->grade }}</td>
             </tr>
             <tr>
-                <th align="left">Category</th>
+                <th align="left">{{ t('Category') }}</th>
                 <td>{{ $assessment->category }}</td>
             </tr>
             <tr>
-                <th align="left">Total Score</th>
+                <th align="left">{{ t('Total Score') }}</th>
                 <td>{{ number_format($assessment->total_score,2) }}</td>
             </tr>
             <tr>
-                <th align="left">Gap to Next Grade</th>
+                <th align="left">{{ t('Gap to Next Grade') }}</th>
                 <td>{{ $assessment->gap_to_next_grade }} points</td>
             </tr>
             <tr>
-                <th align="left">Next Grade</th>
+                <th align="left">{{ t('Next Grade') }}</th>
                 <td>{{ $assessment->next_grade }}</td>
             </tr>
             <tr>
-                <th align="left">Address</th>
+                <th align="left">{{ t('Address') }}</th>
                 <td>{{ $assessment->address }}</td>
             </tr>
             <tr>
-                <th align="left">Assessment Date</th>
-                <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}</td>
+                <th align="left">{{ t('Assessment Date') }}</th>
+                <td>{{ \Carbon\Carbon::parse($assessment->assessment_date)->locale(app()->getLocale())->translatedFormat('d F Y') }}</td>
             </tr>
             <tr>
-                <th align="left">Entry Operator</th>
+                <th align="left">{{ t('Entry Operator') }}</th>
                 <td>{{ $assessment->entry_operator }}</td>
             </tr>
             <tr>
-                <th align="left">Data Source</th>
-                <td>{{ $assessment->data_source }}</td>
-            </tr>
+    <th align="left">{{ t('Data Source') }}</th>
+    <td>{{ t($assessment->data_source) }}</td>
+</tr>
             <tr>
-                <th align="left">Catatan</th>
+                <th align="left">{{ t('Catatan') }}</th>
                 <td>{{ $assessment->notes }}</td>
             </tr>
         </table>
     </div>
     
     <div class="section">
-        <div class="section-title">Executive Summary</div>
+        <div class="section-title">{{ t('Executive Summary') }}</div>
         <table>
             <tr>
-                <th width="30%" align="left">Strongest Dimension</th>
+                <th width="30%" align="left">{{ t('Strongest Dimension') }}</th>
                 <td>{{ $assessment->strongest_dimension }}</td>
             </tr>
             <tr>
-                <th align="left">Weakest Dimension</th>
+                <th align="left">{{ t('Weakest Dimension') }}</th>
                 <td>{{ $assessment->weakest_dimension }}</td>
             </tr>
             <tr>
-                <th align="left">Priority Improvement</th>
+                <th align="left">{{ t('Priority Improvement') }}</th>
                 <td>{{ $assessment->improvement_priority }}</td>
             </tr>
             <tr>
-                <th align="left">Management Recommendation</th>
+                <th align="left">{{ t('Management Recommendation') }}</th>
                 <td>{{ $assessment->management_recommendation }}</td>
             </tr>
         </table>
     </div>
     
     <div class="section">
-        <div class="section-title">Overall Interpretation</div>
+        <div class="section-title">{{ t('Overall Interpretation') }}</div>
         <table>
             <tr>
-                <th width="30%" align="left">Grade Interpretation</th>
+                <th width="30%" align="left">{{ t('Grade Interpretation') }}</th>
                 <td>{{ $assessment->interpretation_grade }}</td>
             </tr>
             <tr>
-                <th align="left">Sector Interpretation</th>
+                <th align="left">{{ t('Sector Interpretation') }}</th>
                 <td>{{ $assessment->interpretation }}</td>
             </tr>
         </table>
@@ -226,85 +226,105 @@
 
 
     <div class="section">
-        <div class="section-title">Assessment Summary</div>
+        <div class="section-title">{{ t('Assessment Summary') }}</div>
         <table>
             <tr>
-                <th width="30%" align="left">Total Indicator</th>
+                <th width="30%" align="left">{{ t('Total Indicator') }}</th>
                 <td>{{ count($answers) }}</td>
             </tr>
             <tr>
-                <th align="left">Average Assessment Score</th>
+                <th align="left">{{ t('Average Assessment Score') }}</th>
                 <td>{{ number_format(array_sum($averages)/count($averages),2) }}</td>
             </tr>
             <tr>
-                <th align="left">Final CCRAM Score</th>
+                <th align="left">{{ t('Final CCRAM Score') }}</th>
                 <td>{{ number_format($assessment->total_score,2) }}</td>
             </tr>
             <tr>
-                <th align="left">Final Rating</th>
+                <th align="left">{{ t('Final Rating') }}</th>
                 <td>{{ $assessment->grade }} - {{ $assessment->category }}</td>
             </tr>
         </table>
     </div>
     
     <div class="section">
-        <div class="section-title">CCRAM Dimension Score</div>
+        <div class="section-title">{{ t('CCRAM Dimension Score') }}</div>
         <table class="center-table">
             <thead>
                 <tr>
-                    <th width="8%" class="text-center">Dimension</th>
-                    <th width="42%">Dimension Name</th>
-                    <th width="15%">Average Score</th>
-                    <th width="15%">Weight</th>
-                    <th width="20%">Weighted Point</th>
+                    <th width="8%" class="text-center">{{ t('Dimension') }}</th>
+                    <th width="42%">{{ t('Dimension Name') }}</th>
+                    <th width="15%">{{ t('Average Score') }}</th>
+                    <th width="15%">{{ t('Weight') }}</th>
+                    <th width="20%">{{ t('Weighted Point') }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td align="center">A</td>
-                    <td>Tata Kelola & Kepemimpinan Iklim</td>
-                    <td align="center">{{ number_format($averages['A'],2) }}</td>
-                    <td align="center">20%</td>
-                    <td align="center">{{ number_format($assessment->score_a,2) }}</td>
-                </tr>
-                <tr>
-                    <td align="center">B</td>
-                    <td>Strategi & Resiliensi Model Bisnis</td>
-                    <td align="center">{{ number_format($averages['B'],2) }}</td>
-                    <td align="center">25%</td>
-                    <td align="center">{{ number_format($assessment->score_b,2) }}</td>
-                </tr>
-                <tr>
-                    <td align="center">C</td>
-                    <td>Manajemen Risiko Iklim Terintegrasi</td>
-                    <td align="center">{{ number_format($averages['C'],2) }}</td>
-                    <td align="center">20%</td>
-                    <td align="center">{{ number_format($assessment->score_c,2) }}</td>
-                </tr>
-                <tr>
-                    <td align="center">D</td>
-                    <td>Kinerja & Target Terukur</td>
-                    <td align="center">{{ number_format($averages['D'],2) }}</td>
-                    <td align="center">25%</td>
-                    <td align="center">{{ number_format($assessment->score_d,2) }}</td>
-                </tr>
-                <tr>
-                    <td align="center">E</td>
-                    <td>Resiliensi Sosial & Rantai Nilai</td>
-                    <td align="center">{{ number_format($averages['E'],2) }}</td>
-                    <td align="center">10%</td>
-                    <td align="center">{{ number_format($assessment->score_e,2) }}</td>
-                </tr>
-                <tr style="font-weight:bold;background:#EFEFEF;">
-                    <td colspan="4">TOTAL SCORE</td>
-                    <td align="center">{{ number_format($assessment->total_score,2) }}</td>
-                </tr>
-            </tbody>
+
+@php
+    $weights = [
+        'A' => 20,
+        'B' => 25,
+        'C' => 20,
+        'D' => 25,
+        'E' => 10,
+    ];
+
+    $weightedScores = [
+        'A' => $assessment->score_a,
+        'B' => $assessment->score_b,
+        'C' => $assessment->score_c,
+        'D' => $assessment->score_d,
+        'E' => $assessment->score_e,
+    ];
+@endphp
+
+@foreach($dimensionPerformance as $row)
+
+<tr>
+
+    <td align="center">
+        {{ $row['dimension'] }}
+    </td>
+
+    <td>
+        {{ $row['dimension_name'] }}
+    </td>
+
+    <td align="center">
+        {{ number_format($row['avg_score'],2) }}
+    </td>
+
+    <td align="center">
+        {{ $weights[$row['dimension']] }}%
+    </td>
+
+    <td align="center">
+        {{ number_format($weightedScores[$row['dimension']],2) }}
+    </td>
+
+</tr>
+
+@endforeach
+
+<tr style="font-weight:bold;background:#EFEFEF;">
+
+    <td colspan="4">
+        {{ t('TOTAL SCORE') }}
+    </td>
+
+    <td align="center">
+        {{ number_format($assessment->total_score,2) }}
+    </td>
+
+</tr>
+
+</tbody>
         </table>
     </div>
     
     <div class="section">
-        <div class="section-title">Climate Resilience Radar Chart</div>
+        <div class="section-title">{{ t('Climate Resilience Radar Chart') }}</div>
         <table>
             <tr>
                 <td align="center">
@@ -318,12 +338,12 @@
 
         <div style="page-break-before: always;"></div>
     <div class="section">
-        <div class="section-title">Dimension Average Score</div>
+        <div class="section-title">{{ t('Dimension Average Score') }}</div>
         <table>
             <tr>
                 <td align="center">
                     @if (!empty($barImage))
-                    <img src="{{ $barImage }}" style="width: 520px;">
+                    <img src="{{ $barImage }}" style="width: 360px;">
                     @endif
                 </td>
             </tr>
@@ -331,16 +351,16 @@
     </div>
     
     <div class="section">
-        <div class="section-title">Dimension Performance</div>
+        <div class="section-title">{{ t('Dimension Performance') }}</div>
         <table class="center-table">
             <thead>
                 <tr>
-                    <th width="7%">Dimension</th>
-                    <th width="22%">Dimension Name</th>
-                    <th width="10%">Average</th>
-                    <th width="12%">Weighted</th>
-                    <th width="15%">Category</th>
-                    <th>Interpretation</th>
+                    <th width="7%">{{ t('Dimension') }}</th>
+                    <th width="22%">{{ t('Dimension Name') }}</th>
+                    <th width="10%">{{ t('Average') }}</th>
+                    <th width="12%">{{ t('Weighted') }}</th>
+                    <th width="15%">{{ t('Category') }}</th>
+                    <th>{{ t('Interpretation') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -359,13 +379,13 @@
     </div>
     
     <div class="section">
-        <div class="section-title">Recommendation by Dimension</div>
+        <div class="section-title">{{ t('Recommendation by Dimension') }}</div>
         <table class="center-table">
             <thead>
                 <tr>
-                    <th width="8%">Dimension</th>
-                    <th width="25%">Dimension Name</th>
-                    <th>Recommendation</th>
+                    <th width="8%">{{ t('Dimension') }}</th>
+                    <th width="25%">{{ t('Dimension Name') }}</th>
+                    <th>{{ t('Recommendation') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -381,16 +401,16 @@
     </div>
     
     <div class="section">
-        <div class="section-title">Assessment Detail</div>
+        <div class="section-title">{{ t('Assessment Detail') }}</div>
         <table class="center-table">
             <thead>
                 <tr>
-                    <th width="8%">Indikator</th>
-                    <th width="28%">Nama Indikator</th>
-                    <th width="24%">Score</th>
-                    <th width="25%">Sumber Bukti</th>
-                    <th width="25%">Dokumen Pendukung</th>
-                    <th width="15%">Catatan</th>
+                    <th width="8%">{{ t('Indikator') }}</th>
+                    <th width="28%">{{ t('Nama Indikator') }}</th>
+                    <th width="24%">{{ t('Score') }}</th>
+                    <th width="25%">{{ t('Sumber Bukti') }}</th>
+                    <th width="25%">{{ t('Dokumen Pendukung') }}</th>
+                    <th width="15%">{{ t('Catatan') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -404,9 +424,9 @@
                     <td>{{ $answer->evidence_description }}</td>
                     <td style="text-align: center">
                         @if ($answer->evidence_file)
-                            <span style="color:green;font-weight: bold;">Diupload</span>
+                            <span style="color:green;font-weight: bold;">{{ t('Diupload') }}</span>
                         @else
-                            <span style="color: #888">Tidak diupload</span>
+                            <span style="color: #888">{{ t('Tidak diupload') }}</span>
                         @endif
                     </td>
                     <td>{{ $answer->note }}</td>
@@ -417,7 +437,7 @@
     </div>
     
     <div class="footer">
-        Climate Change Resilience Assessment Model (CCRAM)<br>Generated : {{ now()->format('d F Y H:i') }}
+        {{ t('Climate Change Resilience Assessment Model (CCRAM)') }}<br>{{ t('Generated') }}: {{ now()->locale(app()->getLocale())->translatedFormat('d F Y H:i') }}
     </div>
 </body>
 </html>

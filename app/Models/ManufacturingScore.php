@@ -9,10 +9,18 @@ class ManufacturingScore extends Model
     protected $fillable = [
         'manufacturing_id',
         'score',
-        'description'
+        'description_id',
+        'description_en',
     ];
 
     public function manufacturing() {
         return $this->belongsTo(Manufacturing::class);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        $locale = app()->getLocale();
+        
+        return app()->getLocale() == 'en' ? ($this->description_en ?: $this->description_id) : $this->description_id;
     }
 }

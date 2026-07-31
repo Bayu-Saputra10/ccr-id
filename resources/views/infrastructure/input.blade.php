@@ -1,23 +1,23 @@
 @extends('layouts.app')
 @section('content')
 <div class="px-3">
-    <h3 class="fw-bold mb-4">Indikator Infrastruktur</h3>
+    <h3 class="fw-bold mb-4">{{ t('Indikator Infrastruktur') }}</h3>
 
     <div class="mb-3">
-        <strong>Perusahaan :</strong>
+        <strong>{{ t('Perusahaan :') }}</strong>
         {{ $assessment->company_name }}
         <br>
-        <strong>Subsektor :</strong>
+        <strong>{{ t('Subsektor :') }}</strong>
         {{ $assessment->subsector }}
         <br>
-        <strong>Tahun Penilaian :</strong>
-        {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale('id')->translatedFormat('d F Y') }}
-<br>
-    <strong>Status :</strong>
+        <strong>{{ t('Tahun Penilaian :') }}</strong>
+        {{ \Carbon\Carbon::parse($assessment->assessment_date)->locale(app()->getLocale())->translatedFormat('d F Y') }}
+        <br>
+    <strong>{{ t('Status :') }}</strong>
     @if ($assessment->status == 'draft')
-        <span class="badge bg-warning text-dark">Draft</span>
+        <span class="badge bg-warning text-dark">{{ t('Draft') }}</span>
     @else
-        <span class="badge bg-success">Completed</span>
+        <span class="badge bg-success">{{ t('Completed') }}</span>
     @endif
 
     @if (session('success'))
@@ -25,29 +25,18 @@
     @endif
     </div>
 
-    {{-- @if (session('validationErrors'))
-        <div class="alert alert-danger">
-            <strong>Masih ada indikator yang belum lengkap:</strong>
-            <ul class="mb-0">
-                @foreach (session('validationErrors') as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
-
     <form action="{{ route('infrastructure.save', $assessment->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th width="80">Dimensi</th>
-                    <th width="120">ID Indikator</th>
-                    <th>Nama Indikator</th>
-                    <th width="250">Score</th>
-                    <th width="250">Sumber Bukti</th>
-                    <th width="220">Upload Bukti</th>
-                    <th width="250">Catatan</th>
+                    <th width="80">{{ t('Dimensi') }}</th>
+                    <th width="120">{{ t('ID Indikator') }}</th>
+                    <th>{{ t('Nama Indikator') }}</th>
+                    <th width="250">{{ t('Score') }}</th>
+                    <th width="250">{{ t('Sumber Bukti') }}</th>
+                    <th width="220">{{ t('Upload Bukti') }}</th>
+                    <th width="250">{{ t('Catatan') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,7 +47,7 @@
                     <td data-bs-toggle="modal" data-bs-target="#indicatorModal{{ $indicator->id }}" style="cursor: pointer;">{{ $indicator->indicator_name }}</td>
                     <td>
                         <select class="form-control" name="score[{{ $indicator->id }}]">
-                            <option value="" selected disabled>Pilih Score</option>
+                            <option value="" selected disabled>{{ t('Pilih Score') }}</option>
                             @foreach($indicator->scores as $score)
                             <option value="{{ $score->score }}" {{ old('score.'.$indicator->id, optional($indicator->answer)->score)==$score->score ? 'selected' : '' }}>
                                 {{ $score->score }} - {{ $score->description }}
@@ -68,7 +57,7 @@
                     </td>
                     <td>
                         <select class="form-control" name="evidence[{{ $indicator->id }}]">
-                            <option value="" selected disabled>Pilih Sumber Bukti</option>
+                            <option value="" selected disabled>{{ t('Pilih Sumber Bukti') }}</option>
                             @foreach($indicator->evidences as $evidence)
                                 <option value="{{ $evidence->value }}" {{ old('evidence.'.$indicator->id, optional($indicator->answer)->evidence)==$evidence->value ? 'selected' : '' }}>
                                     {{ $evidence->description }}
@@ -79,12 +68,12 @@
                     <td>
                         <input type="file" name="evidence_file[{{ $indicator->id }}]" class="form-control evidence-file" accept=".pdf,.jpg,.jpeg,.png">
                         <small class="text-muted">
-                                    Format: PDF, JPG, JPEG, PNG<br>Maksimal ukuran file: <strong>2 MB</strong>
+                                    {{ t('Format') }}: PDF, JPG, JPEG, PNG<br>{{ t('Maksimal ukuran file') }}: <strong>2 MB</strong>
                                 </small>
                         @if (optional($indicator->answer)->evidence_file)
                         <div class="mt-2">
                             <a href="{{ asset('storage/'.optional($indicator->answer)->evidence_file) }}" class="btn btn-sm btn-outline-primary" target="_blank">
-                                <i class="bi bi-paperclip">Lihat File</i>
+                                <i class="bi bi-paperclip"></i> {{ t('Lihat File') }}
                             </a>
                         </div>
                         @endif
@@ -100,9 +89,9 @@
         </table>
 
         <div class="d-flex justify-content-end gap-2 mt-3">
-            <button type="submit" name="action" value="draft" class="btn btn-warning">Simpan Draft</button>
+            <button type="submit" name="action" value="draft" class="btn btn-warning">{{ t('Simpan Draft') }}</button>
 
-            <button type="submit" name="action" value="submit" class="btn btn-success">Simpan Assessment</button>
+            <button type="submit" name="action" value="submit" class="btn btn-success">{{ t('Simpan Assessment') }}</button>
         </div>
         
     </form>
@@ -121,11 +110,11 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <strong>Dimensi :</strong>
+                    <strong>{{ t('Dimensi') }} :</strong>
                     {{ $indicator->dimension }}
                 </div>
                 <hr>
-                <h6>Definisi Operasional</h6>
+                <h6>{{ t('Definisi Operasional') }}</h6>
                 <p>{{ $indicator->definition }}</p>
             </div>
         </div>
@@ -149,14 +138,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Ukuran File Terlalu Besar',
+                    title: '{{ t("Ukuran File Terlalu Besar") }}',
                     html: `
-                        File <b>${file.name}</b> berukuran
+                        {{ t("File") }} <b>${file.name}</b> {{ t("berukuran") }}
                         <b>${(file.size / 1024 / 1024).toFixed(2)} MB</b>.<br><br>
-                        Ukuran maksimal yang diperbolehkan adalah
+                        {{ t("Ukuran maksimal yang diperbolehkan adalah") }}
                         <b>2 MB</b>.
                     `,
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'Ok'
                 });
 
                 // Hapus file yang sudah dipilih

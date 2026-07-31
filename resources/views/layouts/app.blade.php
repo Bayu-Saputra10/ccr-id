@@ -19,10 +19,10 @@
                 <img src="{{ asset('assets/images/Logo.jpeg') }}" alt="CCR-ID" class="logo-app">
                 <div class="ms-3">
                     <div class="brand-title">
-                        CCR-ID
+                        {{ t('CCR-ID') }}
                     </div>
                     <div class="brand-subtitle">
-                        Corporate Climate Resilience
+                        {{ t('Corporate Climate Resilience') }}
                     </div>
                 </div>
             </a>
@@ -33,39 +33,30 @@
 
     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-success">
         <i class="bi bi-speedometer2"></i>
-        Dashboard Admin
+        {{ t('Dashboard Admin') }}
     </a>
 
     <a href="{{ route('assessments.create') }}" class="btn btn-outline-primary">
         <i class="bi bi-plus-circle"></i>
-        Assessment Baru
+        {{ t('Assessment Baru') }}
     </a>
 
     <a href="{{ route('assessments.index') }}" class="btn btn-outline-primary">
         <i class="bi bi-card-list"></i>
-        Semua Assessment
+        {{ t('Semua Assessment') }}
     </a>
 
 @else
-
     <a href="{{ route('dashboard') }}" class="btn btn-outline-success">
-        <i class="bi bi-speedometer2"></i>
-        Dashboard
+        <i class="bi bi-speedometer2"></i> {{ t('Dashboard') }}
     </a>
-
 @endif
-
 
 <div class="dropdown">
     <button
-        class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">
-
-        <i class="bi bi-person-circle me-2"></i>
+        class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+<i class="bi bi-person-circle me-2"></i>
         {{ auth()->user()->name }}
-
     </button>
 
     <ul class="dropdown-menu dropdown-menu-end shadow">
@@ -83,14 +74,14 @@
             <li>
                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                     <i class="bi bi-speedometer2 me-2"></i>
-                    Dashboard Admin
+                    {{ t('Dashboard Admin') }}
                 </a>
             </li>
 
             <li>
                 <a class="dropdown-item" href="{{ route('admin.users.index') }}">
                     <i class="bi bi-people me-2"></i>
-                    User Management
+                    {{ t('User Management') }}
                 </a>
             </li>
 
@@ -101,9 +92,58 @@
         <li>
             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                 <i class="bi bi-person me-2"></i>
-                Profile
+                {{ t('Profile') }}
             </a>
         </li>
+
+        {{-- bahasa --}}
+        <li><hr class="dropdown-divider"></li>
+
+<li>
+
+    <h6 class="dropdown-header">
+
+        🌐 {{ t('Language') }}
+
+    </h6>
+
+</li>
+
+<li>
+
+    <a class="dropdown-item"
+
+       href="{{ route('language.switch','id') }}">
+
+        🇮🇩 Bahasa Indonesia
+
+        @if(app()->getLocale()=='id')
+
+            <i class="bi bi-check-lg float-end"></i>
+
+        @endif
+
+    </a>
+
+</li>
+
+<li>
+
+    <a class="dropdown-item"
+
+       href="{{ route('language.switch','en') }}">
+
+        🇺🇸 English
+
+        @if(app()->getLocale()=='en')
+
+            <i class="bi bi-check-lg float-end"></i>
+
+        @endif
+
+    </a>
+
+</li>
 
         <li>
             <form action="{{ route('logout') }}" method="POST">
@@ -111,7 +151,7 @@
 
                 <button class="dropdown-item text-danger">
                     <i class="bi bi-box-arrow-right me-2"></i>
-                    Logout
+                    {{ t('Logout') }}
                 </button>
             </form>
         </li>
@@ -122,7 +162,7 @@
 
 @endauth
                 @guest
-                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary">{{ t('Login') }}</a>
                 @endguest
             </div>
         </div>
@@ -145,7 +185,7 @@
 
     @if (!Request::is('login') && !Request::is('register'))
     <div class="footer">
-        CCR-ID© {{ date('Y') }}
+        {{ t('CCR-ID') }} © {{ date('Y') }}
     </div>
     @endif
 
@@ -156,19 +196,19 @@
         <script>
             Swal.fire({
                 icon:'warning',
-                title:'Assessment belum disimpan',
+                title:"{{ t('Assessment belum disimpan') }}",
                 html:`<div style="text-align:left">
-                    <p>Masih terdapat indikator yang belum lengkap.</p>
+                    <p>{{ t('Masih terdapat indikator yang belum lengkap.') }}</p>
                     <ul style="max-height:250px;overflow-y:auto">
                         @foreach (session('validationErrors') as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                         </ul>
                         <br>
-                        <b>Silahkan lengkapi seluruh indikator terlebih dahulu.</b>
+                        <b>{{ t('Silahkan lengkapi seluruh indikator terlebih dahulu.') }}</b>
                     </div>`,
                     width:700,
-                    confirmButtonText:'Ok'
+                    confirmButtonText:"{{ t('Ok') }}"
             });
         </script>
     @endif

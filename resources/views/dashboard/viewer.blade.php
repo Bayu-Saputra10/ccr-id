@@ -2,26 +2,28 @@
 @section('content')
 @php
     $sectorNames =[
-        'infrastructure'=> 'Infrastruktur',
-        'manufacturing'=> 'Manufaktur',
-        'agriculture'=> 'Agrikultur',
-        'finance'=> 'Keuangan',
-        'mining'=> 'Energi & Pertambangan',
+        'infrastructure'=> t('Infrastruktur'),
+        'manufacturing'=> t('Manufaktur'),
+        'agriculture'=> t('Agrikultur'),
+        'finance'=> t('Keuangan'),
+        'mining'=> t('Energi & Pertambangan'),
+    ];
+    $sectorColors = [
+        'infrastructure' => '#4F46E5',
+        'manufacturing' => '#F59E0B',
+        'agriculture' => '#06B6D4',
+        'finance' => '#10B981',
+        'mining' => '#EF4444',
     ];
 @endphp
 
 <div class="container">
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-    <h3 id="greeting">
-    Selamat Datang, {{ auth()->user()->name }}
-</h3>
-
-<p class="text-muted" id="currentDate"></p>
-</div>
-
-<div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 id="greeting">{{ t('Selamat Datang,') }} {{ auth()->user()->name }}</h3>
+            <p class="text-muted" id="currentDate"></p>
+        </div>
+        <div>
 
 <a href="{{ route('assessments.create') }}"
 
@@ -29,10 +31,10 @@ class="btn btn-primary">
 
 <i class="bi bi-plus-circle"></i>
 
-Assessment Baru
+{{ t('Assessment Baru') }}
 </a>
 <a href="{{ route('assessments.index') }}" class="btn btn-primary">
-        <i class="bi bi-card-list"></i> Semua Assessment
+        <i class="bi bi-card-list"></i> {{ t('Semua Assessment') }}
     </a>
 
 </div>
@@ -47,7 +49,7 @@ Assessment Baru
 
 <div class="card-body">
 
-<h6>Total Assessment</h6>
+<h6>{{ t('Total Assessment') }}</h6>
 
 <h2>{{ $total }}</h2>
 
@@ -63,7 +65,7 @@ Assessment Baru
 
 <div class="card-body">
 
-<h6>Draft</h6>
+<h6>{{ t('Draft') }}</h6>
 
 <h2 class="text-warning">
 
@@ -83,7 +85,7 @@ Assessment Baru
 
 <div class="card-body">
 
-<h6>Completed</h6>
+<h6>{{ t('Completed') }}</h6>
 
 <h2 class="text-success">
 
@@ -103,7 +105,7 @@ Assessment Baru
 
 <div class="card-body">
 
-<h6>Overall Progress</h6>
+<h6>{{ t('Overall Progress') }}</h6>
 
 <h2>
 
@@ -137,7 +139,7 @@ style="width:{{ $overallProgress }}%">
 
             <div class="card-header">
 
-                Progress Assessment per Sektor
+                {{ t('Progress Assessment per Sektor') }}
 
             </div>
 
@@ -187,48 +189,21 @@ style="width:{{ $overallProgress }}%">
         <div class="card shadow-sm w-100 h-100">
 
     <div class="card-header">
-        Distribusi Assessment
+        {{ t('Distribusi Assessment') }}
     </div>
 
     <div class="card-body text-center">
 
-        <div
-    style="
-        width:180px;height:180px;margin:0 auto;
-    ">
+        <div style="width:230px;height:200px;margin:0 auto;">
     <canvas id="sectorChart"></canvas>
 </div>
 <div class="d-flex justify-content-center flex-wrap gap-4 mt-3">
-
-    @php
-        $colors = [
-            'infrastructure' => '#4F46E5',
-            'manufacturing'  => '#F59E0B',
-            'agriculture'    => '#06B6D4',
-            'finance'        => '#10B981',
-            'mining'         => '#EF4444',
-        ];
-    @endphp
-
     @foreach($sectorChart as $sector => $total)
         <div class="d-flex align-items-center">
-
-            <span
-                style="
-                    width:12px;
-                    height:12px;
-                    border-radius:50%;
-                    background:{{ $colors[$sector] }};
-                    display:inline-block;
-                    margin-right:8px;
-                ">
-            </span>
-
+            <span style="width:12px;height:12px;border-radius:50%;background:{{ $sectorColors[$sector] }}; display:inline-block; margin-right:8px;"></span>
             <small>{{ $sectorNames[$sector] }}</small>
-
         </div>
     @endforeach
-
 </div>
 
     </div>
@@ -248,7 +223,7 @@ style="width:{{ $overallProgress }}%">
 
             <div class="card-header bg-white">
 
-                Draft Assessment
+                {{ t('Draft Assessment') }}
 
             </div>
 
@@ -259,17 +234,11 @@ style="width:{{ $overallProgress }}%">
                     @php
 
                         $route = match($draft->sector){
-
                             'infrastructure' => 'infrastructure.input',
-
                             'manufacturing' => 'manufacturing.input',
-
                             'agriculture' => 'agriculture.input',
-
                             'finance' => 'finance.input',
-
                             'mining' => 'mining.input',
-
                             default => null,
 
                         };
@@ -300,7 +269,7 @@ style="width:{{ $overallProgress }}%">
 
                             <i class="bi bi-pencil-square"></i>
 
-                            Lanjut
+                            {{ t('Lanjut') }}
 
                         </a>
 
@@ -316,7 +285,7 @@ style="width:{{ $overallProgress }}%">
 
                         <br>
 
-                        Semua Assessment telah selesai.
+                        {{ t('Semua Assessment telah selesai.') }}
 
                     </div>
 
@@ -335,7 +304,7 @@ style="width:{{ $overallProgress }}%">
 
             <div class="card-header bg-white">
 
-                Aktivitas Terakhir
+                {{ t('Aktivitas Terakhir') }}
 
             </div>
 
@@ -357,7 +326,7 @@ style="width:{{ $overallProgress }}%">
 
                             <small>
 
-                                {{ ucfirst($activity->status) }}
+                                {{ t(ucfirst($activity->status)) }}
 
                             </small>
 
@@ -386,7 +355,7 @@ style="width:{{ $overallProgress }}%">
 
 <div class="card-header">
 
-Daftar Assessment
+{{ t('Daftar Assessment') }}
 
 </div>
 
@@ -395,9 +364,9 @@ Daftar Assessment
 <table class="table table-bordered align-middle text-center">
     <thead class="text-center">
         <tr>
-            <th>Perusahaan</th>
-            <th>Sektor</th>
-            <th>Progress</th>
+            <th>{{ t('Perusahaan') }}</th>
+            <th>{{ t('Sektor') }}</th>
+            <th>{{ t('Progress') }}</th>
             <th></th>
         </tr>
     </thead>
@@ -460,14 +429,14 @@ Daftar Assessment
         <a href="{{ route($route,$assessment->id) }}"
            class="btn btn-warning btn-sm">
             <i class="bi bi-pencil-square"></i>
-            Lanjut
+            {{ t('Lanjut') }}
         </a>
     @endif
 
 @else
 
     <span class="badge bg-success">
-        Completed
+        {{ t('Completed') }}
     </span>
 
 @endif
@@ -484,13 +453,13 @@ Daftar Assessment
 <div class="d-flex justify-content-between align-items-center mt-3">
 
     <div class="text-muted small">
-        Menampilkan
+        {{ t('Menampilkan') }}
         <strong>{{ $assessments->firstItem() ?? 0 }}</strong>
-        sampai
+        {{ t('sampai') }}
         <strong>{{ $assessments->lastItem() ?? 0 }}</strong>
-        dari
+        {{ t('dari') }}
         <strong>{{ $assessments->total() }}</strong>
-        data
+        {{ t('data') }}
     </div>
 
     <nav>
@@ -499,13 +468,13 @@ Daftar Assessment
             {{-- Tombol Sebelumnya --}}
             @if ($assessments->onFirstPage())
                 <li class="page-item disabled">
-                    <span class="page-link">Sebelumnya</span>
+                    <span class="page-link">{{ t('Sebelumnya') }}</span>
                 </li>
             @else
                 <li class="page-item">
                     <a class="page-link"
                        href="{{ $assessments->previousPageUrl() }}">
-                        Sebelumnya
+                        {{ t('Sebelumnya') }}
                     </a>
                 </li>
             @endif
@@ -525,12 +494,12 @@ Daftar Assessment
                 <li class="page-item">
                     <a class="page-link"
                        href="{{ $assessments->nextPageUrl() }}">
-                        Berikutnya
+                        {{ t('Berikutnya') }}
                     </a>
                 </li>
             @else
                 <li class="page-item disabled">
-                    <span class="page-link">Berikutnya</span>
+                    <span class="page-link">{{ t('Berikutnya') }}</span>
                 </li>
             @endif
 
@@ -558,13 +527,13 @@ Daftar Assessment
     let greeting = "";
 
     if (hour < 11) {
-        greeting = "Selamat Pagi";
+        greeting = "{{ t('Selamat Pagi') }}";
     } else if (hour < 15) {
-        greeting = "Selamat Siang";
+        greeting = "{{ t('Selamat Siang') }}";
     } else if (hour < 18) {
-        greeting = "Selamat Sore";
+        greeting = "{{ t('Selamat Sore') }}";
     } else {
-        greeting = "Selamat Malam";
+        greeting = "{{ t('Selamat Malam') }}";
     }
 
     document.getElementById("greeting").innerHTML =
@@ -578,7 +547,7 @@ Daftar Assessment
     };
 
     document.getElementById("currentDate").innerHTML =
-        now.toLocaleDateString('id-ID', options);
+        now.toLocaleDateString("{{ app()->getLocale() == 'id' ? 'id-ID' : 'en-US' }}", options);
 }
 
 // Jalankan saat halaman dibuka
@@ -589,40 +558,33 @@ setInterval(updateGreeting, 60000);
 
 // chart doughnut
 const ctx = document.getElementById('sectorChart');
-
 new Chart(ctx, {
-
     type: 'doughnut',
     data: {
-
         labels: @json(
     $sectorChart->keys()->map(function($sector) use ($sectorNames) {
         return $sectorNames[$sector] ?? ucfirst($sector);
     })
 ),
-
         datasets: [{
             data: @json($sectorChart->values()),
-
-            backgroundColor: [
-                '#4F46E5',
-                '#10B981',
-                '#F59E0B',
-                '#EF4444',
-                '#06B6D4'
-            ],
-
+            backgroundColor: @json(
+                $sectorChart->keys()->map(function($sector) use ($sectorColors){
+                    return $sectorColors[$sector] ?? '#999999';
+                })
+            ),
             borderWidth: 3,
-
-            hoverOffset: 15
+            borderColor: '#ffffff',
+            radius: '82%',
+            hoverOffset: 18,
+            spacing: 3
         }]
     },
-
     options: {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '70%',
-
+    
+    cutout: '68%',
     plugins: {
         legend: {
             display: false

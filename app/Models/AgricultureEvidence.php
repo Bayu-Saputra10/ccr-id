@@ -11,10 +11,18 @@ class AgricultureEvidence extends Model
     protected $fillable = [
         'agriculture_id',
         'value',
-        'description'
+        'description_id',
+        'description_en',
     ];
 
     public function agriculture() {
         return $this->belongsTo(Agriculture::class);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        $locale = app()->getLocale();
+        
+        return app()->getLocale() == 'en' ? ($this->description_en ?: $this->description_id) : $this->description_id;
     }
 }

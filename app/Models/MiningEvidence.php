@@ -11,10 +11,18 @@ class MiningEvidence extends Model
     protected $fillable = [
         'mining_id',
         'value',
-        'description'
+        'description_id',
+        'description_en',
     ];
 
     public function mining() {
         return $this->belongsTo(Mining::class);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        $locale = app()->getLocale();
+        
+        return app()->getLocale() == 'en' ? ($this->description_en ?: $this->description_id) : $this->description_id;
     }
 }

@@ -1,35 +1,19 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
-
     <div class="d-flex justify-content-between align-items-center mb-4">
-
         <div>
             <h3 class="fw-bold mb-1">
-                <i class="bi bi-people-fill text-primary"></i>
-                User Management
+                <i class="bi bi-people-fill text-primary"></i> {{ t('User Management') }}
             </h3>
-
-            <small class="text-muted">
-                Kelola seluruh pengguna aplikasi CCR-ID
-            </small>
+            <small class="text-muted">{{ t('Kelola seluruh pengguna aplikasi CCR-ID') }}</small>
         </div>
-
-        <a href="{{ route('admin.users.create') }}"
-            class="btn btn-primary">
-
-            <i class="bi bi-plus-circle"></i>
-            Tambah User
-
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> {{ t('Tambah User') }}
         </a>
-
     </div>
-
     <div class="row mb-4">
-
-    <div class="col-md-4">
+        <div class="col-md-4">
 
         <div class="card border-0 shadow-sm">
 
@@ -41,7 +25,7 @@
 
                         <small class="text-muted">
 
-                            Total User
+                            {{ t('Total User') }}
 
                         </small>
 
@@ -75,7 +59,7 @@
 
                         <small class="text-muted">
 
-                            Admin
+                            {{ t('Admin') }}
 
                         </small>
 
@@ -109,7 +93,7 @@
 
                         <small class="text-muted">
 
-                            User
+                            {{ t('User') }}
 
                         </small>
 
@@ -151,7 +135,7 @@
                                 name="keyword"
                                 value="{{ $keyword }}"
                                 class="form-control"
-                                placeholder="Cari nama atau email">
+                                placeholder="{{ t('Cari nama atau email') }}">
 
                             <button class="btn btn-primary">
 
@@ -163,15 +147,15 @@
 
                         <div class="mt-2 text-muted">
 
-    Menampilkan
+    {{ t('Menampilkan') }}
 
     <b>{{ $users->count() }}</b>
 
-    dari
+    {{ t('dari') }}
 
     <b>{{ $users->total() }}</b>
 
-    pengguna.
+    {{ t('pengguna.') }}
 
 </div>
 
@@ -191,17 +175,17 @@
 
                 <tr>
 
-                    <th>Nama</th>
+                    <th>{{ t('Nama') }}</th>
 
-                    <th>Email</th>
+                    <th>{{ t('Email') }}</th>
 
-                    <th width="130">Role</th>
+                    <th width="130">{{ t('Role') }}</th>
 
-                    <th width="180">Dibuat</th>
+                    <th width="180">{{ t('Dibuat') }}</th>
 
                     <th width="180" class="text-center">
 
-                        Action
+                        {{ t('Action') }}
 
                     </th>
 
@@ -259,7 +243,7 @@
 
     <i class="bi bi-shield-lock-fill"></i>
 
-    Admin
+    {{ t('Admin') }}
 
 </span>
 
@@ -269,7 +253,7 @@
 
     <i class="bi bi-person-fill"></i>
 
-    User
+    {{ t('User') }}
 
 </span>
 
@@ -279,29 +263,23 @@
 
                         <td>
 
-                            {{ $user->created_at->format('d M Y') }}
+                            {{ $user->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}
 
                         </td>
 
                         <td class="text-center">
 
-                            <a href="{{ route('admin.users.edit',$user) }}"
-                                class="btn btn-warning btn-sm">
-
+                            <a href="{{ route('admin.users.edit',$user) }}" class="btn btn-warning btn-sm" title="{{ t('Edit') }}">
                                 <i class="bi bi-pencil-square"></i>
-
                             </a>
 
                             <form
-                                action="{{ route('admin.users.destroy',$user) }}"
-                                method="POST"
-                                class="d-inline form-delete">
+                                action="{{ route('admin.users.destroy',$user) }}" method="POST" class="d-inline form-delete">
 
                                 @csrf
                                 @method('DELETE')
 
-                                <button
-                                    class="btn btn-danger btn-sm">
+                                <button class="btn btn-danger btn-sm" title="{{ t('Hapus') }}">
 
                                     <i class="bi bi-trash"></i>
 
@@ -320,7 +298,7 @@
                         <td colspan="6"
                             class="text-center py-5">
 
-                            Tidak ada data.
+                            {{ t('Tidak ada data.') }}
 
                         </td>
 
@@ -358,23 +336,14 @@ document.querySelectorAll('.form-delete').forEach(form=>{
         e.preventDefault();
 
         Swal.fire({
-
-            title:'Hapus user?',
-
-            text:'Data tidak dapat dikembalikan.',
-
+            title:'{{ t("Hapus user?") }}',
+            text:'{{ t("Data tidak dapat dikembalikan.") }}',
             icon:'warning',
-
             showCancelButton:true,
-
             confirmButtonColor:'#d33',
-
             cancelButtonColor:'#6c757d',
-
-            confirmButtonText:'Ya',
-
-            cancelButtonText:'Batal'
-
+            confirmButtonText:'{{ t("Ya") }}',
+            cancelButtonText:'{{ t("Batal") }}'
         }).then((result)=>{
 
             if(result.isConfirmed){
@@ -390,5 +359,4 @@ document.querySelectorAll('.form-delete').forEach(form=>{
 });
 
 </script>
-
 @endpush

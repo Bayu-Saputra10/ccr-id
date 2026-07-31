@@ -17,145 +17,443 @@ class InfrastructureEvidenceSeeder extends Seeder
         $evidences = [
 
         'A1' => [
-            1 => 'Board charter',
-            2 => 'Notulen rapat dewan',
-            3 => 'Annual Report',
-            4 => 'Sustainability Report',
-            5 => 'Lainnya',
-        ],
-        'A2' => [
-            1 => 'Struktur organisasi',
-            2 => 'Job description',
-            3 => 'KPI',
-            4 => 'Laporan manajemen',
-            5 => 'Lainnya',
-        ],
-        'A3' => [
-            1 => 'SK komite',
-            2 => 'TOR',
-            3 => 'Agenda rapat',
-            4 => 'Notulen',
-            5 => 'Laporan rekomendasi',
-            6 => 'Lainnya',
-        ],
-        'A5' => [
-            1 => 'Annual Report',   
-            2 => 'Sustainability Report',
-            3 => 'TCFD/ISSB report',
-            4 => 'Assurance statement',
-            5 => 'Lainnya',
-        ],
+    1 => [
+        'id' => 'Board Charter',
+        'en' => 'Board Charter',
+    ],
+    2 => [
+        'id' => 'Notulen rapat dewan',
+        'en' => 'Board Meeting Minutes',
+    ],
+    3 => [
+        'id' => 'Laporan Tahunan',
+        'en' => 'Annual Report',
+    ],
+    4 => [
+        'id' => 'Laporan Keberlanjutan',
+        'en' => 'Sustainability Report',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'A2' => [
+    1 => [
+        'id' => 'Struktur organisasi',
+        'en' => 'Organizational Structure',
+    ],
+    2 => [
+        'id' => 'Uraian tugas',
+        'en' => 'Job Description',
+    ],
+    3 => [
+        'id' => 'KPI',
+        'en' => 'Key Performance Indicators (KPIs)',
+    ],
+    4 => [
+        'id' => 'Laporan manajemen',
+        'en' => 'Management Report',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'A3' => [
+    1 => [
+        'id' => 'SK komite',
+        'en' => 'Committee Appointment Letter',
+    ],
+    2 => [
+        'id' => 'TOR',
+        'en' => 'Terms of Reference (TOR)',
+    ],
+    3 => [
+        'id' => 'Agenda rapat',
+        'en' => 'Meeting Agenda',
+    ],
+    4 => [
+        'id' => 'Notulen',
+        'en' => 'Meeting Minutes',
+    ],
+    5 => [
+        'id' => 'Laporan rekomendasi',
+        'en' => 'Recommendation Report',
+    ],
+    6 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'A5' => [
+    1 => [
+        'id' => 'Laporan Tahunan',
+        'en' => 'Annual Report',
+    ],
+    2 => [
+        'id' => 'Laporan Keberlanjutan',
+        'en' => 'Sustainability Report',
+    ],
+    3 => [
+        'id' => 'Laporan TCFD/ISSB',
+        'en' => 'TCFD/ISSB Report',
+    ],
+    4 => [
+        'id' => 'Pernyataan Assurance',
+        'en' => 'Assurance Statement',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
 
         'B1' => [
-            1 => 'Risk register',
-            2 => 'Dokumen ERM',
-            3 => 'TCFD disclosure',
-            4 => 'Strategic plan',
-            5 => 'Lainnya',
-        ],
-        'B2' => [
-            1 => 'Business plan',
-            2 => 'CAPEX/OPEX',
-            3 => 'Scenario analysis',
-            4 => 'Laporan keuangan',
-            5 => 'Lainnya',
-        ],
-        'B3' => [
-            1 => 'Climate risk mapping',
-            2 => 'Peta banjir/panas',
-            3 => 'Studi kelayakan proyek',
-            4 => 'Lainnya',
-        ],
-        'B5' => [
-            1 => 'Sustainability Report',
-            2 => 'Peta SDGs',
-            3 => 'ISSB-aligned disclosure',
-            4 => 'Lainnya',
-        ],
+    1 => [
+        'id' => 'Risk Register',
+        'en' => 'Risk Register',
+    ],
+    2 => [
+        'id' => 'Dokumen ERM',
+        'en' => 'ERM Document',
+    ],
+    3 => [
+        'id' => 'Pengungkapan TCFD',
+        'en' => 'TCFD Disclosure',
+    ],
+    4 => [
+        'id' => 'Rencana Strategis',
+        'en' => 'Strategic Plan',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'B2' => [
+    1 => [
+        'id' => 'Rencana Bisnis',
+        'en' => 'Business Plan',
+    ],
+    2 => [
+        'id' => 'CAPEX/OPEX',
+        'en' => 'CAPEX/OPEX',
+    ],
+    3 => [
+        'id' => 'Analisis Skenario',
+        'en' => 'Scenario Analysis',
+    ],
+    4 => [
+        'id' => 'Laporan Keuangan',
+        'en' => 'Financial Statements',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'B3' => [
+    1 => [
+        'id' => 'Pemetaan Risiko Iklim',
+        'en' => 'Climate Risk Mapping',
+    ],
+    2 => [
+        'id' => 'Peta banjir/panas',
+        'en' => 'Flood/Heat Risk Map',
+    ],
+    3 => [
+        'id' => 'Studi Kelayakan Proyek',
+        'en' => 'Project Feasibility Study',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'B5' => [
+    1 => [
+        'id' => 'Laporan Keberlanjutan',
+        'en' => 'Sustainability Report',
+    ],
+    2 => [
+        'id' => 'Peta SDGs',
+        'en' => 'SDGs Mapping',
+    ],
+    3 => [
+        'id' => 'Pengungkapan selaras ISSB',
+        'en' => 'ISSB-aligned Disclosure',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
 
         'C1' => [
-            1 => 'Climate risk assessment',
-            2 => 'Data IPCC/BMKG/BNPB',
-            3 => 'Peta risiko aset',
-            4 => 'Lainnya',
-        ],
-        'C2' => [
-            1 => 'SOP risiko iklim',
-            2 => 'Manual ERM',
-            3 => 'Dashboard risiko',
-            4 => 'BCP',
-            5 => 'Lainnya',
-        ],
-        'C3' => [
-            1 => 'ERM Framework',
-            2 => 'Risk matrix',
-            3 => 'Laporan risiko ke dewan',
-            4 => 'Lainnya',
-        ],
-        'C4' => [
-            1 => 'Annual Report',
-            2 => 'Sustainability Report',
-            3 => 'TCFD section',
-            4 => 'Assurance Report',
-            5 => 'Lainnya',
-        ],
+    1 => [
+        'id' => 'Penilaian risiko iklim',
+        'en' => 'Climate Risk Assessment',
+    ],
+    2 => [
+        'id' => 'Data IPCC/BMKG/BNPB',
+        'en' => 'IPCC/BMKG/BNPB Data',
+    ],
+    3 => [
+        'id' => 'Peta risiko aset',
+        'en' => 'Asset Risk Map',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'C2' => [
+    1 => [
+        'id' => 'SOP risiko iklim',
+        'en' => 'Climate Risk SOP',
+    ],
+    2 => [
+        'id' => 'Manual ERM',
+        'en' => 'ERM Manual',
+    ],
+    3 => [
+        'id' => 'Dashboard risiko',
+        'en' => 'Risk Dashboard',
+    ],
+    4 => [
+        'id' => 'BCP',
+        'en' => 'Business Continuity Plan (BCP)',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'C3' => [
+    1 => [
+        'id' => 'Framework ERM',
+        'en' => 'ERM Framework',
+    ],
+    2 => [
+        'id' => 'Matriks risiko',
+        'en' => 'Risk Matrix',
+    ],
+    3 => [
+        'id' => 'Laporan risiko ke dewan',
+        'en' => 'Risk Report to the Board',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'C4' => [
+    1 => [
+        'id' => 'Laporan Tahunan',
+        'en' => 'Annual Report',
+    ],
+    2 => [
+        'id' => 'Laporan Keberlanjutan',
+        'en' => 'Sustainability Report',
+    ],
+    3 => [
+        'id' => 'Bagian TCFD',
+        'en' => 'TCFD Section',
+    ],
+    4 => [
+        'id' => 'Laporan Assurance',
+        'en' => 'Assurance Report',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
 
         'D1' => [
-            1 => 'Inventaris GRK',
-            2 => 'Laporan verifikasi',
-            3 => 'CDP response',
-            4 => 'Sustainability Report',
-            5 => 'Lainnya',
-        ],
-        'D2' => [
-            1 => 'Data operasional transport/utilitas',
-            2 => 'Inventaris emisi',
-            3 => 'Lainnya',
-        ],
-        'D4' => [
-            1 => 'Data kinerja',
-            2 => 'Inventaris emisi',
-            3 => 'CAPEX',
-            4 => 'Laporan verifikasi',
-            5 => 'Lainnya',
-        ],
-        'D5' => [
-            1 => 'SOP darurat',
-            2 => 'Sistem cadangan energi',
-            3 => 'Laporan kesiapsiagaan',
-            4 => 'Lainnya',
-        ],
-        'D6' => [
-            1 => 'CAPEX adaptasi',
-            2 => 'Dokumen proyek resilien',
-            3 => 'Standar desain',
-            4 => 'Lainnya',
-        ],
+    1 => [
+        'id' => 'Inventaris GRK',
+        'en' => 'GHG Inventory',
+    ],
+    2 => [
+        'id' => 'Laporan verifikasi',
+        'en' => 'Verification Report',
+    ],
+    3 => [
+        'id' => 'Respons CDP',
+        'en' => 'CDP Response',
+    ],
+    4 => [
+        'id' => 'Laporan Keberlanjutan',
+        'en' => 'Sustainability Report',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'D2' => [
+    1 => [
+        'id' => 'Data operasional transportasi/utilitas',
+        'en' => 'Transportation/Utility Operational Data',
+    ],
+    2 => [
+        'id' => 'Inventaris emisi',
+        'en' => 'Emission Inventory',
+    ],
+    3 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'D4' => [
+    1 => [
+        'id' => 'Data kinerja',
+        'en' => 'Performance Data',
+    ],
+    2 => [
+        'id' => 'Inventaris emisi',
+        'en' => 'Emission Inventory',
+    ],
+    3 => [
+        'id' => 'CAPEX',
+        'en' => 'CAPEX',
+    ],
+    4 => [
+        'id' => 'Laporan verifikasi',
+        'en' => 'Verification Report',
+    ],
+    5 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'D5' => [
+    1 => [
+        'id' => 'SOP darurat',
+        'en' => 'Emergency SOP',
+    ],
+    2 => [
+        'id' => 'Sistem cadangan energi',
+        'en' => 'Backup Energy System',
+    ],
+    3 => [
+        'id' => 'Laporan kesiapsiagaan',
+        'en' => 'Preparedness Report',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'D6' => [
+    1 => [
+        'id' => 'CAPEX adaptasi',
+        'en' => 'Adaptation CAPEX',
+    ],
+    2 => [
+        'id' => 'Dokumen proyek resilien',
+        'en' => 'Resilient Infrastructure Project Document',
+    ],
+    3 => [
+        'id' => 'Standar desain',
+        'en' => 'Design Standards',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
 
         'E3' => [
-            1 => 'Kebijakan SDM',
-            2 => 'Program pekerja terdampak',
-            3 => 'Laporan sosial',
-            4 => 'Lainnya',
-        ],
-        'E4' => [
-            1 => 'Laporan CSR',
-            2 => 'Laporan dampak sosial',
-            3 => 'MoU kemitraan',
-            4 => 'Lainnya',
-        ],
-        'E5' => [
-            1 => 'Sistem pengaduan',
-            2 => 'Laporan keluhan',
-            3 => 'Portal publik',
-            4 => 'Lainnya',
-        ],
-        'E6' => [
-            1 => 'MoU pemerintah daerah',
-            2 => 'Program ketahanan wilayah',
-            3 => 'Laporan dampak',
-            4 => 'Lainnya',
-        ],
+    1 => [
+        'id' => 'Kebijakan SDM',
+        'en' => 'Human Resources Policy',
+    ],
+    2 => [
+        'id' => 'Program pekerja terdampak',
+        'en' => 'Affected Worker Support Program',
+    ],
+    3 => [
+        'id' => 'Laporan sosial',
+        'en' => 'Social Impact Report',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'E4' => [
+    1 => [
+        'id' => 'Laporan CSR',
+        'en' => 'CSR Report',
+    ],
+    2 => [
+        'id' => 'Laporan dampak sosial',
+        'en' => 'Social Impact Report',
+    ],
+    3 => [
+        'id' => 'MoU kemitraan',
+        'en' => 'Partnership MoU',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'E5' => [
+    1 => [
+        'id' => 'Sistem pengaduan',
+        'en' => 'Grievance Mechanism',
+    ],
+    2 => [
+        'id' => 'Laporan keluhan',
+        'en' => 'Grievance Report',
+    ],
+    3 => [
+        'id' => 'Portal publik',
+        'en' => 'Public Portal',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
+
+'E6' => [
+    1 => [
+        'id' => 'MoU pemerintah daerah',
+        'en' => 'Local Government MoU',
+    ],
+    2 => [
+        'id' => 'Program ketahanan wilayah',
+        'en' => 'Regional Resilience Program',
+    ],
+    3 => [
+        'id' => 'Laporan dampak',
+        'en' => 'Impact Report',
+    ],
+    4 => [
+        'id' => 'Lainnya',
+        'en' => 'Others',
+    ],
+],
 
         ];
 
@@ -169,12 +467,13 @@ class InfrastructureEvidenceSeeder extends Seeder
             }
 
             foreach ($items as $value => $description) {
-                InfrastructureEvidence::create([
-                    'infrastructure_id' => $indicator->id,
-                    'value' => $value,
-                    'description' => $description,
-                ]);
-            }
+    InfrastructureEvidence::create([
+        'infrastructure_id' => $indicator->id,
+        'value' => $value,
+        'description_id' => $description['id'],
+        'description_en' => $description['en'],
+    ]);
+}
         }
     }
 }

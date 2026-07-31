@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Assessment;
+use App\Models\Subsector;
 use App\Models\Infrastructure;
 use App\Models\Manufacturing;
 use App\Models\Agriculture;
@@ -182,6 +183,22 @@ $query->orderBy($sort, $direction);
         return view('assessments.create');
     }
 
+    public function getSubsectors($sector)
+{
+    $subsectors = Subsector::where('sector', $sector)
+        ->orderBy('name_id')
+        ->get();
+
+    return response()->json(
+        $subsectors->map(function ($item) {
+            return [
+                'id'   => $item->id,
+                'name' => $item->name, // memakai accessor bilingual
+            ];
+        })
+    );
+}
+
     public function store(Request $request) {
         $request->validate([
             'sector' => 'required',
@@ -303,7 +320,7 @@ $query->orderBy($sort, $direction);
 
 public function destroy(Assessment $assessment) {
     if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
-            abort(403, 'Anda tidak memiliki akses menghapus assessment');
+            abort(403, t('Anda tidak memiliki akses menghapus assessment'));
         }
     
     AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
@@ -312,7 +329,7 @@ public function destroy(Assessment $assessment) {
 
     return redirect()
         ->route('assessments.index')
-        ->with('success', 'Data berhasil dihapus.');
+        ->with('success', t('Data berhasil dihapus.'));
 }
 
     public function report(Assessment $assessment) {
@@ -356,10 +373,21 @@ public function destroy(Assessment $assessment) {
         $foreignKey = strtolower($assessment->sector) . '_id';
 
         foreach ($answers as $answer) {
-            $answer->indicator = $indicatorModel::find($answer->indicator_id);
-            $answer->score_description = $scoreModel::where($foreignKey, $answer->indicator_id)->where('score', $answer->score)->value('description');
-            $answer->evidence_description = $evidenceModel::where($foreignKey, $answer->indicator_id)->where('value', $answer->evidence)->value('description');
-        }
+
+    $answer->indicator = $indicatorModel::find($answer->indicator_id);
+
+    $score = $scoreModel::where($foreignKey, $answer->indicator_id)
+        ->where('score', $answer->score)
+        ->first();
+
+    $evidence = $evidenceModel::where($foreignKey, $answer->indicator_id)
+        ->where('value', $answer->evidence)
+        ->first();
+
+    $answer->score_description = $score?->description;
+
+    $answer->evidence_description = $evidence?->description;
+}
 
         return view('assessments.show', compact('assessment', 'answers', 'averages', 'dimensionPerformance'));
     }

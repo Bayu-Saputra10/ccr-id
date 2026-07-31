@@ -11,6 +11,14 @@ class InterpretationResult extends Model
         'category',
         'score_min',
         'score_max',
-        'description'
+        'description_id',
+    'description_en',
     ];
+
+    public function getDescriptionAttribute()
+{
+    return app()->getLocale() === 'en'
+        ? ($this->description_en ?: $this->description_id)
+        : $this->description_id;
+}
 }

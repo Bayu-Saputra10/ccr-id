@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('category');
             $table->decimal('score_min', 8,4);
             $table->decimal('score_max', 8,4);
-            $table->longText('management_recommendation');
-            $table->string('action_focus');
+            $table->longText('management_recommendation_id');
+            $table->longText('management_recommendation_en');
+            $table->string('action_focus_id');
+            $table->string('action_focus_en');
 
             $table->timestamps();
         });

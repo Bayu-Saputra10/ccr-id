@@ -23,8 +23,8 @@ class AdminSeeder extends Seeder
 
         User::firstOrCreate([
             'name' => 'Viewer',
-            'email' => 'viewer@ccrid.com',
-            'password' => Hash::make('viewer_ccr'),
+            'email' => 'user001@ccrid.com',
+            'password' => Hash::make('user_ccrid1'),
             'role' => 'viewer',
         ]);
     }

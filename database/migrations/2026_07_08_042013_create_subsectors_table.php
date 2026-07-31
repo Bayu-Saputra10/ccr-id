@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('sector');
-            $table->string('name');
+            $table->string('name_id');
+            $table->string('name_en');
             
             $table->timestamps();
         });
