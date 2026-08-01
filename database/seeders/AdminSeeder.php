@@ -22,9 +22,37 @@ class AdminSeeder extends Seeder
         ]);
 
         User::firstOrCreate([
-            'name' => 'Viewer',
+            'name' => 'User',
             'email' => 'user001@ccrid.com',
             'password' => Hash::make('user_ccrid1'),
+            'role' => 'viewer',
+        ]);
+
+        User::firstOrCreate([
+            'name' => 'Budi',
+            'email' => 'user002@ccrid.com',
+            'password' => Hash::make('user_ccrid2'),
+            'role' => 'viewer',
+        ]);
+
+        User::firstOrCreate([
+            'name' => 'Andi',
+            'email' => 'user003@ccrid.com',
+            'password' => Hash::make('user_ccrid3'),
+            'role' => 'viewer',
+        ]);
+
+        User::firstOrCreate([
+            'name' => 'Dina',
+            'email' => 'user004@ccrid.com',
+            'password' => Hash::make('user_ccrid4'),
+            'role' => 'viewer',
+        ]);
+
+        User::firstOrCreate([
+            'name' => 'Ani',
+            'email' => 'user005@ccrid.com',
+            'password' => Hash::make('user_ccrid5'),
             'role' => 'viewer',
         ]);
     }
