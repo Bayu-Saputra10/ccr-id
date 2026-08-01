@@ -24,6 +24,36 @@
         {{-- kanan --}}
         <div class="col-lg-6 login-right">
             <div class="login-form">
+
+                <div class="d-flex justify-content-end pe-1 mb-2">
+
+    <div class="btn-group btn-group-sm shadow-sm" role="group">
+
+        <div class="border bg-light d-flex align-items-center justify-content-center px-2"
+     style="width:38px; cursor:default; user-select:none;">
+
+    <i class="bi bi-globe2 fs-5"></i>
+
+</div>
+
+        <a href="{{ route('language.switch','id') }}"
+           class="btn btn-sm px-2 {{ app()->getLocale()=='id'
+                ? 'btn-success'
+                : 'btn-outline-secondary' }}">
+            ID
+        </a>
+
+        <a href="{{ route('language.switch','en') }}"
+           class="btn btn-sm px-2 {{ app()->getLocale()=='en'
+                ? 'btn-success'
+                : 'btn-outline-secondary' }}">
+            EN
+        </a>
+
+    </div>
+
+</div>
+
                 <img src="{{ asset('assets/images/Logo.jpeg') }}" alt="CCR-ID" class="login-logo-right">
                     <h2>{{ t('Selamat Datang') }}</h2>
                     <p>{{ t('Silahkan login ke CCR-ID') }}</p>

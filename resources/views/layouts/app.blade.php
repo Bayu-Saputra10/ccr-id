@@ -103,7 +103,7 @@
 
     <h6 class="dropdown-header">
 
-        🌐 {{ t('Language') }}
+        <i class="bi bi-globe2 me-2"></i> {{ t('Language') }}
 
     </h6>
 
