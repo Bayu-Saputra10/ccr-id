@@ -95,56 +95,6 @@
                 {{ t('Profile') }}
             </a>
         </li>
-
-        {{-- bahasa --}}
-        <li><hr class="dropdown-divider"></li>
-
-<li>
-
-    <h6 class="dropdown-header">
-
-        <i class="bi bi-globe2 me-2"></i> {{ t('Language') }}
-
-    </h6>
-
-</li>
-
-<li>
-
-    <a class="dropdown-item"
-
-       href="{{ route('language.switch','id') }}">
-
-        🇮🇩 Bahasa Indonesia
-
-        @if(app()->getLocale()=='id')
-
-            <i class="bi bi-check-lg float-end"></i>
-
-        @endif
-
-    </a>
-
-</li>
-
-<li>
-
-    <a class="dropdown-item"
-
-       href="{{ route('language.switch','en') }}">
-
-        🇺🇸 English
-
-        @if(app()->getLocale()=='en')
-
-            <i class="bi bi-check-lg float-end"></i>
-
-        @endif
-
-    </a>
-
-</li>
-
         <li>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf

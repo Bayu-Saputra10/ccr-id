@@ -23,55 +23,78 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
+{
+    try {
+
         $request->authenticate();
 
-        try {
+    } catch (\Illuminate\Validation\ValidationException $e) {
 
-    $request->authenticate();
+        return back()
+            ->withErrors([
+                'email' => 'Email atau password yang Anda masukkan salah.'
+            ])
+            ->onlyInput('email');
 
-} catch (\Illuminate\Validation\ValidationException $e) {
-
-    return back()
-        ->withErrors([
-            'email' => 'Email atau password yang Anda masukkan salah.'
-        ])
-        ->onlyInput('email');
-
-}
-
-$request->session()->regenerate();
-
-$user = auth()->user();
-
-app()->setLocale($user->language);
-
-session([
-    'locale'=>$user->language
-]);
-
-cookie()->queue(
-    'locale',
-    $user->language,
-    60*24*365
-);
-
-if (auth()->user()->role === 'admin') {
-    return redirect()->route('admin.dashboard');
-}
-
-return redirect()->route('dashboard');
-
-        // $user = auth()->user();
-        
-        // if (auth()->user()->role == 'admin') {
-        //     return redirect()->route('admin.dashboard');
-        // }
-        // if ($user->role === 'viewer') {
-        //     return redirect()->route('dashboard');
-        // }
-        // return redirect('/');
     }
+
+    $request->session()->regenerate();
+
+    $user = Auth::user();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gunakan bahasa yang dipilih sebelum login
+    |--------------------------------------------------------------------------
+    */
+
+    $locale = session('locale')
+        ?? request()->cookie('locale')
+        ?? $user->language
+        ?? config('app.locale');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Simpan ke session
+    |--------------------------------------------------------------------------
+    */
+
+    session([
+        'locale' => $locale
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Simpan ke cookie
+    |--------------------------------------------------------------------------
+    */
+
+    cookie()->queue(
+        'locale',
+        $locale,
+        60 * 24 * 365
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Simpan ke database
+    |--------------------------------------------------------------------------
+    */
+
+    if ($user->language != $locale) {
+
+        $user->language = $locale;
+
+        $user->save();
+
+    }
+
+    app()->setLocale($locale);
+
+    return $user->role === 'admin'
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('dashboard');
+}
 
     /**
      * Destroy an authenticated session.

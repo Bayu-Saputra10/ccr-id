@@ -8,31 +8,28 @@ use Illuminate\Support\Facades\Cookie;
 
 class LanguageController extends Controller
 {
-    public function switch(Request $request,$locale)
-    {
-        abort_unless(in_array($locale,['id','en']),404);
+    public function switch(Request $request, $locale)
+{
+    abort_unless(in_array($locale, ['id', 'en']), 404);
 
-        session(['locale'=>$locale]);
+    session([
+        'locale' => $locale
+    ]);
 
-        Cookie::queue('locale',$locale,60*24*365);
+    Cookie::queue(
+        'locale',
+        $locale,
+        60 * 24 * 365
+    );
 
-        if(Auth::check()){
+    if (Auth::check()) {
 
-            $user=Auth::user();
+        Auth::user()->update([
+            'language' => $locale
+        ]);
 
-            $user->language=$locale;
-
-            $user->save();
-
-            Auth::logout();
-
-            $request->session()->invalidate();
-
-            $request->session()->regenerateToken();
-
-            return redirect()->route('login');
-        }
-
-        return redirect()->back();
     }
+
+    return back();
+}
 }
