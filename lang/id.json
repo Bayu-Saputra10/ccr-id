@@ -14,6 +14,7 @@
     "Silahkan lengkapi seluruh indikator terlebih dahulu.":"Silahkan lengkapi seluruh indikator terlebih dahulu.",
     "Ok":"Ok",
     "Language": "Bahasa",
+    "User": "User",
 
     "Informasi Dasar Perusahaan": "Informasi Dasar Perusahaan",
     "Informasi Assessment": "Informasi Assessment",
@@ -153,7 +154,6 @@
     "Dashboard Admin": "Dashboard Admin",
     "Total User": "Total User",
     "Total Admin": "Total Admin",
-    "Total Viewer": "Total Viewer",
     "Assessment": "Assessment",
     "Draft": "Draft",
     "Completed": "Completed",

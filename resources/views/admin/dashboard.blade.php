@@ -14,7 +14,7 @@
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h6>{{ t('Total Admin') }}</h6>
+                    <h6>{{ t('Admin') }}</h6>
                     <h2>{{ $totalAdmin }}</h2>
                 </div>
             </div>
@@ -22,7 +22,7 @@
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h6>{{ t('Total Viewer') }}</h6>
+                    <h6>{{ t('User') }}</h6>
                     <h2>{{ $totalViewer }}</h2>
                 </div>
             </div>
