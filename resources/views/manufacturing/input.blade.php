@@ -58,7 +58,7 @@
                     
                     <td>
                         <select class="form-control" name="evidence[{{ $indicator->id }}]">
-                            <option value="">{{ t('Pilih Sumber Bukti') }}</option>
+                            <option value="" selected disabled>{{ t('Pilih Sumber Bukti') }}</option>
                             @foreach($indicator->evidences as $evidence)
                                 <option value="{{ $evidence->value }}" {{ old('evidence.'.$indicator->id, optional($indicator->answer)->evidence)==$evidence->value ? 'selected' : '' }}>
                                     {{ $evidence->description }}
