@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Assessment;
 use App\Models\Subsector;
 use App\Models\Infrastructure;
@@ -57,10 +58,21 @@ class AssessmentController extends Controller
         }
     ]);
 
-    // Hak akses
-    if (auth()->user()->role != 'admin') {
-        $query->where('user_id', auth()->id());
+    // ==========================
+// FILTER USER (ADMIN)
+// ==========================
+
+if(auth()->user()->role=='admin'){
+
+    if($request->filled('user_id')){
+        $query->where('user_id',$request->user_id);
     }
+
+}else{
+
+    $query->where('user_id',auth()->id());
+
+}
 
     // ==========================
     // SEARCH
@@ -84,14 +96,14 @@ class AssessmentController extends Controller
     // FILTER TAHUN
     // ==========================
 
-    if ($request->filled('year')) {
+if ($request->filled('assessment_date')) {
 
-        $query->whereYear(
-            'assessment_date',
-            $request->year
-        );
+    $query->whereDate(
+        'assessment_date',
+        $request->assessment_date
+    );
 
-    }
+}
 
     // ==========================
     // FILTER SEKTOR
@@ -169,14 +181,42 @@ $query->orderBy($sort, $direction);
     // Dropdown Sektor
     $sectors = Assessment::SECTORS;
 
+    // ==========================
+// DATA USER UNTUK ADMIN
+// ==========================
+
+$users = collect();
+
+if (auth()->user()->role == 'admin') {
+
+    $users = User::withCount('assessments')
+        ->orderByRaw("role='admin' DESC")
+        ->orderBy('name')
+        ->get();
+
     return view(
-        'assessments.index',
+        'admin.index',
         compact(
             'assessments',
             'years',
-            'sectors'
+            'sectors',
+            'users'
         )
     );
+}
+
+// ==========================
+// VIEW USER
+// ==========================
+
+return view(
+    'assessments.index',
+    compact(
+        'assessments',
+        'years',
+        'sectors'
+    )
+);
     }
 
     public function create() {

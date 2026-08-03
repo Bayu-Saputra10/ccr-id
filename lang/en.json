@@ -7,6 +7,9 @@
     "Perusahaan": "Company",
     "Total Score": "Total Score",
     "Language": "Language",
+    "Daftar User": "User List",
+    "Semua User": "All Users",
+    "Cari User...": "Find User...",
 
     "CCR-ID":"CCR-ID",
     "Corporate Climate Resilience":"Corporate Climate Resilience",
@@ -292,5 +295,23 @@
     "Format file harus PDF, JPG, JPEG atau PNG.": "The file must be in PDF, JPG, JPEG, or PNG format.",
     "Score belum diisi": "Score has not been selected",
     "Sumber Bukti belum diisi": "Evidence Source has not been selected",
-    "Draft berhasil disimpan.": "Draft saved successfully."
+    "Draft berhasil disimpan.": "Draft saved successfully.",
+
+    "Upload File": "Upload File",
+    "Drag & Drop atau Klik": "Drag & Drop or Click",
+    "Ctrl + V untuk Paste Gambar": "Press Ctrl + V to Paste an Image",
+    "PDF, JPG, JPEG, PNG": "PDF, JPG, JPEG, PNG",
+    "Maksimal 2 MB": "Maximum 2 MB",
+    "File berhasil dipilih": "File selected successfully",
+
+    "Upload File": "Upload File",
+    "Maks. 2 MB": "Maximum 2 MB",
+    "Drag & Drop • Klik • Ctrl + V": "Drag & Drop • Click • Ctrl + V",
+
+    "Format File Tidak Didukung": "Unsupported File Format",
+    "Hanya file PDF, JPG, JPEG, dan PNG yang diperbolehkan.": "Only PDF, JPG, JPEG, and PNG files are allowed.",
+    "Ukuran File Terlalu Besar": "File Size Too Large",
+    "Ukuran file maksimal adalah 2 MB.": "Maximum file size is 2 MB.",
+
+    "File berhasil dipilih": "File selected successfully"
 }

@@ -15,6 +15,9 @@
     "Ok":"Ok",
     "Language": "Bahasa",
     "User": "User",
+    "Daftar User": "Daftar User",
+    "Semua User": "Semua User",
+    "Cari User...": "Cari User...",
 
     "Informasi Dasar Perusahaan": "Informasi Dasar Perusahaan",
     "Informasi Assessment": "Informasi Assessment",
@@ -299,5 +302,24 @@
     "Format file harus PDF, JPG, JPEG atau PNG.": "Format file harus PDF, JPG, JPEG atau PNG.",
     "Score belum diisi": "Score belum diisi",
     "Sumber Bukti belum diisi": "Sumber Bukti belum diisi",
-    "Draft berhasil disimpan.": "Draft berhasil disimpan."
+    "Draft berhasil disimpan.": "Draft berhasil disimpan.",
+
+    "Upload File": "Upload File",
+    "Drag & Drop atau Klik": "Seret & Lepas atau Klik",
+    "Ctrl + V untuk Paste Gambar": "Ctrl + V untuk Tempel Gambar",
+    "PDF, JPG, JPEG, PNG": "PDF, JPG, JPEG, PNG",
+    "Maksimal 2 MB": "Maksimal 2 MB",
+    "File berhasil dipilih": "File berhasil dipilih",
+
+    "Upload File": "Upload File",
+    "Maks. 2 MB": "Maks. 2 MB",
+    "Drag & Drop • Klik • Ctrl + V": "Drag & Drop • Klik • Ctrl + V",
+
+    "Format File Tidak Didukung": "Format File Tidak Didukung",
+    "Hanya file PDF, JPG, JPEG, dan PNG yang diperbolehkan.": "Hanya file PDF, JPG, JPEG, dan PNG yang diperbolehkan.",
+    "Ukuran File Terlalu Besar": "Ukuran File Terlalu Besar",
+    "Ukuran file maksimal adalah 2 MB.": "Ukuran file maksimal adalah 2 MB.",
+
+    "File berhasil dipilih": "File berhasil dipilih"
+
 }
