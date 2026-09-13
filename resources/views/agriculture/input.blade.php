@@ -65,59 +65,34 @@
                             @endforeach
                         </select>
                     </td>
-                        <td>
-
-<div class="upload-area">
-
-    <input
-        type="file"
-        name="evidence_file[{{ $indicator->id }}]"
-        class="evidence-file d-none"
-        accept=".pdf,.jpg,.jpeg,.png">
-
-    <div class="upload-box">
-<i class="bi bi-cloud-arrow-up text-primary fs-4"></i>
-
-    <div class="fw-semibold small mt-1">
-        {{ t('Upload File') }}
-    </div>
-
-    <div class="text-muted mt-1" style="font-size:10px; line-height:1.3;">
-        {{ t('PDF, JPG, JPEG, PNG') }}<br>
-        {{ t('Maks. 2 MB') }}
-    </div>
-
-    <div class="text-primary mt-2" style="font-size:10px;">
-        {{ t('Drag & Drop / Klik') }}
-    </div>
-
-    <div class="text-muted" style="font-size:9px;">
-        {{ t('Ctrl + V') }}
-    </div>
-
-    </div>
-
-    <div class="upload-preview mt-2 text-center">
-
-        @if(optional($indicator->answer)->evidence_file)
-
-            <a href="{{ asset('storage/'.optional($indicator->answer)->evidence_file) }}"
-               target="_blank"
-               class="btn btn-sm btn-outline-primary">
-
-                <i class="bi bi-eye"></i>
-
-                {{ t('Lihat File') }}
-
-            </a>
-
-        @endif
-
-    </div>
-
-</div>
-
-</td>
+                    <td>
+                        <div class="upload-area">
+                            <input type="file" name="evidence_file[{{ $indicator->id }}]" class="evidence-file d-none" accept=".pdf,.jpg,.jpeg,.png">
+                            <div class="upload-box">
+                                <i class="bi bi-cloud-arrow-up text-primary fs-4"></i>
+                                <div class="fw-semibold small mt-1">
+                                    {{ t('Upload File') }}
+                                </div>
+                                <div class="text-muted mt-1" style="font-size:10px; line-height:1.3;">
+                                    {{ t('PDF, JPG, JPEG, PNG') }}<br>
+                                    {{ t('Maks. 2 MB') }}
+                                </div>
+                                <div class="text-primary mt-2" style="font-size:10px;">
+                                    {{ t('Drag & Drop / Klik') }}
+                                </div>
+                                <div class="text-muted" style="font-size:9px;">
+                                    {{ t('Ctrl + V') }}
+                                </div>
+                            </div>
+                            <div class="upload-preview mt-2 text-center">
+                                @if(optional($indicator->answer)->evidence_file)
+                                <a href="{{ asset('storage/'.optional($indicator->answer)->evidence_file) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> {{ t('Lihat File') }}
+                                </a>
+                                @endif
+                            </div>
+                        </div>
+                    </td>
                     <td>
                         <textarea class="form-control" rows="2" name="note[{{ $indicator->id }}]">{{ old('note.'.$indicator->id, optional($indicator->answer)->note) }}</textarea>
                     </td>
@@ -158,159 +133,89 @@
 </div>
 @endforeach
 @push('scripts')
-
 <script>
-
 document.addEventListener('DOMContentLoaded',function(){
-
-const MAX=2*1024*1024;
-
-const allowed=['pdf','jpg','jpeg','png'];
-
-document.querySelectorAll('.upload-area').forEach(function(area){
-
-const input=area.querySelector('.evidence-file');
-
-const box=area.querySelector('.upload-box');
-
-box.onclick=function(){
-
-input.click();
-
-};
-
-function validate(file){
-
-const ext=file.name.split('.').pop().toLowerCase();
-
-if(!allowed.includes(ext)){
-
-Swal.fire({
-    icon: 'warning',
-    title: '{{ t("Format File Tidak Didukung") }}',
-    text: '{{ t("Hanya file PDF, JPG, JPEG, dan PNG yang diperbolehkan.") }}'
-});
-
-return false;
-
-}
-
-if(file.size>MAX){
-
-Swal.fire({
-    icon: 'warning',
-    title: '{{ t("Ukuran File Terlalu Besar") }}',
-    text: '{{ t("Ukuran file maksimal adalah 2 MB.") }}'
-});
-
-return false;
-
-}
-
-return true;
-
-}
-
-function setFile(file){
-
-if(!validate(file)) return;
-
-const dt=new DataTransfer();
-
-dt.items.add(file);
-
-input.files=dt.files;
-const preview = area.querySelector('.upload-preview');
-
-box.innerHTML = `
-<i class="bi bi-check-circle-fill text-success fs-4"></i>
-
-<div class="small fw-semibold mt-1 text-truncate" title="${file.name}">
-    ${file.name}
-</div>
-
-<div style="font-size:11px;" class="text-muted">
-    ${(file.size/1024).toFixed(1)} KB
-</div>
-`;
-
-const url = URL.createObjectURL(file);
-
-preview.innerHTML = `
-<a href="${url}"
-   target="_blank"
-   class="btn btn-sm btn-outline-primary mt-2">
-
-    <i class="bi bi-eye"></i>
-
-    {{ t('Lihat File') }}
-
-</a>
-`;
-
-}
-
-input.onchange=function(){
-
-if(this.files.length){
-
-setFile(this.files[0]);
-
-}
-
-};
-
-box.addEventListener('dragover',function(e){
-
-e.preventDefault();
-
-box.classList.add('dragover');
-
-});
-
-box.addEventListener('dragleave',function(){
-
-box.classList.remove('dragover');
-
-});
-
-box.addEventListener('drop',function(e){
-
-e.preventDefault();
-
-box.classList.remove('dragover');
-
-if(e.dataTransfer.files.length){
-
-setFile(e.dataTransfer.files[0]);
-
-}
-
-});
-
-box.addEventListener('paste',function(e){
-
-const items=e.clipboardData.items;
-
-for(let item of items){
-
-if(item.kind==='file'){
-
-setFile(item.getAsFile());
-
-break;
-
-}
-
-}
-
-});
-
-});
-
-});
-
-</script>
-
-@endpush
-@endsection
+    const MAX=2*1024*1024;
+    const allowed=['pdf','jpg','jpeg','png'];
+    document.querySelectorAll('.upload-area').forEach(function(area){
+        const input=area.querySelector('.evidence-file');
+        const box=area.querySelector('.upload-box');
+        
+        box.onclick=function(){
+            input.click();
+        };
+        
+        function validate(file){
+            const ext=file.name.split('.').pop().toLowerCase();
+            if(!allowed.includes(ext)){
+                Swal.fire({
+                    icon: 'warning',
+                    title: '{{ t("Format File Tidak Didukung") }}',
+                    text: '{{ t("Hanya file PDF, JPG, JPEG, dan PNG yang diperbolehkan.") }}'
+                });
+                return false;
+            }
+            
+            if(file.size>MAX){
+                Swal.fire({
+                    icon: 'warning',
+                    title: '{{ t("Ukuran File Terlalu Besar") }}',
+                    text: '{{ t("Ukuran file maksimal adalah 2 MB.") }}'
+                });
+                return false;
+            }
+            return true;
+        }
+        
+        function setFile(file){
+            if(!validate(file)) return;
+            const dt=new DataTransfer();
+            dt.items.add(file);
+            input.files=dt.files;
+            const preview = area.querySelector('.upload-preview');
+            box.innerHTML = `<i class="bi bi-check-circle-fill text-success fs-4"></i>
+            <div class="small fw-semibold mt-1 text-truncate" title="${file.name}">${file.name}</div>
+            <div style="font-size:11px;" class="text-muted">${(file.size/1024).toFixed(1)} KB</div>`;
+            
+            const url = URL.createObjectURL(file);
+            preview.innerHTML = `<a href="${url}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                <i class="bi bi-eye"></i> {{ t('Lihat File') }}</a>`;
+            }
+            
+            input.onchange=function(){
+                if(this.files.length){
+                    setFile(this.files[0]);
+                }
+            };
+            
+            box.addEventListener('dragover',function(e){
+                e.preventDefault();
+                box.classList.add('dragover');
+            });
+            
+            box.addEventListener('dragleave',function(){
+                box.classList.remove('dragover');
+            });
+            
+            box.addEventListener('drop',function(e){
+                e.preventDefault();
+                box.classList.remove('dragover');
+                if(e.dataTransfer.files.length){
+                    setFile(e.dataTransfer.files[0]);
+                }
+            });
+            
+            box.addEventListener('paste',function(e){
+                const items=e.clipboardData.items;
+                for(let item of items){
+                    if(item.kind==='file'){
+                        setFile(item.getAsFile());
+                        break;
+                    }
+                }
+            });
+        });
+    });
+    </script>
+    @endpush
+    @endsection

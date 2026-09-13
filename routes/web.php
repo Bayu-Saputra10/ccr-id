@@ -48,7 +48,6 @@ Route::middleware('auth')->group(function (){
     // rute infrastruktur
     Route::get('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'index'])->name('infrastructure.input');
     Route::post('/assessments/{assessment}/infrastructure', [InfrastructureController::class, 'save'])->name('infrastructure.save');
-    // 
 
     // rute manufaktur
     Route::get('/assessments/{assessment}/manufacturing', [ManufacturingController::class, 'index'])->name('manufacturing.input');

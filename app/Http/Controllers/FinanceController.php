@@ -19,32 +19,27 @@ class FinanceController extends Controller
 
     public function index(Assessment $assessment) {
         $this->authorizeAssessment($assessment);
-
         $indicators = Finance::with(['scores', 'evidences'])->orderBy('dimension')->orderBy('indicator_id')->get();
-
-        $answers = AssessmentAnswer::where(
-            'assessment_id', $assessment->id
-        )->get()->keyBy('indicator_id');
-
+        $answers = AssessmentAnswer::where('assessment_id', $assessment->id)->get()->keyBy('indicator_id');
         foreach ($indicators as $indicator){
             $indicator->answer = $answers[$indicator->id] ?? null;
         }
-
+        
         return view('finance.input', compact('assessment', 'indicators'));
     }
+
     public function save(Request $request, Assessment $assessment) {
         $this->authorizeAssessment($assessment);
 
         $request->validate([
             'evidence_file.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-        ],[
+        ], [
             'evidence_file.*.max' => t('Ukuran file maksimal 2 MB.'),
             'evidence_file.*.mimes' => t('Format file harus PDF, JPG, JPEG atau PNG.'),
         ]);
+
         $action = $request->input('action', 'submit');
-
         $indicators = Finance::orderBy('indicator_id')->get();
-
         $errors = [];
 
         if ($action == 'submit') {
@@ -63,45 +58,35 @@ class FinanceController extends Controller
         }
 
         $oldAnswers = AssessmentAnswer::where('assessment_id',$assessment->id)->get()->keyBy('indicator_id');
-        
         AssessmentAnswer::where('assessment_id',$assessment->id)->delete();
 
         $scores = $request->input('score', []);
-
-foreach ($scores as $indicatorId => $score) {
-
-    $oldAnswer = $oldAnswers[$indicatorId] ?? null;
-    $filePath = $oldAnswer?->evidence_file;
-
-    if ($request->hasFile("evidence_file.$indicatorId")) {
-
-        if ($oldAnswer && $oldAnswer->evidence_file &&
-            Storage::disk('public')->exists($oldAnswer->evidence_file)) {
-
-            Storage::disk('public')->delete($oldAnswer->evidence_file);
+        
+        foreach ($scores as $indicatorId => $score) {
+            $oldAnswer = $oldAnswers[$indicatorId] ?? null;
+            $filePath = $oldAnswer?->evidence_file;
+            
+            if ($request->hasFile("evidence_file.$indicatorId")) {
+                if ($oldAnswer && $oldAnswer->evidence_file &&
+                Storage::disk('public')->exists($oldAnswer->evidence_file)) {
+                    Storage::disk('public')->delete($oldAnswer->evidence_file);
+                }
+                
+                $uploadedFile = $request->file("evidence_file.$indicatorId");
+                $fileName = $indicatorId.'_'.time().'_'. preg_replace('/[^A-Za-z0-9._-]/','_',$uploadedFile->getClientOriginalName());
+                $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
+            }
+            
+            AssessmentAnswer::updateOrCreate([
+                'assessment_id' => $assessment->id,
+                'indicator_id' => $indicatorId,
+            ], [
+                'score' => $score,
+                'evidence' => $request->evidence[$indicatorId] ?? null,
+                'evidence_file' => $filePath,
+                'note' => $request->note[$indicatorId] ?? null,
+            ]);
         }
-
-        $uploadedFile = $request->file("evidence_file.$indicatorId");
-
-        $fileName = $indicatorId.'_'.time().'_'.
-            preg_replace('/[^A-Za-z0-9._-]/','_',$uploadedFile->getClientOriginalName());
-
-        $filePath = $uploadedFile->storeAs('evidence',$fileName,'public');
-    }
-
-    AssessmentAnswer::updateOrCreate(
-        [
-            'assessment_id' => $assessment->id,
-            'indicator_id' => $indicatorId,
-        ],
-        [
-            'score' => $score,
-            'evidence' => $request->evidence[$indicatorId] ?? null,
-            'evidence_file' => $filePath,
-            'note' => $request->note[$indicatorId] ?? null,
-        ]
-    );
-}
 
         if ($action == 'draft') {
             $assessment->status='draft';
@@ -110,9 +95,7 @@ foreach ($scores as $indicatorId => $score) {
         }
 
         $result = app(CCRAMCalculatorService::class)->calculate($assessment);
-
         $assessment->update($result);
-
         $assessment->status = 'completed';
         $assessment->save();
 

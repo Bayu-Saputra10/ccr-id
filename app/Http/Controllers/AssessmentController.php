@@ -19,7 +19,7 @@ use App\Models\ManagementRecommendation;
 class AssessmentController extends Controller
 {
     // penulisan route
-    private function getSectorConfig(string $sector): array{
+    private function getSectorConfig(string $sector): array {
         $sector = strtolower($sector);
         return match ($sector){
             'infrastructure' => [
@@ -58,165 +58,77 @@ class AssessmentController extends Controller
         }
     ]);
 
-    // ==========================
-// FILTER USER (ADMIN)
-// ==========================
-
-if(auth()->user()->role=='admin'){
-
-    if($request->filled('user_id')){
-        $query->where('user_id',$request->user_id);
-    }
-
-}else{
-
-    $query->where('user_id',auth()->id());
-
-}
-
-    // ==========================
-    // SEARCH
-    // ==========================
-
-    if ($request->filled('search')) {
-
-        $search = $request->search;
-
-        $query->where(function ($q) use ($search) {
-
-            $q->where('company_name', 'like', "%{$search}%")
-              ->orWhere('subsector', 'like', "%{$search}%")
-              ->orWhere('entry_operator', 'like', "%{$search}%");
-
-        });
-
-    }
-
-    // ==========================
-    // FILTER TAHUN
-    // ==========================
-
-if ($request->filled('assessment_date')) {
-
-    $query->whereDate(
-        'assessment_date',
-        $request->assessment_date
-    );
-
-}
-
-    // ==========================
-    // FILTER SEKTOR
-    // ==========================
-
-    if ($request->filled('sector')) {
-
-        $query->where(
-            'sector',
-            $request->sector
-        );
-
-    }
-
-    // ==========================
-// SORTING
-// ==========================
-
-$sort = $request->get('sort', 'created_at');
-$direction = $request->get('direction', 'desc');
-
-$allowedSort = [
-    'company_name',
-    'sector',
-    'assessment_date',
-    'total_score',
-    'status',
-    'created_at',
-];
-
-if (!in_array($sort, $allowedSort)) {
-    $sort = 'created_at';
-}
-
-$direction = strtolower($direction) == 'asc' ? 'asc' : 'desc';
-
-$query->orderBy($sort, $direction);
-
-    // ==========================
-    // PAGINATION
-    // ==========================
-
-    $perPage = $request->per_page ?? 10;
-
-    $assessments = $query
-        ->paginate($perPage)
-        ->withQueryString();
-
-    foreach ($assessments as $assessment) {
-
-        if ($assessment->status == 'completed') {
-
-            $assessment->progress = 100;
-
-            continue;
-
+    // FILTER USER (ADMIN)
+    if(auth()->user()->role=='admin'){
+        if($request->filled('user_id')){
+            $query->where('user_id',$request->user_id);
         }
+    }else{
+        $query->where('user_id',auth()->id());
+    }
 
-        $config = $this->getSectorConfig($assessment->sector);
+    // SEARCH
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('company_name', 'like', "%{$search}%")->orWhere('subsector', 'like', "%{$search}%")->orWhere('entry_operator', 'like', "%{$search}%");
+            });
+    }
 
-        $total = $config['model']::count();
+    // FILTER TAHUN
+    if ($request->filled('assessment_date')) {
+        $query->whereDate('assessment_date', $request->assessment_date);
+    }
 
-        $assessment->progress = $total > 0
-            ? round(($assessment->answered_count / $total) * 100)
-            : 0;
-
+    // FILTER SEKTOR
+    if ($request->filled('sector')) {
+        $query->where('sector', $request->sector);
+    }
+    
+    // SORTING
+    $sort = $request->get('sort', 'created_at');
+    $direction = $request->get('direction', 'desc');
+    $allowedSort = [
+        'company_name',
+        'sector',
+        'assessment_date',
+        'total_score',
+        'status',
+        'created_at',
+    ];
+    
+    if (!in_array($sort, $allowedSort)) {
+        $sort = 'created_at';
+    }
+    
+    $direction = strtolower($direction) == 'asc' ? 'asc' : 'desc';
+    $query->orderBy($sort, $direction);
+    // PAGINATION
+    $perPage = $request->per_page ?? 10;
+    $assessments = $query->paginate($perPage)->withQueryString();
+    foreach ($assessments as $assessment) {
+        if ($assessment->status == 'completed') {
+            $assessment->progress = 100;
+            continue;
+        }
+    $config = $this->getSectorConfig($assessment->sector);
+    $total = $config['model']::count();
+    $assessment->progress = $total > 0 ? round(($assessment->answered_count / $total) * 100) : 0;
     }
 
     // Dropdown Tahun
-    $years = Assessment::selectRaw('YEAR(assessment_date) as year')
-                ->distinct()
-                ->orderByDesc('year')
-                ->pluck('year');
-
+    $years = Assessment::selectRaw('YEAR(assessment_date) as year')->distinct()->orderByDesc('year')->pluck('year');
     // Dropdown Sektor
     $sectors = Assessment::SECTORS;
-
-    // ==========================
-// DATA USER UNTUK ADMIN
-// ==========================
-
-$users = collect();
-
-if (auth()->user()->role == 'admin') {
-
-    $users = User::withCount('assessments')
-        ->orderByRaw("role='admin' DESC")
-        ->orderBy('name')
-        ->get();
-
-    return view(
-        'admin.index',
-        compact(
-            'assessments',
-            'years',
-            'sectors',
-            'users'
-        )
-    );
-}
-
-// ==========================
-// VIEW USER
-// ==========================
-
-return view(
-    'assessments.index',
-    compact(
-        'assessments',
-        'years',
-        'sectors'
-    )
-);
+    // DATA USER UNTUK ADMIN
+    $users = collect();
+    if (auth()->user()->role == 'admin') {
+        $users = User::withCount('assessments')->orderByRaw("role='admin' DESC")->orderBy('name')->get();
+        
+    return view('admin.index', compact('assessments', 'years', 'sectors', 'users'));
+    }    
+    // VIEW USER
+    return view('assessments.index', compact('assessments', 'years', 'sectors'));
     }
 
     public function create() {
@@ -319,11 +231,10 @@ return view(
         if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
             abort(403);
         }
-
+        
         $config = $this->getSectorConfig($assessment->sector);
-        return view('assessments.create', [
-            'assessment' => $assessment, 'edit' => true,
-        ]);
+        
+        return view('assessments.create', ['assessment' => $assessment, 'edit' => true,]);
     }
 
     public function update(Request $request, Assessment $assessment){
@@ -342,7 +253,6 @@ return view(
             'data_source.*' => 'string',
             'notes' => 'nullable|string',
         ]);
-
         $assessment->update([
             'sector' => $request->sector,
             'company_name' => $request->company_name,
@@ -353,24 +263,19 @@ return view(
             'data_source' => implode(', ', $request->data_source),
             'notes' => $request->notes
         ]);
-        return redirect()->route(
-            strtolower($assessment->sector).'.input', $assessment->id
-        );
+        return redirect()->route(strtolower($assessment->sector).'.input', $assessment->id);
     }
-
-public function destroy(Assessment $assessment) {
-    if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
+    
+    public function destroy(Assessment $assessment) {
+        if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
             abort(403, t('Anda tidak memiliki akses menghapus assessment'));
         }
-    
-    AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
-
-    $assessment->delete();
-
-    return redirect()
-        ->route('assessments.index')
-        ->with('success', t('Data berhasil dihapus.'));
-}
+        
+        AssessmentAnswer::where('assessment_id', $assessment->id)->delete();
+        $assessment->delete();
+        
+        return redirect()->route('assessments.index')->with('success', t('Data berhasil dihapus.'));
+    }
 
     public function report(Assessment $assessment) {
         if (auth()->user()->role != 'admin' && $assessment->user_id != auth()->id()) {
@@ -378,11 +283,8 @@ public function destroy(Assessment $assessment) {
         }
 
         $answers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();
-
         $sector = ucfirst(strtolower($assessment->sector));
-
         $indicatorModel = "App\\Models\\{$sector}";
-
         $averages = [];
 
         foreach (['A','B','C','D','E'] as $dimension) {
@@ -391,55 +293,38 @@ public function destroy(Assessment $assessment) {
             foreach ($answers as $answer) {
                 $indicator = $indicatorModel::find($answer->indicator_id);
                 $answer->file_name = $answer->evidence_file ? basename($answer->evidence_file) : null;
-
                 if ($indicator && $indicator->dimension == $dimension) {
                     $scores[] = $answer->score;
                 }
             }
-
-            $averages[$dimension] = count($scores) ? round(array_sum($scores) / count($scores), 2) : 0;
+        $averages[$dimension] = count($scores) ? round(array_sum($scores) / count($scores), 2) : 0;
         }
 
         $result = app(CCRAMCalculatorService::class)->calculate($assessment);
 
         $assessment->category = $result['category'];
-$assessment->interpretation_grade = $result['interpretation_grade'];
-$assessment->interpretation = $result['interpretation'];
-$assessment->management_recommendation = $result['management_recommendation'];
-$assessment->improvement_priority = $result['improvement_priority'];
-
-$assessment->strongest_dimension = $result['strongest_dimension'];
-$assessment->weakest_dimension = $result['weakest_dimension'];
-$assessment->next_grade = $result['next_grade'];
-$assessment->gap_to_next_grade = $result['gap_to_next_grade'];
-
+        $assessment->interpretation_grade = $result['interpretation_grade'];
+        $assessment->interpretation = $result['interpretation'];
+        $assessment->management_recommendation = $result['management_recommendation'];
+        $assessment->improvement_priority = $result['improvement_priority'];
+        $assessment->strongest_dimension = $result['strongest_dimension'];
+        $assessment->weakest_dimension = $result['weakest_dimension'];
+        $assessment->next_grade = $result['next_grade'];
+        $assessment->gap_to_next_grade = $result['gap_to_next_grade'];
         $dimensionPerformance = $result['dimension_performance'];
-
         $sector = ucfirst(strtolower($assessment->sector));
-
         $indicatorModel = "App\\Models\\{$sector}";
         $scoreModel = "App\\Models\\{$sector}Score";
         $evidenceModel = "App\\Models\\{$sector}Evidence";
-
         $foreignKey = strtolower($assessment->sector) . '_id';
 
         foreach ($answers as $answer) {
-
-    $answer->indicator = $indicatorModel::find($answer->indicator_id);
-
-    $score = $scoreModel::where($foreignKey, $answer->indicator_id)
-        ->where('score', $answer->score)
-        ->first();
-
-    $evidence = $evidenceModel::where($foreignKey, $answer->indicator_id)
-        ->where('value', $answer->evidence)
-        ->first();
-
-    $answer->score_description = $score?->description;
-
-    $answer->evidence_description = $evidence?->description;
-}
-
+            $answer->indicator = $indicatorModel::find($answer->indicator_id);
+            $score = $scoreModel::where($foreignKey, $answer->indicator_id)->where('score', $answer->score)->first();
+            $evidence = $evidenceModel::where($foreignKey, $answer->indicator_id)->where('value', $answer->evidence)->first();
+            $answer->score_description = $score?->description;
+            $answer->evidence_description = $evidence?->description;
+        }
         return view('assessments.show', compact('assessment', 'answers', 'averages', 'dimensionPerformance'));
     }
 }

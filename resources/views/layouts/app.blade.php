@@ -31,6 +31,11 @@
 
 @if(auth()->user()->role == 'admin')
 
+{{-- Panduan pengguna --}}
+<a href="{{ asset('assets/docs/Panduan_Pengguna_CCR-ID.pdf') }}" class="btn btn-outline-secondary" download>
+    <i class="bi bi-book me-1"></i> {{ t('Panduan Pengguna') }}
+</a>
+
     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-success">
         <i class="bi bi-speedometer2"></i>
         {{ t('Dashboard Admin') }}
@@ -47,6 +52,11 @@
     </a>
 
 @else
+{{-- Panduan pengguna --}}
+<a href="{{ asset('assets/docs/Panduan_Pengguna_CCR-ID.pdf') }}" class="btn btn-outline-secondary" download title="Download Panduan Pengguna">
+    <i class="bi bi-book me-1"></i> {{ t('Panduan Pengguna') }}
+</a>
+
     <a href="{{ route('dashboard') }}" class="btn btn-outline-success">
         <i class="bi bi-speedometer2"></i> {{ t('Dashboard') }}
     </a>

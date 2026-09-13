@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="card-body">
-
     <div class="container-fluid">
         {{-- header --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -54,9 +53,7 @@
             {{-- profil --}}
             <div class="col-lg-6">
                 <div class="card report-card h-100">
-                    <div class="card-header report-header">
-                        {{ t('Profil Perusahaan') }}
-                    </div>
+                    <div class="card-header report-header">{{ t('Profil Perusahaan') }}</div>
                     <div class="card-body p-0">
                         <table class="table profile-table mb-0">
                             <tbody>
@@ -93,6 +90,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- score dimensi --}}
             <div class="col-lg-6">
                 <div class="card report-card h-100">
@@ -188,6 +186,7 @@
                 </div>
             </div>
         </div>
+
         {{-- row 3 --}}
         <div class="row g-4 mb-4">
             <div class="col-lg-12">
@@ -359,62 +358,54 @@
             }]
         },
         options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: false,
-
-    layout: {
-        padding: {
-            top: 10,
-            right: 15,
-            bottom: 10,
-            left: 10
-        }
-    },
-
-    plugins: {
-        legend: {
-            display: false
-        }
-    },
-
-    scales: {
-        x: {
-            grid: {
-                display: false
-            },
-            ticks: {
-                font: {
-                    size: 14,
-                    weight: 'bold'
-                }
-            }
-        },
-
-        y: {
-            min: 0,
-            max: 5,
-            beginAtZero: true,
-
-            ticks: {
-                stepSize: 0.5,
-                font: {
-                    size: 12
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    right: 15,
+                    bottom: 10,
+                    left: 10
                 }
             },
-
-            grid: {
-                color: '#E5E7EB'
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                y: {
+                    min: 0,
+                    max: 5,
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 0.5,
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: '#E5E7EB'
+                    }
+                }
             }
         }
-    }
-}
     });
     document.getElementById('pdfForm').addEventListener('submit', function() {
         document.getElementById('radarImage').value = radarChart.toBase64Image();
-
         document.getElementById('barImage').value = detailChart.toBase64Image();
     });
 </script>
-
 @endsection

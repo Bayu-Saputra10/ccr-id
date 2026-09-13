@@ -45,275 +45,118 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                <div class="col-md-2 d-grid">
-
-                    <button
-                        class="btn btn-primary">
-
-                        <i class="bi bi-search"></i>
-
-                        {{ t('Cari') }}
-
-                    </button>
-
+                                <div class="col-md-2 d-grid">
+                                    <button class="btn btn-primary"><i class="bi bi-search"></i> {{ t('Cari') }}</button>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{{ route('assessments.index') }}" class="btn btn-secondary btn-sm">{{ t('Reset Filter') }}</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-            </div>
-
-            <div class="mt-3">
-
-                <a
-                    href="{{ route('assessments.index') }}"
-                    class="btn btn-secondary btn-sm">
-
-                    {{ t('Reset Filter') }}
-
-                </a>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
                 <table class="table list-table align-middle mb-0">
                     <thead>
                         <tr>
                             <th>
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'company_name',
-    'direction'=>sortDirection('company_name')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>{{ t('Perusahaan') }}</span>
-
-    @if(request('sort')=='company_name')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-
-</a>
-                            </th>
-                            <th>
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'sector_name',
-    'direction'=>sortDirection('sector_name')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>{{ t('Sektor') }}</span>
-
-    @if(request('sort')=='sector_name')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-
-</a>
-                            </th>
-                            <th>
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'assessment_date',
-    'direction'=>sortDirection('assessment_date')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>{{ t('Tanggal Penilaian') }}</span>
-
-    @if(request('sort')=='assessment_date')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-
-</a>
-                            </th>
-                            <th class="score-column">
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'score_a',
-    'direction'=>sortDirection('score_a')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>A</span>
-
-    @if(request('sort')=='score_a')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-
-</a>
-                            </th>
-                            <th class="score-column">
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'score_b',
-    'direction'=>sortDirection('score_b')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>B</span>
-
-    @if(request('sort')=='score_b')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-                                </a>
-                            </th>
-                            <th class="score-column">
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'score_c',
-    'direction'=>sortDirection('score_c')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>C</span>
-
-    @if(request('sort')=='score_c')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-                                </a>
-                            </th>
-                            <th class="score-column">
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'score_d',
-    'direction'=>sortDirection('score_d')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>D</span>
-
-    @if(request('sort')=='score_d')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
-                                </a>
-                            </th>
-                            <th class="score-column">
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'score_e',
-    'direction'=>sortDirection('score_e')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>E</span>
-
-    @if(request('sort')=='score_e')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'company_name', 'direction'=>sortDirection('company_name')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>{{ t('Perusahaan') }}</span>
+                                    @if(request('sort')=='company_name')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th>
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'total_score',
-    'direction'=>sortDirection('total_score')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>{{ t('Total Score') }}</span>
-
-    @if(request('sort')=='total_score')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'sector_name', 'direction'=>sortDirection('sector_name')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>{{ t('Sektor') }}</span>
+                                    @if(request('sort')=='sector_name')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th>
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'assessment_date', 'direction'=>sortDirection('assessment_date')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>{{ t('Tanggal Penilaian') }}</span>
+                                    @if(request('sort')=='assessment_date')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th class="score-column">
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'score_a', 'direction'=>sortDirection('score_a')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>A</span>
+                                    @if(request('sort')=='score_a')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th class="score-column">
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'score_b', 'direction'=>sortDirection('score_b')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>B</span>
+                                    @if(request('sort')=='score_b')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th class="score-column">
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'score_c', 'direction'=>sortDirection('score_c')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>C</span>
+                                    @if(request('sort')=='score_c')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th class="score-column">
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'score_d', 'direction'=>sortDirection('score_d')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>D</span>
+                                    @if(request('sort')=='score_d')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th class="score-column">
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'score_e', 'direction'=>sortDirection('score_e')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>E</span>
+                                    @if(request('sort')=='score_e')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
+                                </a>
+                            </th>
+                            <th>
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'total_score', 'direction'=>sortDirection('total_score')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>{{ t('Total Score') }}</span>
+                                    @if(request('sort')=='total_score')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th>{{ t('Progress') }}</th>
                             <th>
-                                <a href="{{ route('assessments.index',
-array_merge(request()->query(),[
-    'sort'=>'status',
-    'direction'=>sortDirection('status')
-])) }}"
-class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
-
-    <span>{{ t('Status') }}</span>
-
-    @if(request('sort')=='status')
-
-        <i class="bi {{ request('direction')=='asc'
-            ? 'bi-arrow-up'
-            : 'bi-arrow-down' }}"></i>
-
-    @else
-
-        <i class="bi bi-arrow-down-up text-secondary"></i>
-
-    @endif
+                                <a href="{{ route('assessments.index', array_merge(request()->query(),['sort'=>'status', 'direction'=>sortDirection('status')])) }}" class="text-decoration-none text-dark fw-semibold d-inline-flex align-items-center gap-1">
+                                    <span>{{ t('Status') }}</span>
+                                    @if(request('sort')=='status')
+                                    <i class="bi {{ request('direction')=='asc' ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
+                                    @else
+                                    <i class="bi bi-arrow-down-up text-secondary"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th></th>
